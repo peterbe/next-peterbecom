@@ -21,6 +21,3 @@ module.exports = (phase, { defaultConfig }) => {
     /* config options for all phases except development here */
   };
 };
-// module.exports = {
-//   reactStrictMode: true,
-// }

@@ -1,9 +1,6 @@
-import { useState, useEffect } from "react";
-// import useSWR, { mutate } from 'swr';
+import { useState } from "react";
 import type { Post } from "../../types";
 import { DisplayComment } from "./comment";
-
-// const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "";
 
 interface PrepareData {
   csrfmiddlewaretoken: string;
@@ -13,6 +10,36 @@ interface PreviewData {
 }
 interface SubmitData {
   hash: string;
+  hash_expiration_seconds: number;
+  comment: string;
+}
+
+const LOCALESTORAGE_NAME_KEY = "commenting";
+
+type RememberedName = {
+  name: string;
+  email: string;
+};
+function getRememberedName(): RememberedName {
+  const res: RememberedName = {
+    name: "",
+    email: "",
+  };
+  try {
+    const serialized = localStorage.getItem(LOCALESTORAGE_NAME_KEY);
+    if (serialized) {
+      const remembered = JSON.parse(serialized);
+      if (remembered.name) {
+        res.name = remembered.name;
+      }
+      if (remembered.email) {
+        res.email = remembered.email;
+      }
+    }
+  } catch (error) {
+    console.warn("Unable to read from localStorage");
+  }
+  return res;
 }
 
 export function CommentForm({
@@ -22,9 +49,10 @@ export function CommentForm({
   parent: string | null;
   post: Post;
 }) {
+  const { name: rememberedName, email: rememberedEmail } = getRememberedName();
   const [comment, setComment] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState(rememberedName);
+  const [email, setEmail] = useState(rememberedEmail);
   const [csrfmiddlewaretoken, setCsrfmiddlewaretoken] = useState("");
   const [csrfmiddlewaretokenTimestamp, setCsrfmiddlewaretokenTimestamp] =
     useState<Date | null>(null);
@@ -58,26 +86,28 @@ export function CommentForm({
   async function preview() {
     const body = new FormData();
     body.append("comment", comment);
-    body.append("csrfmiddlewaretoken", csrfmiddlewaretoken);
     const response = await fetch("/api/v1/plog/comments/preview", {
       method: "POST",
       body,
-      // headers: {
-      //   "X-CSRFToken": csrfmiddlewaretoken,
-      // },
+      headers: {
+        "X-CSRFToken": csrfmiddlewaretoken,
+      },
     });
     if (!response.ok) {
       setPreviewError(new Error(`${response.status}`));
     } else {
       const data: PreviewData = await response.json();
       setRenderedComment(data.comment);
+      setPreviewError(null);
     }
   }
 
   async function submit() {
     const body = new FormData();
     body.append("oid", post.oid);
-    body.append("comment", comment);
+    body.append("comment", comment.trim());
+    body.append("name", name.trim());
+    body.append("email", email.trim());
     if (parent) {
       body.append("parent", parent);
     }
@@ -89,10 +119,31 @@ export function CommentForm({
       },
     });
     if (!response.ok) {
-      setSubmitError(new Error(`${response.status}`));
+      throw new Error(`${response.status}`);
     } else {
       const data: SubmitData = await response.json();
       setSubmittedHash(data.hash);
+      setRenderedComment(data.comment);
+      setSubmitError(null);
+    }
+  }
+
+  function rememberName() {
+    if (name.trim() || email.trim()) {
+      try {
+        localStorage.setItem(
+          LOCALESTORAGE_NAME_KEY,
+          JSON.stringify({ name, email })
+        );
+      } catch (error) {
+        console.warn("Unable to save in localStorage");
+      }
+    } else {
+      try {
+        localStorage.removeItem(LOCALESTORAGE_NAME_KEY);
+      } catch (error) {
+        console.warn("Unable to save in localStorage");
+      }
     }
   }
 
@@ -102,7 +153,7 @@ export function CommentForm({
         <DisplayComment
           comment={{
             id: 0,
-            oid: "xxx",
+            oid: "mock",
             comment: renderedComment,
             add_date: new Date().toString(),
             depth: 0,
@@ -114,6 +165,31 @@ export function CommentForm({
           children={null}
         ></DisplayComment>
       )}
+
+      {submitError && (
+        <div className="ui negative message">
+          <i className="close icon" onClick={() => setSubmitError(null)}></i>
+          <div className="header">Sorry. The comment couldn't be posted.</div>
+          <p>An error occurred trying to send this to the server.</p>
+          <p>
+            <code>{submitError.toString()}</code>
+          </p>
+        </div>
+      )}
+
+      {previewError && (
+        <div className="ui negative message">
+          <i className="close icon" onClick={() => setPreviewError(null)}></i>
+          <div className="header">
+            Sorry. The comment couldn't be previewed.
+          </div>
+          <p>An error occurred trying to send this to the server.</p>
+          <p>
+            <code>{previewError.toString()}</code>
+          </p>
+        </div>
+      )}
+
       <form
         onSubmit={async (event) => {
           event.preventDefault();
@@ -123,13 +199,19 @@ export function CommentForm({
             await prepare();
             await submit();
             console.warn("Work harder!");
+            setComment("");
+          } catch (error) {
+            if (error instanceof Error) {
+              setSubmitError(error);
+            } else {
+              throw error;
+            }
           } finally {
             setSubmitting(false);
           }
         }}
         className="ui form"
       >
-        <code>{csrfmiddlewaretoken}</code>
         <div className="field">
           <label>What do you think?</label>
           <textarea
@@ -154,6 +236,7 @@ export function CommentForm({
                 title="Your full name"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
+                onBlur={rememberName}
               />
             </div>
             <div className="field">
@@ -165,6 +248,7 @@ export function CommentForm({
                 title="Your email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
+                onBlur={rememberName}
               />
             </div>
           </div>
