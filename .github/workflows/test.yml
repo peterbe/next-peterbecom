@@ -27,7 +27,7 @@ jobs:
             adminui/node_modules
           key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.github/workflows/test.yml') }}
 
-      - name: Install yarn packages
+      - name: Install
         if: steps.cached-node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
