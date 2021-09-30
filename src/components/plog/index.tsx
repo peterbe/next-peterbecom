@@ -1,66 +1,16 @@
-import type { NextPage } from "next";
 import Head from "next/head";
-import type { AppProps } from "next/app";
-import {
-  // GetStaticProps,
-  // GetStaticPaths,
-  GetServerSideProps,
-  // InferGetStaticPropsType,
-  // InferGetServerSidePropsType,
-} from "next";
 import { Fragment } from "react";
 import styles from "../../styles/Post.module.css";
 
-import { Footer } from "../../components/footer";
-import { CarbonAd } from "../../components/carbonad";
-import { CommentsSection } from "../../components/plog/comments";
-import { formatDateBasic } from "../../components/utils";
+import { Footer, LyricsFooter } from "../footer";
+import { CarbonAd } from "../carbonad";
+import { CommentsSection } from "./comments";
+import { formatDateBasic } from "../utils";
 import type { Post, Comments } from "../../types";
-
-interface Data {
-  post: Post;
-  comments: Comments;
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const params = context.params;
-  const oid = params!.oid;
-
-  const API_BASE = process.env.API_BASE;
-  if (!API_BASE) {
-    throw new Error("can't not be set");
-  }
-
-  const res = await fetch(`${API_BASE}/api/v1/plog/${oid}`);
-  if (res.status === 404) {
-    return {
-      notFound: true,
-    };
-  }
-  const data: Data = await res.json();
-  const { post, comments } = data;
-
-  if (post.archived) {
-    return {
-      notFound: true,
-    };
-  }
-  const page = 1;
-
-  return {
-    props: {
-      post,
-      comments,
-      page,
-    },
-  };
-};
-
-const THIS_YEAR = new Date().getFullYear();
 
 // const Plog: NextPage = (props: Props) => {
 // function Plog({ data }: InferGetStaticPropsType<typeof getServerSideProps>) {
-function Blogpost({
+export function Blogpost({
   post,
   comments,
   page,
@@ -184,7 +134,7 @@ function Blogpost({
               href="https://twitter.com/peterbe"
               className="ui tiny twitter button"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
             >
               Follow <b>@peterbe</b> on Twitter
             </a>
@@ -205,18 +155,13 @@ function Blogpost({
           />
         )}
 
-        {isLyricsPage && (
-          <p className={styles.lyrics_footer}>
-            &copy; <a href="/">peterbe.com</a> 2003 - {THIS_YEAR}
-          </p>
-        )}
+        {isLyricsPage && <LyricsFooter />}
       </div>
 
       {!isLyricsPage && <Footer />}
     </div>
   );
 }
-export default Blogpost;
 
 function isNotPublished(date: string) {
   const actualDate = new Date(date);
@@ -268,9 +213,8 @@ function OldPostWarning({ date }: { date: string }) {
     <div className={className} style={{ marginBottom: 40 }}>
       <div className="header">Mind that age!</div>
       <p>
-        This blog post is
-        <b>{{ years }} years old!</b> Most likely, its content is outdated.
-        Especially if it's technical.
+        This blog post is <b>{years.toFixed(0)} years old!</b> Most likely, its
+        content is outdated. Especially if it&apos;s technical.
       </p>
     </div>
   );

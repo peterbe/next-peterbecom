@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react";
 import type { Post, Comments, Comment } from "../../types";
+import Link from "next/link";
 import { CommentForm } from "./commentform";
 import { DisplayComment } from "./comment";
 
@@ -17,35 +18,23 @@ export function CommentsSection({
   post: Post;
 }) {
   const [parent, setParent] = useState<string | null>(null);
+
+  const pagination = (
+    <CommentsPagination
+      oid={post.oid}
+      page={page}
+      nextPage={comments.next_page}
+      previousPage={comments.previous_page}
+    />
+  );
+
   return (
     <>
       <h2 className="ui dividing header" id="comments">
         {comments.truncated ? "Recent comments" : "Comments"}
       </h2>
 
-      {(comments.paginate_uri_next || comments.paginate_uri_previous) && (
-        <span className="pagination sub header">
-          {comments.paginate_uri_previous && (
-            <>
-              Go to{" "}
-              <a href={`${comments.paginate_uri_previous}#comments`}>
-                ← Page {page - 1}
-              </a>
-              &nbsp;
-            </>
-          )}{" "}
-          <span style={{ color: "#999" }}>Page {page}</span> &nbsp;
-          {comments.paginate_uri_next && (
-            <>
-              Go to{" "}
-              <a href={`${comments.paginate_uri_next}#comments`}>
-                Page {page + 1} →
-              </a>
-              &nbsp;
-            </>
-          )}
-        </span>
-      )}
+      <div className="pagination sub header">{pagination}</div>
 
       {hideComments && comments.count && (
         <p>
@@ -66,6 +55,8 @@ export function CommentsSection({
         </div>
       )}
 
+      <div className="pagination pagination-footer">{pagination}</div>
+
       {disallowComments && (
         <p>
           <em>Comments closed</em>
@@ -73,6 +64,55 @@ export function CommentsSection({
       )}
     </>
   );
+}
+
+function CommentsPagination({
+  oid,
+  page,
+  nextPage,
+  previousPage,
+}: {
+  oid: string;
+  page: number;
+  nextPage: number | null;
+  previousPage: number | null;
+}) {
+  if (!nextPage && !previousPage) {
+    return null;
+  }
+
+  return (
+    <>
+      {previousPage && (
+        <>
+          Go to{" "}
+          <Link href={makePaginationURL(oid, previousPage)}>
+            <a>← Page {page - 1}</a>
+          </Link>
+          &nbsp;
+        </>
+      )}{" "}
+      <span style={{ color: "#999" }}>Page {page}</span> &nbsp;
+      {nextPage && (
+        <>
+          Go to{" "}
+          <Link href={makePaginationURL(oid, nextPage)}>
+            <a>Page {nextPage} →</a>
+          </Link>
+          &nbsp;
+        </>
+      )}
+    </>
+  );
+}
+
+function makePaginationURL(oid: string, page: number) {
+  let url = `/plog/${oid}`;
+  if (page !== 1) {
+    url += `/p${page}`;
+  }
+  url += "#comments";
+  return url;
 }
 
 function ShowCommentTree({

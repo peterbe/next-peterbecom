@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../styles/About.module.css";
 
 const About: NextPage = () => {
@@ -13,7 +14,7 @@ const About: NextPage = () => {
 
       <main className={styles.main}>
         <p>
-          Back to <a href="/">Home</a>
+          Back to <Link href="/">Home</Link>
         </p>
         <Image
           src="/about/thatsgroce.png"

@@ -1,7 +1,6 @@
 export interface Post {
   oid: string;
   title: string;
-  // id: string;
   pub_date: string;
   url: string | null;
   categories: string[];
@@ -11,7 +10,6 @@ export interface Post {
   body: string;
   hide_comments: boolean;
   disallow_comments: boolean;
-  // comments: number;
 }
 
 export interface Comment {
@@ -19,7 +17,7 @@ export interface Comment {
   oid: string;
   comment: string;
   add_date: string;
-  notApproved?: boolean;
+  not_approved?: boolean;
   depth: number;
   name: string | null;
   replies?: Comment[];
@@ -28,7 +26,7 @@ export interface Comment {
 export interface Comments {
   truncated: boolean;
   count: number;
-  paginate_uri_previous?: string;
-  paginate_uri_next?: string;
+  next_page: number | null;
+  previous_page: number | null;
   tree: Comment[];
 }

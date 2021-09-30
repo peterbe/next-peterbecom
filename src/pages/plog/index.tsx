@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+// import type { NextPage } from "next";
 // import Head from "next/head";
 import type { AppProps } from "next/app";
 import {
@@ -6,9 +6,11 @@ import {
   GetStaticPaths,
   GetServerSideProps,
   InferGetStaticPropsType,
+  InferGetServerSidePropsType,
 } from "next";
 import { Fragment } from "react";
 import styles from "../../styles/Plog.module.css";
+import { Footer } from "../../components/footer";
 
 interface Post {
   oid: string;
@@ -35,19 +37,19 @@ interface Data {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch("http://localhost:8000/api/v1/plog/");
   const data: Data = await res.json();
-  const { groups } = data;
+  // const { groups } = data;
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
-    props: {
-      groups,
-    },
+    props: data,
   };
 };
 
-// const Plog: NextPage = (props: Props) => {
-// function Plog({ data }: InferGetStaticPropsType<typeof getServerSideProps>) {
-function Plog({ groups }: { groups: Group[] }) {
+// const Plog: NextPage = ({ groups }: { groups: Group[] }) => {
+const Plog = ({ groups }: { groups: Group[] }) => {
+  // }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  // function Plog({ data }: InferGetStaticPropsType<typeof getServerSideProps>) {
+  // function Plog({ groups }: { groups: Group[] }) {
   return (
     <div className={styles.container}>
       <h1>Archive</h1>
@@ -80,8 +82,9 @@ function Plog({ groups }: { groups: Group[] }) {
         <title>About Peterbe.com</title>
         <link rel="icon" href="/favicon.ico" />
       </Head> */}
+      <Footer />
     </div>
   );
-}
+};
 
 export default Plog;

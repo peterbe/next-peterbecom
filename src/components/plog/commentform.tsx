@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Post } from "../../types";
 import { DisplayComment } from "./comment";
 
@@ -49,10 +49,19 @@ export function CommentForm({
   parent: string | null;
   post: Post;
 }) {
-  const { name: rememberedName, email: rememberedEmail } = getRememberedName();
   const [comment, setComment] = useState("");
-  const [name, setName] = useState(rememberedName);
-  const [email, setEmail] = useState(rememberedEmail);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    const { name, email } = getRememberedName();
+    if (name) {
+      setName(name);
+    }
+    if (email) {
+      setName(email);
+    }
+  }, []);
+
   const [csrfmiddlewaretoken, setCsrfmiddlewaretoken] = useState("");
   const [csrfmiddlewaretokenTimestamp, setCsrfmiddlewaretokenTimestamp] =
     useState<Date | null>(null);
@@ -162,14 +171,17 @@ export function CommentForm({
           setParent={() => {}}
           notApproved={false}
           disallowComments={true}
-          children={null}
-        ></DisplayComment>
+        >
+          hi there
+        </DisplayComment>
       )}
 
       {submitError && (
         <div className="ui negative message">
           <i className="close icon" onClick={() => setSubmitError(null)}></i>
-          <div className="header">Sorry. The comment couldn't be posted.</div>
+          <div className="header">
+            Sorry. The comment couldn&apos;t be posted.
+          </div>
           <p>An error occurred trying to send this to the server.</p>
           <p>
             <code>{submitError.toString()}</code>
@@ -181,7 +193,7 @@ export function CommentForm({
         <div className="ui negative message">
           <i className="close icon" onClick={() => setPreviewError(null)}></i>
           <div className="header">
-            Sorry. The comment couldn't be previewed.
+            Sorry. The comment couldn&apos;t be previewed.
           </div>
           <p>An error occurred trying to send this to the server.</p>
           <p>
