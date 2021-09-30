@@ -14,10 +14,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.3.0
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: '16'
-          cache: 'yarn'
+          cache: 'npm'
 
       - name: Cache node_modules
         uses: actions/cache@v2.1.6
@@ -27,7 +27,7 @@ jobs:
             adminui/node_modules
           key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.github/workflows/test.yml') }}
 
-      - name: Install yarn packages
+      - name: Install
         if: steps.cached-node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
