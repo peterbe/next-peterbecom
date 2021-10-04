@@ -1,0 +1,25 @@
+.date {
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+.post_link {
+  margin-right: 10px;
+}
+.categories {
+  font-size: 0.9em;
+  color: rgb(153, 153, 153);
+  float: right;
+}
+.comments {
+  font-size: 0.9em;
+  color: rgb(153, 153, 153);
+}
+
+@media only screen and (max-width: 767px) {
+  .categories {
+    display: none;
+  }
+  .post {
+    margin-left: 15px;
+  }
+}
