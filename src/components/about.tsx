@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 
 import { Content } from "./content";
 import styles from "../styles/About.module.css";
@@ -13,7 +14,8 @@ export function About() {
       </Head>
 
       <p>
-        My name is <strong>Peter Bengtsson</strong> and I'm a web developer.
+        My name is <strong>Peter Bengtsson</strong> and I&apos;m a web
+        developer.
         <br />
         This is by personal blog.
       </p>
@@ -43,7 +45,7 @@ export function About() {
           </div>
           <div className="rest">
             <h3>
-              That's Groce!
+              That&apos;s Groce!
               <a
                 href="#thatsgroce"
                 title="Link to this section"
@@ -62,13 +64,13 @@ export function About() {
               <a href="https://github.com/preactjs/preact-cli">Preact</a> on the{" "}
               <a href="https://firebase.google.com/">Firebase platform</a>.
               <br />
-              It's built specifically as <b>mobile web app</b> with service
+              It&apos;s built specifically as <b>mobile web app</b> with service
               workers and server-side rendered pages for{" "}
               <a href="https://twitter.com/peterbe/status/1300881801611706370">
                 optimal web performance
               </a>
               .<br />
-              <a href="/plog/thats-groce-app">Blog post about it here</a>.
+              <Link href="/plog/thats-groce-app">Blog post about it here</Link>.
             </p>
           </div>
         </div>
@@ -110,9 +112,9 @@ export function About() {
               into the latency vs. overheads balance.
               <br />
               This is{" "}
-              <a href="/plog/websockets-vs-xhr-2019">
+              <Link href="/plog/websockets-vs-xhr-2019">
                 the full blog post about the experiment
-              </a>
+              </Link>
               . The code{" "}
               <a href="https://github.com/peterbe/sockshootout2019">
                 github.com/peterbe/sockshootout2019
@@ -220,7 +222,7 @@ export function About() {
           </div>
           <div className="rest">
             <h3>
-              How's My WiFi
+              How&apos;s My WiFi
               <a
                 href="#howsmywifi"
                 title="Link to this section"
@@ -355,7 +357,7 @@ export function About() {
           </div>
           <div className="rest">
             <h3>
-              Heads'upper
+              Heads&apos;upper
               <a
                 href="#headsupper"
                 title="Link to this section"
@@ -371,7 +373,8 @@ export function About() {
               A GitHub Webhook receiver app that sends an email to certain
               people when a git commit comes in that contains the trigger word{" "}
               <code>headsup:</code>. More{" "}
-              <a href="/plog/headsupper.io">extended blog post</a> here and{" "}
+              <Link href="/plog/headsupper.io">extended blog post</Link> here
+              and{" "}
               <a href="https://github.com/peterbe/headsupper">code on GitHub</a>
               .<br />
               The back end is written in <b>Django</b>, the front-end written in{" "}
@@ -579,8 +582,10 @@ export function About() {
               count each unique domain. Or use this tool. <br />
               What this proves is that DNS is still incredibly important for web
               performance.{" "}
-              <a href="/plog/number-of-domains">Blogged about it here</a> and
-              the relevant{" "}
+              <Link href="/plog/number-of-domains">
+                Blogged about it here
+              </Link>{" "}
+              and the relevant{" "}
               <a href="https://github.com/peterbe/django-peterbecom/blob/master/peterbecom/nodomains/count.js">
                 <b>Node</b> code is here
               </a>
@@ -620,11 +625,11 @@ export function About() {
             <p>
               This is a mashup using the{" "}
               <a href="https://developer.github.com/v3/">GitHub API</a> to make
-              a dashboard over all open Pull Requests on a GitHub project. It's
-              a Flask backend for doing proxy caching of requests and an
-              AngularJS front end. I{" "}
-              <a href="/plog/github-pr-triage">blogged about it</a> in more
-              detail and the code is{" "}
+              a dashboard over all open Pull Requests on a GitHub project.
+              It&apos;s a Flask backend for doing proxy caching of requests and
+              an AngularJS front end. I{" "}
+              <Link href="/plog/github-pr-triage">blogged about it</Link> in
+              more detail and the code is{" "}
               <a href="https://github.com/peterbe/github-pr-triage">
                 available on GitHub
               </a>
@@ -664,8 +669,8 @@ export function About() {
               <a href="https://bugzilla.mozilla.org">Bugzilla</a> native REST
               API. The app is entirely client side and written in AngularJS and
               is entirely served from a CDN. I have{" "}
-              <a href="/plog/buggy">blogged about it</a> in more detail on my
-              blog and the code is{" "}
+              <Link href="/plog/buggy">blogged about it</Link> in more detail on
+              my blog and the code is{" "}
               <a href="https://github.com/peterbe/buggy">available on GitHub</a>
               .
             </p>
@@ -756,7 +761,7 @@ export function About() {
             <p>
               All the code is open source and{" "}
               <a href="https://github.com/peterbe/tiler">available here</a> and
-              it's a Tornado app that relies very heavily on{" "}
+              It&apos;s a Tornado app that relies very heavily on{" "}
               <a href="http://python-rq.org/">RQ</a>.
             </p>
           </div>
@@ -830,16 +835,19 @@ export function About() {
               <a href="http://uslicensespotter.com/">uslicensespotter.com</a>
             </h4>
             <p>
-              It's for spotting out-of-state license plates in the US and tick
-              them off on your smartphone.
+              It&apos;s for spotting out-of-state license plates in the US and
+              tick them off on your smartphone.
               <br />
               This is a work in progress project. I have blogged out it{" "}
-              <a href="/plog/us-license-plate-spotter-part-1">
+              <Link href="/plog/us-license-plate-spotter-part-1">
                 first here
-              </a> and{" "}
-              <a href="/plog/us-license-plate-spotter-part-2">then here</a>{" "}
-              about the update. It's an ongoing project to try to build real
-              mobile native apps from HTML and Javascript. <br />
+              </Link>{" "}
+              and{" "}
+              <Link href="/plog/us-license-plate-spotter-part-2">
+                then here
+              </Link>{" "}
+              about the update. It&apos;s an ongoing project to try to build
+              real mobile native apps from HTML and Javascript. <br />
               This is also my first ever project that actually uses Facebook's
               API to facilitate wall posts from the app.
               <br />
@@ -847,8 +855,8 @@ export function About() {
               <a href="https://github.com/peterbe/uslicenseplates/">
                 source code is here
               </a>{" "}
-              and it's a bit of a mess because it's after all just an ongoing
-              experiment.
+              and It&apos;s a bit of a mess because It&apos;s after all just an
+              ongoing experiment.
             </p>
           </div>
         </div>
@@ -883,10 +891,13 @@ export function About() {
               It started as a Bookmarklet so that when you're visiting
               twitter.com it appends, for each user you follow, whether they
               also follow you. Later, the most useful feature was the{" "}
-              <a href="/plog/too-cool-for-me-everyone">/everybody</a> page where
-              everyone you follow is split half between those who follow you and
-              those that are too cool for you. <br />
-              <a href="/plog/too-cool-for-me">blogged about it here</a> and{" "}
+              <Link href="/plog/too-cool-for-me-everyone">/everybody</Link> page
+              where everyone you follow is split half between those who follow
+              you and those that are too cool for you. <br />
+              <Link href="/plog/too-cool-for-me">
+                blogged about it here
+              </Link>{" "}
+              and{" "}
               <a href="https://github.com/peterbe/toocool">
                 source code is here
               </a>
@@ -897,7 +908,7 @@ export function About() {
 
         <div className={styles.project} id="peterbecom">
           <div className={styles.screenshot}>
-            <a href="/">
+            <Link href="/">
               <Image
                 src="/about/peterbecom-screenshot.png"
                 alt="Peterbe.com screenshot"
@@ -905,7 +916,7 @@ export function About() {
                 height={93}
                 loading="lazy"
               />
-            </a>
+            </Link>
           </div>
           <div className="rest">
             <h3>
@@ -919,16 +930,18 @@ export function About() {
               </a>
             </h3>
             <h4>
-              <a href="/">peterbe.com</a>
+              <Link href="/">peterbe.com</Link>
             </h4>
             <p>
               In 2012 I re-wrote this site from scratch. Being very fast was
               important to me and I've blogged about how I made the{" "}
-              <a href="/plog/secs-sell-frickin-fast-server-side">server-side</a>{" "}
+              <Link href="/plog/secs-sell-frickin-fast-server-side">
+                server-side
+              </Link>{" "}
               and
-              <a href="/plog/secs-sell-frickin-fast-client-side">
+              <Link href="/plog/secs-sell-frickin-fast-client-side">
                 client-side
-              </a>{" "}
+              </Link>{" "}
               fast.
               <br />
               The code to this site is open source and the{" "}
@@ -967,11 +980,12 @@ export function About() {
               <a href="http://donecal.com/">donecal.com</a>
             </h4>
             <p>
-              This is a full HTML5 calendar. It's fast and simple and has a
+              This is a full HTML5 calendar. It&apos;s fast and simple and has a
               practical <a href="http://donecal.com/help/API">API</a>.<br />
-              I've <a href="/plog/donecal.com">
+              I've <Link href="/plog/donecal.com">
                 blogged about it here
-              </a> and{" "}
+              </Link>{" "}
+              and{" "}
               <a href="https://github.com/peterbe/worklog">
                 source code is here
               </a>
@@ -1021,9 +1035,10 @@ export function About() {
               The hosting of this project is actually done by a fellow Tornado
               contributor called <a href="http://feilong.me/">Felinx Lee</a>.
               <br />
-              <a href="/plog/tornadogists.org">
+              <Link href="/plog/tornadogists.org">
                 Blogged about it here
-              </a> and{" "}
+              </Link>{" "}
+              and{" "}
               <a href="https://github.com/peterbe/tornado_gists">
                 source code is here
               </a>
@@ -1067,15 +1082,17 @@ export function About() {
               Facebook, Twitter, Google, Persona all take care of the
               authentication.
               <br />I first{" "}
-              <a href="/plog/launching-kwissle">blogged about it here</a> when
-              it was launched and here are{" "}
-              <a href="/plog/slides-about-kwissle-lpdojo/slides.html">
+              <Link href="/plog/launching-kwissle">
+                blogged about it here
+              </Link>{" "}
+              when it was launched and here are{" "}
+              <Link href="/plog/slides-about-kwissle-lpdojo/slides.html">
                 the slides
-              </a>{" "}
+              </Link>{" "}
               which I later{" "}
-              <a href="/plog/slides-about-kwissle-lpdojo">
+              <Link href="/plog/slides-about-kwissle-lpdojo">
                 presented at PyCon UK 2011
-              </a>
+              </Link>
               .
             </p>
           </div>
@@ -1120,9 +1137,9 @@ export function About() {
                 Source code available here
               </a>{" "}
               and I've{" "}
-              <a href="/search?q=keywords%3Acrosstips">
+              <Link href="/search?q=keywords%3Acrosstips">
                 blogged about various aspects of it here
-              </a>
+              </Link>
               .
             </p>
           </div>
@@ -1166,7 +1183,7 @@ export function About() {
               road is congested. This was my first project using client-side
               Geolocation.
               <br />
-              <a href="/plog/tflcameras">Blogged about it here</a> and the{" "}
+              <Link href="/plog/tflcameras">Blogged about it here</Link> and the{" "}
               <a href="https://github.com/peterbe/tflcameras">
                 source code is here
               </a>
@@ -1204,12 +1221,12 @@ export function About() {
               </a>
             </h4>
             <p>
-              This was my first pure mobile web site. It's for my{" "}
+              This was my first pure mobile web site. It&apos;s for my{" "}
               <a href="http://www.fwckungfu.com/">
                 Fujian White Crane Kung Fu Club
               </a>{" "}
               that I trained with when I lived in London. This site uses a
-              remote database connection and is heavily cached. It's built
+              remote database connection and is heavily cached. It&apos;s built
               taylor made for mobile as it goes straight to the basic details
               you need.
               <br />
@@ -1222,18 +1239,19 @@ export function About() {
                 code is here
               </a>{" "}
               and I blogged about when this was my first site to get{" "}
-              <a href="/plog/first-yslow-grade-a">100 points on YSlow!</a>.
+              <Link href="/plog/first-yslow-grade-a">100 points on YSlow!</Link>
+              .
             </p>
           </div>
         </div>
 
         <p style={{ marginTop: 30 }}>
           <strong>Note:</strong>
-          This list does not include any of the fun projects I'm workig on at
-          work. <strong>These are all side-projects</strong>.<br />
-          Also, most of these projects I'm{" "}
-          <strong>not actively working on</strong> but they're all projects that
-          are <strong>alive and hosted somewhere</strong>.
+          This list does not include any of the fun projects I&apos;m workig on
+          at work. <strong>These are all side-projects</strong>.<br />
+          Also, most of these projects I&apos;m{" "}
+          <strong>not actively working on</strong> but they&apo;re all projects
+          that are <strong>alive and hosted somewhere</strong>.
         </p>
       </div>
     </Content>
