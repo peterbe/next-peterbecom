@@ -1,25 +1,31 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Footer } from "./footer";
+import { MainMenu } from "./mainmenu";
 
 interface Props {
   children: ReactNode;
-  pageTitle: string;
+  pageTitle: string | ReactNode;
   extraHead?: ReactNode;
   footer?: ReactNode;
+  hideMainMenu?: boolean;
 }
-export function Content({ pageTitle, children, footer, extraHead }: Props) {
+export function Content({
+  pageTitle,
+  children,
+  footer,
+  extraHead,
+  hideMainMenu,
+}: Props) {
   return (
     <>
       <div className="ui main container">
         <h1 className="ui header">{pageTitle}</h1>
-        {extraHead ? extraHead : <p>A blog and website by Peter Bengtsson</p>}
+        {extraHead && extraHead}
       </div>
-      <div className="ui container content">
-        {children}
-        {footer ? footer : <Footer />}
-      </div>
+      {!hideMainMenu && <MainMenu />}
+      <div className="ui container content">{children}</div>
+      {footer ? footer : <Footer />}
     </>
   );
 }
