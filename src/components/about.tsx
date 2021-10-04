@@ -410,10 +410,11 @@ export function About() {
             </h4>
             <p>
               You enter the GitHub URL to a project and for each deployment
-              target (e.g. "dev", "stage", "production") you enter a URL that
-              points to a file that contains the git sha that is deployed there.
-              Then you get an overview of what git commits been and not been
-              deployed across those deployments.{" "}
+              target (e.g. &quot;dev&quot;, &quot;stage&quot;,
+              &quot;production&quot;) you enter a URL that points to a file that
+              contains the git sha that is deployed there. Then you get an
+              overview of what git commits been and not been deployed across
+              those deployments.{" "}
               <a href="https://whatsdeployed.io/?owner=mozilla&repo=socorro&name[]=Stage&amp;url[]=https://crash-stats.allizom.org/status/revision/&amp;name[]=Prod&amp;url[]=https://crash-stats.mozilla.com/status/revision/">
                 For
               </a>{" "}
@@ -705,7 +706,7 @@ export function About() {
             </h4>
             <p>
               Makes it possible for you to &quot;crowdfund&quot; your presents.
-              Integrates with Amazon.com&trade;'s{" "}
+              Integrates with Amazon.com&trade;&apos;s{" "}
               <a
                 href="https://www.amazon.com/gp/registry/wishlist/"
                 rel="nofollow"
@@ -761,7 +762,7 @@ export function About() {
             <p>
               All the code is open source and{" "}
               <a href="https://github.com/peterbe/tiler">available here</a> and
-              It&apos;s a Tornado app that relies very heavily on{" "}
+              it&apos;s a Tornado app that relies very heavily on{" "}
               <a href="http://python-rq.org/">RQ</a>.
             </p>
           </div>
@@ -796,7 +797,7 @@ export function About() {
               </a>
             </h4>
             <p>
-              If you haven't already done so, check out my new game:{" "}
+              If you haven&apos;t already done so, check out my new game:{" "}
               <a href="http://aroundtheworldgame.com/" rel="nofollow">
                 Around The World
               </a>{" "}
@@ -848,14 +849,14 @@ export function About() {
               </Link>{" "}
               about the update. It&apos;s an ongoing project to try to build
               real mobile native apps from HTML and Javascript. <br />
-              This is also my first ever project that actually uses Facebook's
-              API to facilitate wall posts from the app.
+              This is also my first ever project that actually uses
+              Facebook&apos;s API to facilitate wall posts from the app.
               <br />
               The{" "}
               <a href="https://github.com/peterbe/uslicenseplates/">
                 source code is here
               </a>{" "}
-              and It&apos;s a bit of a mess because It&apos;s after all just an
+              and it&apos;s a bit of a mess because it&apos;s after all just an
               ongoing experiment.
             </p>
           </div>
@@ -888,7 +889,7 @@ export function About() {
               <a href="http://toocoolfor.me">toocoolfor.me</a>
             </h4>
             <p>
-              It started as a Bookmarklet so that when you're visiting
+              It started as a Bookmarklet so that when you&apos;re visiting
               twitter.com it appends, for each user you follow, whether they
               also follow you. Later, the most useful feature was the{" "}
               <Link href="/plog/too-cool-for-me-everyone">/everybody</Link> page
@@ -908,7 +909,7 @@ export function About() {
 
         <div className={styles.project} id="peterbecom">
           <div className={styles.screenshot}>
-            <Link href="/">
+            <Link href="/" passHref>
               <Image
                 src="/about/peterbecom-screenshot.png"
                 alt="Peterbe.com screenshot"
@@ -934,7 +935,7 @@ export function About() {
             </h4>
             <p>
               In 2012 I re-wrote this site from scratch. Being very fast was
-              important to me and I've blogged about how I made the{" "}
+              important to me and I&apos;ve blogged about how I made the{" "}
               <Link href="/plog/secs-sell-frickin-fast-server-side">
                 server-side
               </Link>{" "}
@@ -982,10 +983,10 @@ export function About() {
             <p>
               This is a full HTML5 calendar. It&apos;s fast and simple and has a
               practical <a href="http://donecal.com/help/API">API</a>.<br />
-              I've <Link href="/plog/donecal.com">
+              I&apos;ve{" "}
+              <Link href="/plog/donecal.com">
                 blogged about it here
-              </Link>{" "}
-              and{" "}
+              </Link> and{" "}
               <a href="https://github.com/peterbe/worklog">
                 source code is here
               </a>
@@ -1078,7 +1079,7 @@ export function About() {
             <p>
               My first real-time web game. The game is that you get paired up
               with another random player and you have to answer quiz questions
-              as fast and accurate as possible. My first web app that let's
+              as fast and accurate as possible. My first web app that let&apos;s
               Facebook, Twitter, Google, Persona all take care of the
               authentication.
               <br />I first{" "}
@@ -1136,7 +1137,7 @@ export function About() {
               <a href="https://github.com/peterbe/kl">
                 Source code available here
               </a>{" "}
-              and I've{" "}
+              and I&apos;ve{" "}
               <Link href="/search?q=keywords%3Acrosstips">
                 blogged about various aspects of it here
               </Link>

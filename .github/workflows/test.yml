@@ -30,5 +30,8 @@ jobs:
         if: steps.cached-node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+
       - name: Build (and lint)
         run: npm run build
