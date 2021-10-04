@@ -85,9 +85,8 @@ function CommentsPagination({
     <>
       {previousPage && (
         <>
-          Go to{" "}
           <Link href={makePaginationURL(oid, previousPage)}>
-            <a>← Page {page - 1}</a>
+            <a>← Go to page {page - 1}</a>
           </Link>
           &nbsp;
         </>
@@ -95,9 +94,8 @@ function CommentsPagination({
       <span style={{ color: "#999" }}>Page {page}</span> &nbsp;
       {nextPage && (
         <>
-          Go to{" "}
           <Link href={makePaginationURL(oid, nextPage)}>
-            <a>Page {nextPage} →</a>
+            <a>Go to page {nextPage} →</a>
           </Link>
           &nbsp;
         </>

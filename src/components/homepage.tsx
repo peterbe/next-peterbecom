@@ -20,10 +20,12 @@ interface Props {
 }
 export function Homepage({ posts, categories, nextPage, previousPage }: Props) {
   return (
-    <Content pageTitle="Peterbe.com">
+    <Content
+      pageTitle="Peterbe.com"
+      extraHead={<p>A blog and website by Peter Bengtsson</p>}
+    >
       <Head>
         <title>Peterbe.com - Stuff in Peter&apos;s head</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {categories.length > 0 && <CategoryFiltering categories={categories} />}
@@ -66,7 +68,7 @@ function CategoryFiltering({ categories }: { categories: string[] }) {
             {i === categories.length - 1 ? "." : ", "}
           </Fragment>
         );
-      })}
+      })}{" "}
       <Link href="/">Clear filter</Link>
     </div>
   );

@@ -1,3 +1,10 @@
+interface RelatedPost {
+  oid: string;
+  title: string;
+  pub_date: string;
+  categories?: string[];
+}
+
 export interface Post {
   oid: string;
   title: string;
@@ -10,6 +17,10 @@ export interface Post {
   body: string;
   hide_comments: boolean;
   disallow_comments: boolean;
+  previous_post: RelatedPost | null;
+  next_post: RelatedPost | null;
+  related_by_category: RelatedPost[];
+  related_by_keyword: RelatedPost[];
 }
 
 export interface Comment {

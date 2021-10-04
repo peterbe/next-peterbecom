@@ -9,13 +9,14 @@ export function Footer() {
     <div className="ui inverted vertical footer segment">
       <div className="ui center aligned container">
         <p>
-          &copy; peterbe.com 2003 - {THIS_YEAR} &sdot; Hosted on{" "}
+          &copy; peterbe.com 2003 - {THIS_YEAR}
+          {/* &sdot; Hosted on{" "}
           <a
             href="https://www.digitalocean.com/?refcode=9c9126b69f33"
             title="Yes, following this link and signing up will give me a small referal bonus :)"
           >
             Digital Ocean
-          </a>
+          </a> */}
         </p>
 
         <div className="ui horizontal inverted small divided link list">

@@ -1,8 +1,10 @@
 import Head from "next/head";
+import Link from "next/link";
 import { Fragment } from "react";
 import styles from "../../styles/Post.module.css";
 
-import { Footer, LyricsFooter } from "../footer";
+import { LyricsFooter } from "../footer";
+import { Content } from "../content";
 import { CarbonAd } from "../carbonad";
 import { CommentsSection } from "./comments";
 import { formatDateBasic } from "../utils";
@@ -35,7 +37,52 @@ export function Blogpost({
     pageTitle += " - Peterbe.com";
   }
   return (
-    <div>
+    <Content
+      pageTitle={
+        <>
+          {post.title}{" "}
+          {page > 1 && <span className="sub header">(Page {page})</span>}
+        </>
+      }
+      hideMainMenu={isLyricsPage}
+      extraHead={
+        <>
+          {!isLyricsPage && (
+            <p>
+              {formatDateBasic(post.pub_date)} &nbsp;{" "}
+              <span className={styles.comment_count}>
+                {comments.count.toLocaleString()} comment
+                {comments.count !== 0 && "s"}
+              </span>{" "}
+              &nbsp;{" "}
+              {post.categories.map((name, i) => {
+                return (
+                  <Fragment key={name}>
+                    <Link href={categoryURL(name)}>
+                      <a
+                        rel="nofollow"
+                        title={`Filter by the '${name}' category'`}
+                      >
+                        {name}
+                      </a>
+                    </Link>
+                    {i !== post.categories.length - 1 && ", "}
+                  </Fragment>
+                );
+              })}
+            </p>
+          )}
+
+          {isLyricsPage && <SongLyricsSubheader page={page} />}
+
+          {!isLyricsPage && post.url && (
+            <h4>
+              <a href={post.url}>{post.url}</a>
+            </h4>
+          )}
+        </>
+      }
+    >
       <Head>
         <title>{post.title} - Peterbe.com</title>
 
@@ -74,92 +121,52 @@ export function Blogpost({
           </>
         )}
       </Head>
-      <div className="ui main container">
-        <h1 className="ui header">
-          {pageTitle}{" "}
-          {page > 1 && <span className="sub header">(Page {page})</span>}
-        </h1>
 
-        {!isLyricsPage && (
-          <p>
-            {formatDateBasic(post.pub_date)} &nbsp;{" "}
-            <span className={styles.comment_count}>
-              {comments.count.toLocaleString()} comment
-              {comments.count !== 0 && "s"}
-            </span>{" "}
-            &nbsp;{" "}
-            {post.categories.map((name, i) => {
-              return (
-                <Fragment key={name}>
-                  <a
-                    href={categoryURL(name)}
-                    rel="nofollow"
-                    title={`Filter by the '${name}' category'`}
-                  >
-                    {name}
-                  </a>
-                  {i !== post.categories.length - 1 && ", "}
-                </Fragment>
-              );
-            })}
-          </p>
-        )}
+      {!isLyricsPage && isOld(post.pub_date) && (
+        <OldPostWarning date={post.pub_date} />
+      )}
+      {isNotPublished(post.pub_date) && (
+        <NotPublishedWarning date={post.pub_date} />
+      )}
 
-        {isLyricsPage && <SongLyricsSubheader page={page} />}
-        {!isLyricsPage && post.url && (
-          <h4>
-            <a href={post.url}>{post.url}</a>
-          </h4>
-        )}
-      </div>
+      {/* When it's the lyrics page, show the Carbon Ad AFTER the post text */}
+      {!isLyricsPage && <CarbonAd />}
 
-      <div className="ui container content">
-        {!isLyricsPage && isOld(post.pub_date) && (
-          <OldPostWarning date={post.pub_date} />
-        )}
-        {isNotPublished(post.pub_date) && (
-          <NotPublishedWarning date={post.pub_date} />
-        )}
+      <div dangerouslySetInnerHTML={{ __html: post.body }} />
 
-        {/* When it's the lyrics page, show the Carbon Ad AFTER the post text */}
-        {!isLyricsPage && <CarbonAd />}
+      {isLyricsPage && <CarbonAd />}
 
-        <div dangerouslySetInnerHTML={{ __html: post.body }} />
+      {!isLyricsPage && (
+        <p className={styles.twitter_button}>
+          <a
+            href="https://twitter.com/peterbe"
+            className="ui tiny twitter button"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Follow <b>@peterbe</b> on Twitter
+          </a>
+        </p>
+      )}
 
-        {isLyricsPage && <CarbonAd />}
+      {post.hide_comments && post.disallow_comments ? (
+        <p>
+          <em>Comments closed for this page</em>
+        </p>
+      ) : (
+        <CommentsSection
+          disallowComments={post.disallow_comments}
+          hideComments={post.hide_comments}
+          comments={comments}
+          page={page}
+          post={post}
+        />
+      )}
 
-        {!isLyricsPage && (
-          <p>
-            <a
-              href="https://twitter.com/peterbe"
-              className="ui tiny twitter button"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Follow <b>@peterbe</b> on Twitter
-            </a>
-          </p>
-        )}
+      {isLyricsPage && <LyricsFooter />}
 
-        {post.hide_comments && post.disallow_comments ? (
-          <p>
-            <em>Comments closed for this page</em>
-          </p>
-        ) : (
-          <CommentsSection
-            disallowComments={post.disallow_comments}
-            hideComments={post.hide_comments}
-            comments={comments}
-            page={page}
-            post={post}
-          />
-        )}
-
-        {isLyricsPage && <LyricsFooter />}
-      </div>
-
-      {!isLyricsPage && <Footer />}
-    </div>
+      {!isLyricsPage && <RelatedPosts post={post} />}
+    </Content>
   );
 }
 
@@ -213,7 +220,7 @@ function OldPostWarning({ date }: { date: string }) {
     <div className={className} style={{ marginBottom: 40 }}>
       <div className="header">Mind that age!</div>
       <p>
-        This blog post is <b>{years.toFixed(0)} years old!</b> Most likely, its
+        This blog post is <b>{Math.floor(years)} years old!</b> Most likely, its
         content is outdated. Especially if it&apos;s technical.
       </p>
     </div>
@@ -246,9 +253,94 @@ function categoryURL(name: string) {
   return `/oc-${name.replace(" ", "+")}`;
 }
 
+function postURL(oid: string) {
+  return `/plog/${oid}`;
+}
+
 function absoluteURL(uri: string) {
   if (!uri.includes("://")) {
     return `https://www.peterbe.com${uri}`;
   }
   return uri;
+}
+
+function RelatedPosts({ post }: { post: Post }) {
+  const previousPost = post.previous_post;
+  const nextPost = post.next_post;
+  const relatedByCategory = post.related_by_category || [];
+  const relatedByKeyword = post.related_by_keyword || [];
+
+  return (
+    <>
+      <h2 className="ui dividing header">Related posts</h2>
+
+      <dl className="related-posts">
+        {previousPost && (
+          <>
+            <dt>Previous:</dt>
+            <dd>
+              <Link href={postURL(previousPost.oid)}>{previousPost.title}</Link>{" "}
+              <small>{formatDateBasic(previousPost.pub_date)}</small>
+            </dd>
+          </>
+        )}
+
+        {nextPost && (
+          <>
+            <dt>Next:</dt>
+            <dd>
+              <Link href={postURL(nextPost.oid)}>{nextPost.title}</Link>{" "}
+              <small>{formatDateBasic(nextPost.pub_date)}</small>
+            </dd>
+          </>
+        )}
+      </dl>
+
+      {relatedByCategory.length > 0 && (
+        <>
+          <dl className="related-posts">
+            <dt>Related by category:</dt>
+            {relatedByCategory.map((related) => (
+              <dd key={related.oid}>
+                <Link href={postURL(related.oid)}>{related.title}</Link>{" "}
+                <small>{formatDateBasic(related.pub_date)}</small>{" "}
+                <SubCategories categories={related.categories || []} />
+              </dd>
+            ))}
+          </dl>
+        </>
+      )}
+
+      {relatedByKeyword.length > 0 && (
+        <>
+          <dl className="related-posts">
+            <dt>Related by keyword:</dt>
+            {relatedByKeyword.map((related) => (
+              <dd key={related.oid}>
+                <Link href={postURL(related.oid)}>{related.title}</Link>{" "}
+                <small>{formatDateBasic(related.pub_date)}</small>
+              </dd>
+            ))}
+          </dl>
+        </>
+      )}
+    </>
+  );
+}
+
+function SubCategories({ categories }: { categories: string[] }) {
+  return (
+    <>
+      {categories.map((category, i) => (
+        <Fragment key={category}>
+          <Link href={categoryURL(category)}>
+            <a title={`Filter by the '${category}' category`}>
+              <small>{category}</small>
+            </a>
+          </Link>
+          {i < categories.length - 1 && <small>, </small>}
+        </Fragment>
+      ))}
+    </>
+  );
 }
