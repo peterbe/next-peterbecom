@@ -1,7 +1,6 @@
 import { GetServerSideProps } from "next";
 
 import { Search } from "../components/search";
-// import type { Post, Comments } from "../../../types";
 
 interface Document {
   oid: string;
@@ -21,8 +20,6 @@ interface SearchResult {
 }
 
 interface ServerData {
-  //   post: Post;
-  //   comments: Comments;
   results: SearchResult;
 }
 interface ServerError {
@@ -71,25 +68,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-  //   const oid = context.params!.oid;
-  //   const res = await fetch(`${process.env.API_BASE}/api/v1/plog/${oid}`);
-  //   if (res.status === 404) {
-  //     return {
-  //       notFound: true,
-  //     };
-  //   }
-  //   const data: ServerData = await res.json();
-  //   const { post, comments } = data;
-  const page = 1;
   return {
     props: {
-      //   post,
-      //   comments,
       debug,
       q,
       results,
       error,
-      // page,
     },
   };
 };
