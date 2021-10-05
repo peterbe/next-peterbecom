@@ -77,6 +77,19 @@ export function Search({ q, results, error, debug }: Props) {
         </div>
       )}
 
+      {!q && (
+        <form className="ui form search">
+          <div className="field">
+            <div className="ui fluid action input">
+              <input type="search" name="q" placeholder="Search..." />
+              <button type="submit" className="ui button primary">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+      )}
+
       {results && !error && (
         <SearchMetaDetails
           found={results.count_documents}

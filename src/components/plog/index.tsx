@@ -160,6 +160,7 @@ export function Blogpost({
           comments={comments}
           page={page}
           post={post}
+          // addOwnComment={addOwnComment}
         />
       )}
 

@@ -8,12 +8,16 @@ export function DisplayComment({
   disallowComments,
   notApproved,
   setParent,
+  parent,
+  toggleEditMode,
 }: {
   comment: Comment;
-  children: ReactNode;
+  children?: ReactNode | null;
   disallowComments: boolean;
   notApproved: boolean;
   setParent: (oid: string | null) => void;
+  parent: string | null;
+  toggleEditMode?: () => void;
 }) {
   let className = "comment";
   if (comment.depth) {
@@ -25,19 +29,31 @@ export function DisplayComment({
       <a className="metadata" href={`#${comment.oid}`} rel="nofollow">
         {formatDateBasic(comment.add_date)}
       </a>{" "}
-      {!disallowComments && (
-        <a
-          className="metadata reply"
-          href={`#${comment.oid}`}
-          data-oid={comment.oid}
-          rel="nofollow"
+      {toggleEditMode && (
+        <button
+          className="mini ui button"
           onClick={(event) => {
             event.preventDefault();
-            setParent(comment.oid);
+            toggleEditMode();
           }}
         >
-          Reply
-        </a>
+          Edit comment
+        </button>
+      )}
+      {!disallowComments && !toggleEditMode && (
+        <button
+          className="mini ui button"
+          onClick={(event) => {
+            event.preventDefault();
+            if (parent && parent === comment.oid) {
+              setParent(null);
+            } else {
+              setParent(comment.oid);
+            }
+          }}
+        >
+          {parent && parent === comment.oid ? "Cancel reply" : "Reply"}
+        </button>
       )}{" "}
       {notApproved && (
         <span className="not-approved">

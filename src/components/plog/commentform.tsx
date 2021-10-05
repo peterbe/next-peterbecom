@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Post } from "../../types";
+import type { Post, AddOwnComment } from "../../types";
 import { DisplayComment } from "./comment";
 
 interface PrepareData {
@@ -45,13 +45,23 @@ function getRememberedName(): RememberedName {
 export function CommentForm({
   parent,
   post,
+  addOwnComment,
+  editHash,
+  initialComment = "",
+  initialEmail = "",
+  initialName = "",
 }: {
   parent: string | null;
   post: Post;
+  editHash?: string;
+  addOwnComment: AddOwnComment;
+  initialComment?: string;
+  initialEmail?: string;
+  initialName?: string;
 }) {
-  const [comment, setComment] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [comment, setComment] = useState(initialComment);
+  const [name, setName] = useState(initialName);
+  const [email, setEmail] = useState(initialEmail);
   useEffect(() => {
     const { name, email } = getRememberedName();
     if (name) {
@@ -72,7 +82,6 @@ export function CommentForm({
   const [previewError, setPreviewError] = useState<Error | null>(null);
   const [prepareError, setPrepareError] = useState<Error | null>(null);
   const [submitError, setSubmitError] = useState<Error | null>(null);
-  const [submittedHash, setSubmittedHash] = useState("");
 
   async function prepare() {
     if (csrfmiddlewaretoken && csrfmiddlewaretokenTimestamp) {
@@ -120,6 +129,9 @@ export function CommentForm({
     if (parent) {
       body.append("parent", parent);
     }
+    if (editHash) {
+      body.append("hash", editHash);
+    }
     const response = await fetch("/api/v1/plog/comments/submit", {
       method: "POST",
       body,
@@ -131,9 +143,10 @@ export function CommentForm({
       throw new Error(`${response.status}`);
     } else {
       const data: SubmitData = await response.json();
-      setSubmittedHash(data.hash);
-      setRenderedComment(data.comment);
+      setComment("");
+      setRenderedComment("");
       setSubmitError(null);
+      addOwnComment(data.hash, data.comment, comment, name, email, parent);
     }
   }
 
@@ -171,9 +184,8 @@ export function CommentForm({
           setParent={() => {}}
           notApproved={false}
           disallowComments={true}
-        >
-          hi there
-        </DisplayComment>
+          parent={null}
+        ></DisplayComment>
       )}
 
       {submitError && (
@@ -210,8 +222,6 @@ export function CommentForm({
           try {
             await prepare();
             await submit();
-            console.warn("Work harder!");
-            setComment("");
           } catch (error) {
             if (error instanceof Error) {
               setSubmitError(error);
@@ -223,6 +233,7 @@ export function CommentForm({
           }
         }}
         className="ui form"
+        style={{ marginTop: 40 }}
       >
         <div className="field">
           <label>What do you think?</label>
@@ -266,7 +277,7 @@ export function CommentForm({
           </div>
           <button
             type="button"
-            className="ui button primary preview"
+            className={`ui button ${!renderedComment ? "primary" : ""}`}
             disabled={previewing || !comment.trim()}
             onClick={async (event) => {
               event.preventDefault();
@@ -279,14 +290,14 @@ export function CommentForm({
               }
             }}
           >
-            Preview first
+            {renderedComment ? "Preview again" : "Preview first"}
           </button>
           <button
             type="submit"
-            className="ui button post"
+            className={`ui button post ${renderedComment ? "primary" : ""}`}
             disabled={submitting || !comment.trim()}
           >
-            Post comment
+            {editHash ? "Save changes" : "Post comment"}
           </button>
 
           <p className="note-about-email">

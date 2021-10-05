@@ -41,3 +41,21 @@ export interface Comments {
   previous_page: number | null;
   tree: Comment[];
 }
+
+export interface OwnComment {
+  hash: string;
+  comment: string;
+  renderedComment: string;
+  name: string;
+  email: string;
+  parent: string | null;
+}
+
+export type AddOwnComment = (
+  hash: string,
+  renderedComment: string,
+  comment: string,
+  name: string,
+  email: string,
+  parent: string | null
+) => void;
