@@ -10,6 +10,7 @@ export function DisplayComment({
   setParent,
   parent,
   toggleEditMode,
+  allowReply,
 }: {
   comment: Comment;
   children?: ReactNode | null;
@@ -18,6 +19,7 @@ export function DisplayComment({
   setParent: (oid: string | null) => void;
   parent: string | null;
   toggleEditMode?: () => void;
+  allowReply?: boolean;
 }) {
   let className = "comment";
   if (comment.depth) {
@@ -40,7 +42,7 @@ export function DisplayComment({
           Edit comment
         </button>
       )}
-      {!disallowComments && !toggleEditMode && (
+      {!disallowComments && allowReply && !toggleEditMode && (
         <button
           className="mini ui button"
           onClick={(event) => {

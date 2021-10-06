@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import type { Post, AddOwnComment } from "../../types";
+import { useEffect, useState, useRef } from "react";
+import type { Post, AddOwnCommentProps } from "../../types";
 import { DisplayComment } from "./comment";
 
 interface PrepareData {
@@ -9,6 +9,7 @@ interface PreviewData {
   comment: string;
 }
 interface SubmitData {
+  oid: string;
   hash: string;
   hash_expiration_seconds: number;
   comment: string;
@@ -50,14 +51,18 @@ export function CommentForm({
   initialComment = "",
   initialEmail = "",
   initialName = "",
+  depth,
+  setParent,
 }: {
   parent: string | null;
   post: Post;
   editHash?: string;
-  addOwnComment: AddOwnComment;
+  addOwnComment: (props: AddOwnCommentProps) => void;
   initialComment?: string;
   initialEmail?: string;
   initialName?: string;
+  depth: number;
+  setParent: (oid: string | null) => void;
 }) {
   const [comment, setComment] = useState(initialComment);
   const [name, setName] = useState(initialName);
@@ -71,6 +76,16 @@ export function CommentForm({
       setName(email);
     }
   }, []);
+
+  const textareaRef = useRef<null | HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (parent) {
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+      }
+    }
+  }, [parent]);
 
   const [csrfmiddlewaretoken, setCsrfmiddlewaretoken] = useState("");
   const [csrfmiddlewaretokenTimestamp, setCsrfmiddlewaretokenTimestamp] =
@@ -143,10 +158,16 @@ export function CommentForm({
       throw new Error(`${response.status}`);
     } else {
       const data: SubmitData = await response.json();
-      setComment("");
-      setRenderedComment("");
-      setSubmitError(null);
-      addOwnComment(data.hash, data.comment, comment, name, email, parent);
+      addOwnComment({
+        oid: data.oid,
+        renderedComment: data.comment,
+        hash: data.hash,
+        comment,
+        name,
+        email,
+        depth,
+        parent,
+      });
     }
   }
 
@@ -222,14 +243,19 @@ export function CommentForm({
           try {
             await prepare();
             await submit();
+            setSubmitting(false);
+            if (parent) {
+              setParent(null);
+            } else {
+              setComment("");
+            }
           } catch (error) {
+            setSubmitting(false);
             if (error instanceof Error) {
               setSubmitError(error);
             } else {
               throw error;
             }
-          } finally {
-            setSubmitting(false);
           }
         }}
         className="ui form"
@@ -238,6 +264,7 @@ export function CommentForm({
         <div className="field">
           <label>What do you think?</label>
           <textarea
+            ref={textareaRef}
             name="comment"
             value={comment}
             onChange={(event) => setComment(event.target.value)}

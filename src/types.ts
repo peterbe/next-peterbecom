@@ -43,12 +43,14 @@ export interface Comments {
 }
 
 export interface OwnComment {
+  oid: string;
   hash: string;
   comment: string;
   renderedComment: string;
   name: string;
   email: string;
   parent: string | null;
+  depth: number;
 }
 
 export type AddOwnComment = (
@@ -57,5 +59,17 @@ export type AddOwnComment = (
   comment: string,
   name: string,
   email: string,
-  parent: string | null
+  parent: string | null,
+  depth: number
 ) => void;
+
+export interface AddOwnCommentProps {
+  oid: string;
+  renderedComment: string;
+  hash: string;
+  comment: string;
+  name: string;
+  email: string;
+  depth: number;
+  parent: string | null;
+}
