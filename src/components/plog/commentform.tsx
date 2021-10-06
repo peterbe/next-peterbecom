@@ -53,6 +53,7 @@ export function CommentForm({
   initialName = "",
   depth,
   setParent,
+  onSubmitted,
 }: {
   parent: string | null;
   post: Post;
@@ -63,6 +64,7 @@ export function CommentForm({
   initialName?: string;
   depth: number;
   setParent: (oid: string | null) => void;
+  onSubmitted?: () => void;
 }) {
   const [comment, setComment] = useState(initialComment);
   const [name, setName] = useState(initialName);
@@ -80,12 +82,19 @@ export function CommentForm({
   const textareaRef = useRef<null | HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (parent) {
-      if (textareaRef.current) {
-        textareaRef.current.focus();
+    if (parent || editHash) {
+      const textarea = textareaRef.current;
+      if (textarea) {
+        textarea.focus();
+        if (editHash) {
+          textarea.setSelectionRange(
+            textarea.value.length,
+            textarea.value.length
+          );
+        }
       }
     }
-  }, [parent]);
+  }, [parent, editHash]);
 
   const [csrfmiddlewaretoken, setCsrfmiddlewaretoken] = useState("");
   const [csrfmiddlewaretokenTimestamp, setCsrfmiddlewaretokenTimestamp] =
@@ -136,6 +145,7 @@ export function CommentForm({
   }
 
   async function submit() {
+    await prepare(); // idempotent and fast
     const body = new FormData();
     body.append("oid", post.oid);
     body.append("comment", comment.trim());
@@ -241,13 +251,15 @@ export function CommentForm({
           if (!comment.trim()) return;
           setSubmitting(true);
           try {
-            await prepare();
             await submit();
             setSubmitting(false);
             if (parent) {
               setParent(null);
             } else {
               setComment("");
+            }
+            if (onSubmitted) {
+              onSubmitted();
             }
           } catch (error) {
             setSubmitting(false);
@@ -311,6 +323,7 @@ export function CommentForm({
               if (!comment.trim()) return;
               setPreviewing(true);
               try {
+                await prepare();
                 await preview();
               } finally {
                 setPreviewing(false);
@@ -324,7 +337,13 @@ export function CommentForm({
             className={`ui button post ${renderedComment ? "primary" : ""}`}
             disabled={submitting || !comment.trim()}
           >
-            {editHash ? "Save changes" : "Post comment"}
+            {editHash
+              ? submitting
+                ? "Saving changes"
+                : "Save changes"
+              : submitting
+              ? "Posting comment"
+              : "Post comment"}
           </button>
 
           <p className="note-about-email">

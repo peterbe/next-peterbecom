@@ -57,49 +57,6 @@ export function CommentsSection({
             disallowComments={disallowComments}
             setParent={setParent}
             parent={parent}
-            // ownComments={ownComments}
-            // addOwnComment={(
-            //   hash: string,
-            //   renderedComment: string,
-            //   comment: string,
-            //   name: string,
-            //   email: string,
-            //   parent: string | null,
-            //   depth: number
-            // ) => {
-            //   setOwnComments((prevState) => {
-            //     const newComments: OwnComment[] = [];
-            //     let edited = false;
-            //     for (const ownComment of prevState) {
-            //       if (ownComment.hash === hash) {
-            //         newComments.push({
-            //           hash,
-            //           renderedComment,
-            //           comment,
-            //           name,
-            //           email,
-            //           parent,
-            //           depth,
-            //         });
-            //         edited = true;
-            //       } else {
-            //         newComments.push(ownComment);
-            //       }
-            //     }
-            //     if (!edited) {
-            //       newComments.push({
-            //         hash,
-            //         renderedComment,
-            //         comment,
-            //         name,
-            //         email,
-            //         parent,
-            //         depth,
-            //       });
-            //     }
-            //     return newComments;
-            //   });
-            // }}
           />
         </div>
       )}
@@ -190,19 +147,30 @@ function ShowCommentTree({
     parent,
   }: AddOwnCommentProps) {
     setOwnComments((prevState) => {
-      return [
-        ...prevState,
-        {
-          oid,
-          hash,
-          comment,
-          renderedComment,
-          name,
-          email,
-          depth,
-          parent,
-        },
-      ];
+      const newComments: OwnComment[] = [];
+      const newComment: OwnComment = {
+        oid,
+        hash,
+        renderedComment,
+        comment,
+        name,
+        email,
+        parent,
+        depth,
+      };
+      let edited = false;
+      for (const ownComment of prevState) {
+        if (ownComment.hash === hash) {
+          newComments.push(newComment);
+          edited = true;
+        } else {
+          newComments.push(ownComment);
+        }
+      }
+      if (!edited) {
+        newComments.push(newComment);
+      }
+      return newComments;
     });
   }
 
@@ -247,22 +215,11 @@ function ShowCommentTree({
               .filter((c) => c.parent === comment.oid)
               .map((ownComment) => {
                 return (
-                  <DisplayComment
+                  <DisplayOwnComment
                     key={ownComment.oid}
-                    comment={{
-                      id: 0,
-                      oid: ownComment.oid,
-                      comment: ownComment.renderedComment,
-                      add_date: new Date().toISOString(),
-                      not_approved: true,
-                      depth: ownComment.depth,
-                      name: ownComment.name,
-                    }}
-                    disallowComments={false}
-                    allowReply={false}
-                    notApproved={true}
-                    setParent={() => {}}
-                    parent={null}
+                    ownComment={ownComment}
+                    addOwnComment={addOwnComment}
+                    post={post}
                   />
                 );
               })}
@@ -274,22 +231,11 @@ function ShowCommentTree({
         .filter((c) => c.parent === null)
         .map((ownComment) => {
           return (
-            <DisplayComment
+            <DisplayOwnComment
               key={ownComment.oid}
-              comment={{
-                id: 0,
-                oid: ownComment.oid,
-                comment: ownComment.renderedComment,
-                add_date: new Date().toISOString(),
-                not_approved: true,
-                depth: ownComment.depth,
-                name: ownComment.name,
-              }}
-              disallowComments={false}
-              allowReply={false}
-              notApproved={true}
-              setParent={() => {}}
-              parent={null}
+              ownComment={ownComment}
+              addOwnComment={addOwnComment}
+              post={post}
             />
           );
         })}
@@ -309,67 +255,54 @@ function ShowCommentTree({
   );
 }
 
-// function DisplayOwnComment({
-//   ownComment,
-//   post,
-//   addOwnComment,
-//   setParent,
-// }: {
-//   ownComment: OwnComment;
-//   addOwnComment: (props: AddOwnCommentProps) => void;
-//   post: Post;
-//   setParent: (oid: string | null) => void;
-// }) {
-//   const [editMode, setEditMode] = useState(false);
-
-//   useEffect(() => {
-//     setEditMode(false);
-//   }, [ownComment]);
-
-//   if (editMode) {
-//     return (
-//       <CommentForm
-//         editHash={ownComment.hash}
-//         // addOwnComment={(...args) => {
-//         //   setEditMode(false);
-//         //   addOwnComment(...args);
-//         // }}
-//         addOwnComment={addOwnComment}
-//         post={post}
-//         parent={null}
-//         initialComment={ownComment.comment}
-//         initialName={ownComment.name}
-//         initialEmail={ownComment.email}
-//         depth={ownComment.depth}
-//         setParent={setParent}
-//       />
-//     );
-//   }
-//   const comment: Comment = {
-//     id: 0,
-//     oid: `${Math.random()}`,
-//     comment: ownComment.renderedComment,
-//     add_date: new Date().toISOString(),
-//     not_approved: true,
-//     depth: 0,
-//     name: ownComment.name,
-//     replies: [],
-//   };
-
-//   return (
-//     <DisplayComment
-//       comment={comment}
-//       disallowComments={false}
-//       toggleEditMode={() => {
-//         setEditMode(!editMode);
-//       }}
-//       setParent={() => {}}
-//       notApproved={true}
-//       parent={null}
-//     >
-//       <p>
-//         <i>You can edit your own comment until you refresh this page.</i>
-//       </p>
-//     </DisplayComment>
-//   );
-// }
+function DisplayOwnComment({
+  ownComment,
+  addOwnComment,
+  post,
+}: {
+  ownComment: OwnComment;
+  addOwnComment: (props: AddOwnCommentProps) => void;
+  post: Post;
+}) {
+  const [editMode, setEditMode] = useState(false);
+  if (editMode) {
+    return (
+      <CommentForm
+        editHash={ownComment.hash}
+        parent={ownComment.parent}
+        addOwnComment={addOwnComment}
+        onSubmitted={() => {
+          setEditMode(false);
+        }}
+        initialComment={ownComment.comment}
+        initialName={ownComment.name}
+        initialEmail={ownComment.email}
+        depth={ownComment.depth}
+        setParent={() => {}}
+        post={post}
+      />
+    );
+  }
+  return (
+    <DisplayComment
+      key={ownComment.oid}
+      comment={{
+        id: 0,
+        oid: ownComment.oid,
+        comment: ownComment.renderedComment,
+        add_date: new Date().toISOString(),
+        not_approved: true,
+        depth: ownComment.depth,
+        name: ownComment.name,
+      }}
+      disallowComments={false}
+      allowReply={false}
+      notApproved={true}
+      setParent={() => {}}
+      parent={null}
+      toggleEditMode={() => {
+        setEditMode((prevState) => !prevState);
+      }}
+    ></DisplayComment>
+  );
+}

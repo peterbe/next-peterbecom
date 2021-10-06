@@ -32,6 +32,7 @@ export interface Comment {
   depth: number;
   name: string | null;
   replies?: Comment[];
+  hash?: string;
 }
 
 export interface Comments {
