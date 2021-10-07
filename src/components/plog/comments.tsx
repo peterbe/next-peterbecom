@@ -241,7 +241,7 @@ function ShowCommentTree({
         })}
 
       {!parent && root && !disallowComments && (
-        <>
+        <div id="commentsform">
           <CommentForm
             parent={parent}
             post={post}
@@ -249,7 +249,7 @@ function ShowCommentTree({
             setParent={setParent}
             depth={0}
           />
-        </>
+        </div>
       )}
     </>
   );

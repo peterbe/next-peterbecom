@@ -253,6 +253,7 @@ export function CommentForm({
           try {
             await submit();
             setSubmitting(false);
+            setRenderedComment("");
             if (parent) {
               setParent(null);
             } else {

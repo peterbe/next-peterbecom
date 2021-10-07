@@ -217,8 +217,9 @@ span.not-approved {
 .ui.comments .comment .metadata {
   display: inline-block;
   margin-left: 0.5em;
+  margin-right: 0.5em;
   color: rgba(0, 0, 0, 0.4);
-  font-size: 0.875em;
+  font-size: 1em;
 }
 .ui.comments .comment a.metadata {
   color: rgba(0, 0, 0, 0.4);

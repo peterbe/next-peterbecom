@@ -1,1 +1,21 @@
-/* Currently empty */
+.post {
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #e8e9e9;
+}
+
+.post_metadata_date {
+  margin-right: 10px;
+  font-weight: bold;
+}
+.post_metadata_comments {
+  margin-right: 10px;
+}
+
+.comment_banner {
+  clear: both;
+  margin: 20px;
+  text-align: center;
+  font-size: 0.8em;
+  font-style: italic;
+}

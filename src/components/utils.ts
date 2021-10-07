@@ -18,3 +18,11 @@ export function formatDateBasic(date: string) {
   const monthName = monthNames[actualDate.getMonth()];
   return `${actualDate.getDate()} ${monthName} ${actualDate.getFullYear()}`;
 }
+
+export function postURL(oid: string) {
+  return `/plog/${oid}`;
+}
+
+export function categoryURL(name: string) {
+  return `/oc-${name.replace(" ", "+")}`;
+}

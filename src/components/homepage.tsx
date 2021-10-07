@@ -4,12 +4,18 @@ import Link from "next/link";
 
 import { Content } from "./content";
 
-// import styles from "../styles/Home.module.css";
+import styles from "../styles/Home.module.css";
+import { formatDateBasic, postURL, categoryURL } from "./utils";
+
 interface Post {
   title: string;
   oid: string;
   comments: number;
+  pub_date: string;
   categories: string[];
+  url: string;
+  html: string;
+  disallow_comments: boolean;
 }
 
 interface Props {
@@ -30,17 +36,52 @@ export function Homepage({ posts, categories, nextPage, previousPage }: Props) {
 
       {categories.length > 0 && <CategoryFiltering categories={categories} />}
 
-      <div>
-        {posts.map((post) => {
-          return (
-            <div key={post.oid}>
-              <h3>
-                <Link href={`/plog/${post.oid}`}>{post.title}</Link>
-              </h3>
-            </div>
-          );
-        })}
-      </div>
+      {posts.map((post) => {
+        return (
+          <div key={post.oid} className={styles.post}>
+            <h2>
+              <Link href={postURL(post.oid)}>{post.title}</Link>
+            </h2>
+            <p>
+              <span className={styles.post_metadata_date}>
+                {formatDateBasic(post.pub_date)}
+              </span>
+              <span className={styles.post_metadata_comments}>
+                {post.comments} comment{post.comments !== 1 && "s"}{" "}
+              </span>
+              {post.categories.map((name, i) => (
+                <Fragment key={name}>
+                  <Link href={categoryURL(name)}>
+                    <a
+                      rel="nofollow"
+                      title={`Filter by the '${name}' category`}
+                    >
+                      {name}
+                    </a>
+                  </Link>
+                  {i < post.categories.length - 1 && ", "}
+                </Fragment>
+              ))}
+            </p>
+
+            {post.url && (
+              <h4>
+                <a href={post.url}>{post.url}</a>
+              </h4>
+            )}
+
+            <div dangerouslySetInnerHTML={{ __html: post.html }} />
+
+            {!post.disallow_comments && (
+              <p className={styles.comment_banner}>
+                <Link href={postURL(post.oid) + "#commentsform"}>
+                  Please post a comment if you have thoughts or questions.
+                </Link>
+              </p>
+            )}
+          </div>
+        );
+      })}
 
       <HomepagePagination
         categories={categories}
@@ -72,10 +113,6 @@ function CategoryFiltering({ categories }: { categories: string[] }) {
       <Link href="/">Clear filter</Link>
     </div>
   );
-}
-
-function categoryURL(name: string) {
-  return `/oc-${name.replace(" ", "+")}`;
 }
 
 function HomepagePagination({
