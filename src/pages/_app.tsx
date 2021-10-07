@@ -1,3 +1,4 @@
+import Head from "next/head";
 // import '../styles/globals.css'
 import "../styles/css/semantic/reset.min.css";
 import "../styles/css/semantic/site.min.css";
@@ -32,7 +33,35 @@ import "../styles/css/carbon-ads.css";
 
 import type { AppProps } from "next/app";
 
+import { USE_GOOGLE_ANALYTICS } from "../lib/_constants";
+import { useGA, GAScripts } from "../lib/_ga";
+
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  useGA();
+
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="RSS"
+          href="/rss.xml"
+        />
+
+        {/* <GAScripts/> can't return null because it gets used inside a <Head> */}
+        {USE_GOOGLE_ANALYTICS && <GAScripts />}
+
+        <link rel="icon" href="/images/favicon-48.png" />
+        <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+      </Head>
+      <Component {...pageProps} />
+    </>
+  );
 }
 export default MyApp;

@@ -50,7 +50,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const res = await fetch(url);
     if (res.status === 400) {
       const serverError: ServerError = await res.json();
-      console.log(JSON.stringify(serverError, null, 2));
 
       for (const [key, messages] of Object.entries(serverError)) {
         for (const message of messages) {
@@ -63,7 +62,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       throw new Error(`${res.status} on ${url}`);
     } else {
       const data: ServerData = await res.json();
-      console.log(data);
       results = data.results;
     }
   }

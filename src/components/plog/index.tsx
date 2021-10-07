@@ -52,7 +52,7 @@ export function Blogpost({
               {formatDateBasic(post.pub_date)} &nbsp;{" "}
               <span className={styles.comment_count}>
                 {comments.count.toLocaleString()} comment
-                {comments.count !== 0 && "s"}
+                {comments.count !== 1 && "s"}
               </span>{" "}
               &nbsp;{" "}
               {post.categories.map((name, i) => {
@@ -160,7 +160,6 @@ export function Blogpost({
           comments={comments}
           page={page}
           post={post}
-          // addOwnComment={addOwnComment}
         />
       )}
 

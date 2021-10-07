@@ -909,7 +909,8 @@ export function About() {
 
         <div className={styles.project} id="peterbecom">
           <div className={styles.screenshot}>
-            <Link href="/" passHref>
+            {/* Can't use <Link> here because the child isn't a regular HTML element */}
+            <a href="/">
               <Image
                 src="/about/peterbecom-screenshot.png"
                 alt="Peterbe.com screenshot"
@@ -917,7 +918,7 @@ export function About() {
                 height={93}
                 loading="lazy"
               />
-            </Link>
+            </a>
           </div>
           <div className="rest">
             <h3>
@@ -931,7 +932,9 @@ export function About() {
               </a>
             </h3>
             <h4>
-              <Link href="/">peterbe.com</Link>
+              <Link href="/" passHref>
+                peterbe.com
+              </Link>
             </h4>
             <p>
               In 2012 I re-wrote this site from scratch. Being very fast was
