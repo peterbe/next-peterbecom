@@ -1,11 +1,32 @@
+import Script from "next/script";
+
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+declare global {
+  interface Window {
+    Autocompeter?: Function;
+  }
+}
 export function MainMenu({ pageTitle }: { pageTitle?: string }) {
   const router = useRouter();
   let q = router.query.q || "";
   if (Array.isArray(q)) {
     q = q[0];
+  }
+
+  const [whatStartedLoading, setWhatStartedLoading] = useState<
+    "mouseover" | "focus" | ""
+  >("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const [ready, setReady] = useState(false);
+
+  function getReady() {
+    if (!ready) {
+      setReady(true);
+    }
   }
 
   return (
@@ -52,12 +73,45 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
             role="search"
           >
             <div className="item ui input">
+              {ready && (
+                <Script
+                  // src="https://cdn.jsdelivr.net/autocompeter/1/autocompeter.min.js"
+                  src="/autocompeter/autocompeter.min.js"
+                  onLoad={() => {
+                    if (window.Autocompeter && inputRef.current) {
+                      window.Autocompeter(inputRef.current, {
+                        url: "/api/v1/autocompete",
+                        domain: document.location.host,
+                        ping: false,
+                      });
+                      if (whatStartedLoading === "focus") {
+                        const wrappedInput =
+                          document.querySelector<HTMLInputElement>(
+                            'input[name="q"]'
+                          );
+                        if (wrappedInput) {
+                          wrappedInput.focus();
+                        }
+                      }
+                    }
+                  }}
+                />
+              )}
               <input
                 type="text"
                 name="q"
                 maxLength={90}
                 defaultValue={q}
                 placeholder="Search"
+                ref={inputRef}
+                onFocus={() => {
+                  setWhatStartedLoading("focus");
+                  getReady();
+                }}
+                onMouseOver={() => {
+                  setWhatStartedLoading("mouseover");
+                  getReady();
+                }}
               />
             </div>
           </form>

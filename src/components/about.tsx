@@ -909,8 +909,7 @@ export function About() {
 
         <div className={styles.project} id="peterbecom">
           <div className={styles.screenshot}>
-            {/* Can't use <Link> here because the child isn't a regular HTML element */}
-            <a href="/">
+            <Link href="/" passHref>
               <Image
                 src="/about/peterbecom-screenshot.png"
                 alt="Peterbe.com screenshot"
@@ -918,7 +917,7 @@ export function About() {
                 height={93}
                 loading="lazy"
               />
-            </a>
+            </Link>
           </div>
           <div className="rest">
             <h3>

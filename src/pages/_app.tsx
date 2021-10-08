@@ -29,7 +29,7 @@ import "../styles/css/search.css";
 // import "../styles/css/plog-awspa.css";
 import "../styles/css/carbon-ads.css";
 // import "../styles/css/carbon-campaign.css",
-// "autocompeter/autocompeter.min.css",
+import "../styles/autocompeter.min.css";
 
 import type { AppProps } from "next/app";
 
