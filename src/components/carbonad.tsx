@@ -1,6 +1,6 @@
 export function CarbonAd() {
   // if (process.env.NEXT_PUBLIC_NO_ADS) {
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV === "development") {
     return null;
   }
 
