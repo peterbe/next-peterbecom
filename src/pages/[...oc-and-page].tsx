@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from "next";
 
 import { Homepage } from "../components/homepage";
+import { cacheHeader } from "../lib/cache";
 
 interface Post {
   title: string;
@@ -14,16 +15,23 @@ interface ServerData {
   next_page: number | null;
   previous_page: number | null;
 }
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
+  cacheHeader(res);
+
   const categories: string[] = [];
-  const params = context.params!["oc-and-page"];
+  const pathParams = params!["oc-and-page"];
 
   const sp = new URLSearchParams();
-  const paramPage = (params as string[]).find((param) => /p\d+/.test(param));
+  const paramPage = (pathParams as string[]).find((param) =>
+    /p\d+/.test(param)
+  );
   if (paramPage) {
     sp.set("page", paramPage.slice(1));
   }
-  const paramCategories = (params as string[])
+  const paramCategories = (pathParams as string[])
     .filter((param) => /^oc-/.test(param))
     .map((param) => param.slice(3).replace(/\+/g, " "));
   categories.push(...paramCategories);
@@ -32,11 +40,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     sp.append("oc", category);
   }
   const url = `${process.env.API_BASE}/api/v1/plog/homepage?${sp.toString()}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`${res.status} on ${url}`);
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`${response.status} on ${url}`);
   }
-  const data: ServerData = await res.json();
+  const data: ServerData = await response.json();
   const { posts } = data;
   const nextPage = data.next_page;
   const previousPage = data.previous_page;

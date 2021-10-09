@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 
+import { cacheHeader } from "../../../lib/cache";
 import { Blogpost } from "../../../components/plog";
 import type { Post, Comments } from "../../../types";
 
@@ -8,8 +9,12 @@ interface ServerData {
   comments: Comments;
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { params } = context;
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
+  cacheHeader(res);
+
   const pageRaw = params!.page as string;
   if (!/^p\d+/.test(pageRaw)) {
     return {
@@ -20,15 +25,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const oid = params!.oid as string;
   const sp = new URLSearchParams();
   sp.set("page", `${page}`);
-  const res = await fetch(
+  const response = await fetch(
     `${process.env.API_BASE}/api/v1/plog/${oid}?${sp.toString()}`
   );
-  if (res.status === 404) {
+  if (response.status === 404) {
     return {
       notFound: true,
     };
   }
-  const data: ServerData = await res.json();
+  const data: ServerData = await response.json();
   const { post, comments } = data;
 
   return {

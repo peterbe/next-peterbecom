@@ -8,15 +8,21 @@ interface ServerData {
   comments: Comments;
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const oid = context.params!.oid;
-  const res = await fetch(`${process.env.API_BASE}/api/v1/plog/${oid}`);
-  if (res.status === 404) {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
+  if (process.env.NODE_ENV !== "development") {
+    res.setHeader("Cache-Control", "public,max-age=86400");
+  }
+  const oid = params!.oid;
+  const response = await fetch(`${process.env.API_BASE}/api/v1/plog/${oid}`);
+  if (response.status === 404) {
     return {
       notFound: true,
     };
   }
-  const data: ServerData = await res.json();
+  const data: ServerData = await response.json();
   const { post, comments } = data;
   const page = 1;
   return {

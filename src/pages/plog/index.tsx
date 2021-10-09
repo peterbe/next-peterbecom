@@ -1,5 +1,6 @@
 import { GetServerSideProps } from "next";
 
+import { cacheHeader } from "../../lib/cache";
 import { Archive } from "../../components/plog/archive";
 
 interface Post {
@@ -16,13 +17,15 @@ interface ServerData {
   groups: Group[];
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  cacheHeader(res);
+
   const url = `${process.env.API_BASE}/api/v1/plog/`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`${res.status} on ${url}`);
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`${response.status} on ${url}`);
   }
-  const data: ServerData = await res.json();
+  const data: ServerData = await response.json();
   const { groups } = data;
 
   return {

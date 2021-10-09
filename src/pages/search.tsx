@@ -1,6 +1,7 @@
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 
 import { Search } from "../components/search";
+import { cacheHeader } from "../lib/cache";
 
 interface Document {
   oid: string;
@@ -28,8 +29,11 @@ interface ServerError {
   }[];
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  let q = context.query.q || "";
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  res,
+}) => {
+  let q = query.q || "";
   if (Array.isArray(q)) {
     q = q[0];
   }
@@ -38,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let results = null;
   let error = null;
 
-  const debug = "debug-search" in context.query;
+  const debug = "debug-search" in query;
 
   if (q) {
     const sp = new URLSearchParams();
@@ -47,9 +51,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       sp.set("debug", debug.toString());
     }
     const url = `${process.env.API_BASE}/api/v1/search/?${sp.toString()}`;
-    const res = await fetch(url);
-    if (res.status === 400) {
-      const serverError: ServerError = await res.json();
+    const response = await fetch(url);
+    if (response.status === 400) {
+      const serverError: ServerError = await response.json();
 
       for (const [key, messages] of Object.entries(serverError)) {
         for (const message of messages) {
@@ -58,12 +62,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
         break;
       }
-    } else if (!res.ok) {
-      throw new Error(`${res.status} on ${url}`);
+    } else if (!response.ok) {
+      throw new Error(`${response.status} on ${url}`);
     } else {
-      const data: ServerData = await res.json();
+      const data: ServerData = await response.json();
       results = data.results;
     }
+  }
+
+  if (!error) {
+    cacheHeader(res);
   }
 
   return {
