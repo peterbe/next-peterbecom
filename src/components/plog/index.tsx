@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import styles from "../../styles/Post.module.css";
 
 import { LyricsFooter } from "../footer";
@@ -36,6 +36,39 @@ export function Blogpost({
     }
     pageTitle += " - Peterbe.com";
   }
+
+  useEffect(() => {
+    let mounted = true;
+    setTimeout(() => {
+      if (!mounted) return;
+
+      const url = document.location.href.split("#")[0] + "/ping";
+      const pathname = document.location.pathname.split("/");
+      const oid = pathname[pathname.length - 1];
+      let pinged: string[] = [];
+      try {
+        pinged.push(
+          ...(window.sessionStorage.getItem("pinged") || "").split("/")
+        );
+      } catch (err) {
+        console.warn("sessionStorage.getItem() not working", err);
+      }
+      fetch(url, {
+        method: "PUT",
+      }).then((r) => {
+        pinged.unshift(oid);
+        try {
+          window.sessionStorage.setItem("pinged", pinged.join("/"));
+        } catch (err) {
+          console.warn("sessionStorage.setItem() not working", err);
+        }
+      });
+    }, 800);
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <Content
       pageTitle={
