@@ -15,9 +15,15 @@ export function About() {
 
       <p>
         My name is <strong>Peter Bengtsson</strong> and I&apos;m a web
-        developer.
-        <br />
-        This is by personal blog.
+        developer. This is by personal blog.
+      </p>
+      <p>
+        I work at <a href="https://github.com">GitHub</a> as a full-stack
+        developer on the{" "}
+        <a href="https://github.com/github/docs-engineering">
+          Docs engineering team
+        </a>
+        .
       </p>
 
       <p>
