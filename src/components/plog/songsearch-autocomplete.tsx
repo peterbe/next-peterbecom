@@ -168,13 +168,13 @@ export default function SongSearchAutocomplete() {
       }
       if ((length < 4 || q.endsWith(" ")) && length < 24) {
         // The impatient one.
-        fetchAutocompleteSuggestionsThrottled(q);
+        fetchAutocompleteSuggestionsThrottled();
       } else if (length > 24) {
         // The patient one.
-        fetchAutocompleteSuggestionsDebouncedLong(q);
+        fetchAutocompleteSuggestionsDebouncedLong();
       } else if (length) {
         // The patient one.
-        fetchAutocompleteSuggestionsDebounced(q);
+        fetchAutocompleteSuggestionsDebounced();
       } else {
         setAutocompleteSuggestions(null);
         // autocompleteSearchSuggestions: null,
