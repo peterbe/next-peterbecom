@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Fragment, useEffect } from "react";
 import styles from "../../styles/Post.module.css";
 
-import { LyricsFooter } from "../footer";
 import { Content } from "../content";
 import { CarbonAd } from "../carbonad";
 import { CommentsSection } from "./comments";
@@ -21,21 +20,13 @@ export function Blogpost({
   comments: Comments;
   page: number;
 }) {
-  const isLyricsPage = post.oid === "blogitem-040601-1";
   let pageTitle = "";
-  if (isLyricsPage) {
-    if (page > 1) {
-      pageTitle = `Find song by lyrics (Page ${page})`;
-    } else {
-      pageTitle = "Find song by lyrics - Looking for songs by the lyrics";
-    }
-  } else {
-    pageTitle = post.title;
-    if (page > 1) {
-      pageTitle += ` (page ${page})`;
-    }
-    pageTitle += " - Peterbe.com";
+
+  pageTitle = post.title;
+  if (page > 1) {
+    pageTitle += ` (page ${page})`;
   }
+  pageTitle += " - Peterbe.com";
 
   useEffect(() => {
     let mounted = true;
@@ -77,38 +68,34 @@ export function Blogpost({
           {page > 1 && <span className="sub header">(Page {page})</span>}
         </>
       }
-      hideMainMenu={isLyricsPage}
+      hideMainMenu={false}
       extraHead={
         <>
-          {!isLyricsPage && (
-            <p>
-              {formatDateBasic(post.pub_date)} &nbsp;{" "}
-              <span className={styles.comment_count}>
-                {comments.count.toLocaleString()} comment
-                {comments.count !== 1 && "s"}
-              </span>{" "}
-              &nbsp;{" "}
-              {post.categories.map((name, i) => {
-                return (
-                  <Fragment key={name}>
-                    <Link href={categoryURL(name)}>
-                      <a
-                        rel="nofollow"
-                        title={`Filter by the '${name}' category'`}
-                      >
-                        {name}
-                      </a>
-                    </Link>
-                    {i !== post.categories.length - 1 && ", "}
-                  </Fragment>
-                );
-              })}
-            </p>
-          )}
+          <p>
+            {formatDateBasic(post.pub_date)} &nbsp;{" "}
+            <span className={styles.comment_count}>
+              {comments.count.toLocaleString()} comment
+              {comments.count !== 1 && "s"}
+            </span>{" "}
+            &nbsp;{" "}
+            {post.categories.map((name, i) => {
+              return (
+                <Fragment key={name}>
+                  <Link href={categoryURL(name)}>
+                    <a
+                      rel="nofollow"
+                      title={`Filter by the '${name}' category'`}
+                    >
+                      {name}
+                    </a>
+                  </Link>
+                  {i !== post.categories.length - 1 && ", "}
+                </Fragment>
+              );
+            })}
+          </p>
 
-          {isLyricsPage && <SongLyricsSubheader page={page} />}
-
-          {!isLyricsPage && post.url && (
+          {post.url && (
             <h4>
               <a href={post.url}>{post.url}</a>
             </h4>
@@ -129,58 +116,48 @@ export function Blogpost({
           <meta property="og:description" content={post.summary} />
         )}
 
-        {!isLyricsPage && (
-          <>
-            <meta name="twitter:creator" content="@peterbe" />
-            <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={pageTitle} />
-            {post.summary && <meta name="description" content={post.summary} />}
-            {post.summary && (
-              <meta name="twitter:description" content={post.summary} />
-            )}
+        <meta name="twitter:creator" content="@peterbe" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        {post.summary && <meta name="description" content={post.summary} />}
+        {post.summary && (
+          <meta name="twitter:description" content={post.summary} />
+        )}
 
-            {post.open_graph_image && (
-              <>
-                <meta
-                  name="twitter:image"
-                  content={absoluteURL(post.open_graph_image)}
-                />
-                <meta
-                  property="og:image"
-                  content={absoluteURL(post.open_graph_image)}
-                />
-              </>
-            )}
+        {post.open_graph_image && (
+          <>
+            <meta
+              name="twitter:image"
+              content={absoluteURL(post.open_graph_image)}
+            />
+            <meta
+              property="og:image"
+              content={absoluteURL(post.open_graph_image)}
+            />
           </>
         )}
       </Head>
 
-      {!isLyricsPage && isOld(post.pub_date) && (
-        <OldPostWarning date={post.pub_date} />
-      )}
+      {isOld(post.pub_date) && <OldPostWarning date={post.pub_date} />}
+
       {isNotPublished(post.pub_date) && (
         <NotPublishedWarning date={post.pub_date} />
       )}
 
-      {/* When it's the lyrics page, show the Carbon Ad AFTER the post text */}
-      {!isLyricsPage && <CarbonAd />}
+      <CarbonAd />
 
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
 
-      {isLyricsPage && <CarbonAd />}
-
-      {!isLyricsPage && (
-        <p className={styles.twitter_button}>
-          <a
-            href="https://twitter.com/peterbe"
-            className="ui tiny twitter button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Follow <b>@peterbe</b> on Twitter
-          </a>
-        </p>
-      )}
+      <p className={styles.twitter_button}>
+        <a
+          href="https://twitter.com/peterbe"
+          className="ui tiny twitter button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Follow <b>@peterbe</b> on Twitter
+        </a>
+      </p>
 
       {post.hide_comments && post.disallow_comments ? (
         <p>
@@ -196,9 +173,7 @@ export function Blogpost({
         />
       )}
 
-      {isLyricsPage && <LyricsFooter />}
-
-      {!isLyricsPage && <RelatedPosts post={post} />}
+      <RelatedPosts post={post} />
     </Content>
   );
 }
@@ -258,28 +233,6 @@ function OldPostWarning({ date }: { date: string }) {
       </p>
     </div>
   );
-}
-
-function SongLyricsSubheader({ page }: { page: number }) {
-  const titles: {
-    [key: number]: string;
-  } = {
-    1: "I'm looking for a song that goes like this lyrics.",
-    2: "I'm looking for this song by these lyrics.",
-    3: "I'm looking for a song I don't know the name of.",
-    4: "Looking for a song you heard, but don't know the name?",
-    5: "Looking for a song you heard, but don't know the name?",
-    6: "Trying to find a song but only know a few words.",
-    7: "Anyone know this song by these lyrics?",
-    8: "I'm looking for this song by these lyrics.",
-    9: "Trying to find the name of the song.",
-    10: "Looking for the name of the song by the lyrics.",
-    11: "Help me find the name of the song by lyrics.",
-    12: "I'm looking for a song that goes...",
-    13: "I don't know the song, but I know some lyrics.",
-  };
-  const title = titles[page] || "Look for a song by its lyrics.";
-  return <h3 className="ui header">{title}</h3>;
 }
 
 function categoryURL(name: string) {

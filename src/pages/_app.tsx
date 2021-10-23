@@ -31,6 +31,11 @@ import "../styles/css/carbon-ads.css";
 // import "../styles/css/carbon-campaign.css",
 import "../styles/autocompeter.min.css";
 
+// NOT IDEAL!
+// Need to move this to a module and use it
+// correct in Lyricspost.tsx
+import "../styles/songsearch-autocomplete.css";
+
 import type { AppProps } from "next/app";
 
 import { USE_GOOGLE_ANALYTICS } from "../lib/_constants";

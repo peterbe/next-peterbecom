@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import styles from "../styles/Footer.module.css";
-
 const THIS_YEAR = new Date().getFullYear();
 
 export function Footer() {
@@ -44,13 +42,5 @@ export function Footer() {
         </p>
       </div>
     </div>
-  );
-}
-
-export function LyricsFooter() {
-  return (
-    <p className={styles.lyrics_footer}>
-      &copy; <Link href="/">peterbe.com</Link> 2003 - {THIS_YEAR}
-    </p>
   );
 }

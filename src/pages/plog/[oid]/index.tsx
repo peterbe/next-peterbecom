@@ -1,6 +1,8 @@
 import { GetServerSideProps } from "next";
 
+import { cacheHeader } from "../../../lib/cache";
 import { Blogpost } from "../../../components/plog";
+import { Lyricspost } from "../../../components/plog/lyricspost";
 import type { Post, Comments } from "../../../types";
 
 interface ServerData {
@@ -12,9 +14,8 @@ export const getServerSideProps: GetServerSideProps = async ({
   params,
   res,
 }) => {
-  if (process.env.NODE_ENV !== "development") {
-    res.setHeader("Cache-Control", "public,max-age=86400");
-  }
+  cacheHeader(res);
+
   const oid = params!.oid;
   const response = await fetch(`${process.env.API_BASE}/api/v1/plog/${oid}`);
   if (response.status === 404) {
@@ -37,6 +38,9 @@ export const getServerSideProps: GetServerSideProps = async ({
 type ViewProps = React.ComponentProps<typeof Blogpost>;
 
 const View = (props: ViewProps) => {
+  if (props.post.oid === "blogitem-040601-1") {
+    return <Lyricspost {...props} />;
+  }
   return <Blogpost {...props} />;
 };
 
