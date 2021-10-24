@@ -21,6 +21,8 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
   >("");
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const [menuState, setMenuState] = useState<"closed" | "opened">("closed");
+
   const [ready, setReady] = useState(false);
 
   function getReady() {
@@ -117,9 +119,30 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
           </form>
         </div>
 
-        <div className="ui right floated dropdown item">
-          Menu <i className="dropdown">▼</i>
-          <div className="menu">
+        <div
+          className={`ui right floated dropdown item ${
+            menuState === "opened" ? "active visible" : ""
+          }`}
+          onClick={(event) => {
+            console.log("HI!");
+
+            if (menuState === "closed") {
+              setMenuState("opened");
+            } else {
+              setMenuState("closed");
+            }
+          }}
+        >
+          Menu{" "}
+          {/* <i className="dropdown">{menuState === "opened" ? "▼" : "▶︎▸"}</i> */}
+          <div
+            className={`menu  ${menuState === "opened" ? "visible" : "hidden"}`}
+            style={
+              menuState === "opened"
+                ? { display: "block" }
+                : { display: "none" }
+            }
+          >
             <Link href="/">
               <a className="item">Home</a>
             </Link>
