@@ -57,5 +57,8 @@ module.exports = (phase, { defaultConfig }) => {
     async rewrites() {
       return REWRITES;
     },
+
+    // https://nextjs.org/docs/advanced-features/source-maps
+    productionBrowserSourceMaps: true,
   };
 };

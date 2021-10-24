@@ -26,9 +26,9 @@ import "../styles/css/semantic/search.css";
 import "../styles/css/highlight.css";
 import "../styles/css/peterbe.css";
 import "../styles/css/search.css";
-// import "../styles/css/plog-awspa.css";
+
+// These are not ideal! They pollute the lyrics page
 import "../styles/css/carbon-ads.css";
-// import "../styles/css/carbon-campaign.css",
 import "../styles/autocompeter.min.css";
 
 // NOT IDEAL!
@@ -36,10 +36,15 @@ import "../styles/autocompeter.min.css";
 // correct in Lyricspost.tsx
 import "../styles/songsearch-autocomplete.css";
 
+// import type { AppProps, NextWebVitalsMetric } from "next/app";
 import type { AppProps } from "next/app";
 
 import { USE_GOOGLE_ANALYTICS } from "../lib/_constants";
 import { useGA, GAScripts } from "../lib/_ga";
+
+// export function reportWebVitals(metric: NextWebVitalsMetric) {
+//   console.log("METRIC:", metric);
+// }
 
 function MyApp({ Component, pageProps }: AppProps) {
   useGA();
