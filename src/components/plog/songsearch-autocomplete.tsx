@@ -31,11 +31,13 @@ interface ServerData {
 const SERVER = "https://songsear.ch";
 const MAX_LENGTH = 150;
 
-interface Window {
-  Image: {
-    prototype: HTMLImageElement;
-    new (): HTMLImageElement;
-  };
+declare global {
+  interface Window {
+    Image: {
+      prototype: HTMLImageElement;
+      new (): HTMLImageElement;
+    };
+  }
 }
 // var a = new window.Image();
 
@@ -189,9 +191,6 @@ export default function SongSearchAutocomplete() {
       setShowAutocompleteSuggestions(true);
     }
   }, [q]);
-  // function onChangeSearch(event) => {
-
-  // }
 
   const fetchAutocompleteSuggestionsDebounced = debounce(
     800,
@@ -211,11 +210,8 @@ export default function SongSearchAutocomplete() {
     const cached = fetchAutocompleteSuggestionsCache.get(q.trim());
     if (cached) {
       return Promise.resolve(cached).then((results) => {
-        // this.setState({
         setAutocompleteSuggestions(results);
         setAutocompleteHighlight(-1);
-        // autocompleteSearchSuggestions: results.search_suggestions,
-        // });
       });
     }
     setWaitingFor(q);
@@ -223,7 +219,7 @@ export default function SongSearchAutocomplete() {
       .then((r) => {
         if (r.status === 200) {
           if (q.startsWith(waitingFor)) {
-            r.json().then((results) => {
+            r.json().then((results: ServerData) => {
               fetchAutocompleteSuggestionsCache.set(q.trim(), results.matches);
               setAutocompleteSuggestions(results.matches);
               setAutocompleteHighlight(-1);
@@ -237,14 +233,12 @@ export default function SongSearchAutocomplete() {
   }
 
   function onKeyDownSearch(key: string): boolean {
-    // let suggestions = this.state.autocompleteSuggestions;
     if (autocompleteSuggestions) {
       let highlight = autocompleteHighlight;
       if (
         (key === "ArrowDown" || key === "Tab") &&
         highlight < autocompleteSuggestions.length
       ) {
-        // event.preventDefault();
         setAutocompleteHighlight(highlight + 1);
         return true;
       } else if (key === "ArrowUp" && highlight > -1) {
