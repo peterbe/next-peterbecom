@@ -10,11 +10,17 @@ body {
   margin-top: 2em;
 }
 .main.menu {
-  margin-top: 4em;
+  margin-top: 1em;
   border-radius: 0;
   border: none;
   box-shadow: none;
   transition: box-shadow 0.5s ease, padding 0.5s ease;
+}
+
+@media (min-width: 767px) {
+  .main.menu {
+    margin-top: 4em;
+  }
 }
 .main.menu .item img.logo {
   margin-right: 1.5em;
