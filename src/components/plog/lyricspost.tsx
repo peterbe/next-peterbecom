@@ -19,12 +19,7 @@ export function Lyricspost({
   comments: Comments;
   page: number;
 }) {
-  let pageTitle = "";
-  if (page > 1) {
-    pageTitle = `Find song by lyrics (Page ${page})`;
-  } else {
-    pageTitle = "Find song by lyrics - Looking for songs by the lyrics";
-  }
+  let pageTitle = "Find song by lyrics";
 
   return (
     <Content
@@ -38,7 +33,10 @@ export function Lyricspost({
       extraHead={<SongLyricsSubheader page={page} />}
     >
       <Head>
-        <title>{pageTitle}</title>
+        <title>
+          {pageTitle}
+          {page > 1 && ` (Page ${page})`}
+        </title>
 
         <meta
           property="og:url"
