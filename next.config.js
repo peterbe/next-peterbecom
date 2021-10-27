@@ -59,6 +59,6 @@ module.exports = (phase, { defaultConfig }) => {
     },
 
     // https://nextjs.org/docs/advanced-features/source-maps
-    productionBrowserSourceMaps: true,
+    productionBrowserSourceMaps: false, // disabled because I can't think of a reason to keep it on
   };
 };
