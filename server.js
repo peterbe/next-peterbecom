@@ -21,7 +21,9 @@ app.prepare().then(() => {
     //   handle(req, res, parsedUrl);
     // }
     handle(req, res, parsedUrl);
-    console.log(req.method, req.path);
+
+    // Hobo logging
+    console.log(new Date(), req.method, req.url);
   }).listen(port, (err) => {
     if (err) throw err;
     console.log(`> Ready on http://localhost:${port}`);
