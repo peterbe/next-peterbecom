@@ -56,15 +56,15 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
           <Link href="/">
             <a className="ui item">Home</a>
           </Link>
-          <Link href="/plog">
+          <Link href="/plog" prefetch={false}>
             <a className="ui item">Archive</a>
           </Link>
-          <Link href="/about">
+          <Link href="/about" prefetch={false}>
             <a href="{{ url('about') }}" className="ui item">
               About
             </a>
           </Link>
-          <Link href="/contact">
+          <Link href="/contact" prefetch={false}>
             <a href="{{ url('contact') }}" className="ui item">
               Contact
             </a>
@@ -123,9 +123,7 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
           className={`ui right floated dropdown item ${
             menuState === "opened" ? "active visible" : ""
           }`}
-          onClick={(event) => {
-            console.log("HI!");
-
+          onClick={() => {
             if (menuState === "closed") {
               setMenuState("opened");
             } else {
@@ -146,16 +144,16 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
             <Link href="/">
               <a className="item">Home</a>
             </Link>
-            <Link href="/plog">
+            <Link href="/plog" prefetch={false}>
               <a className="item">Archive</a>
             </Link>
-            <Link href="/about">
+            <Link href="/about" prefetch={false}>
               <a className="item">About</a>
             </Link>
-            <Link href="/contact">
+            <Link href="/contact" prefetch={false}>
               <a className="item">Contact</a>
             </Link>
-            <Link href="/search">
+            <Link href="/search" prefetch={false}>
               <a className="item">Search</a>
             </Link>
           </div>

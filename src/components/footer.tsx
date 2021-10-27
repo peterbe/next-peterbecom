@@ -21,16 +21,16 @@ export function Footer() {
           <Link href="/">
             <a className="item">Home</a>
           </Link>{" "}
-          <Link href="/plog/">
+          <Link href="/plog/" prefetch={false}>
             <a className="item">Archive</a>
           </Link>{" "}
-          <Link href="/about">
+          <Link href="/about" prefetch={false}>
             <a className="item">About</a>
           </Link>{" "}
-          <Link href="/contact">
+          <Link href="/contact" prefetch={false}>
             <a className="item">Contact</a>
           </Link>{" "}
-          <Link href="/search">
+          <Link href="/search" prefetch={false}>
             <a className="item">Search</a>
           </Link>
         </div>
