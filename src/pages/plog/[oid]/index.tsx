@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import { cacheHeader } from "../../../lib/cache";
 import { Blogpost } from "../../../components/plog";
 import { Lyricspost } from "../../../components/plog/lyricspost";
+import { API_BASE } from "../../../lib/_constants";
 import type { Post, Comments } from "../../../types";
 
 interface ServerData {
@@ -17,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   cacheHeader(res);
 
   const oid = params!.oid;
-  const response = await fetch(`${process.env.API_BASE}/api/v1/plog/${oid}`);
+  const response = await fetch(`${API_BASE}/api/v1/plog/${oid}`);
   if (response.status === 404) {
     return {
       notFound: true,

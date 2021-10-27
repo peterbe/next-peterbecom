@@ -2,6 +2,7 @@ import type { GetServerSideProps } from "next";
 
 import { Search } from "../components/search";
 import { cacheHeader } from "../lib/cache";
+import { API_BASE } from "../lib/_constants";
 
 interface Document {
   oid: string;
@@ -50,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     if (debug) {
       sp.set("debug", debug.toString());
     }
-    const url = `${process.env.API_BASE}/api/v1/search/?${sp.toString()}`;
+    const url = `${API_BASE}/api/v1/search/?${sp.toString()}`;
     const response = await fetch(url);
     if (response.status === 400) {
       const serverError: ServerError = await response.json();

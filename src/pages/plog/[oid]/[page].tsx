@@ -4,6 +4,7 @@ import { cacheHeader } from "../../../lib/cache";
 import { Blogpost } from "../../../components/plog";
 import { Lyricspost } from "../../../components/plog/lyricspost";
 import type { Post, Comments } from "../../../types";
+import { API_BASE } from "../../../lib/_constants";
 
 interface ServerData {
   post: Post;
@@ -27,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const sp = new URLSearchParams();
   sp.set("page", `${page}`);
   const response = await fetch(
-    `${process.env.API_BASE}/api/v1/plog/${oid}?${sp.toString()}`
+    `${API_BASE}/api/v1/plog/${oid}?${sp.toString()}`
   );
   if (response.status === 404) {
     return {

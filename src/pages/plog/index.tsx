@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 
 import { cacheHeader } from "../../lib/cache";
 import { Archive } from "../../components/plog/archive";
+import { API_BASE } from "../../lib/_constants";
 
 interface Post {
   oid: string;
@@ -20,7 +21,7 @@ interface ServerData {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   cacheHeader(res);
 
-  const url = `${process.env.API_BASE}/api/v1/plog/`;
+  const url = `${API_BASE}/api/v1/plog/`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`${response.status} on ${url}`);

@@ -2,6 +2,7 @@ import type { GetServerSideProps } from "next";
 
 import { Homepage } from "../components/homepage";
 import { cacheHeader } from "../lib/cache";
+import { API_BASE } from "../lib/_constants";
 
 interface Post {
   title: string;
@@ -18,10 +19,6 @@ interface ServerData {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   cacheHeader(res);
 
-  const API_BASE = process.env.API_BASE;
-  if (!API_BASE) {
-    throw new Error("can't not be set");
-  }
   const categories: string[] = [];
   const response = await fetch(`${API_BASE}/api/v1/plog/homepage`);
   const data: ServerData = await response.json();

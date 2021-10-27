@@ -2,6 +2,7 @@ import type { GetServerSideProps } from "next";
 
 import { Homepage } from "../components/homepage";
 import { cacheHeader } from "../lib/cache";
+import { API_BASE } from "../lib/_constants";
 
 interface Post {
   title: string;
@@ -39,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   for (const category of categories) {
     sp.append("oc", category);
   }
-  const url = `${process.env.API_BASE}/api/v1/plog/homepage?${sp.toString()}`;
+  const url = `${API_BASE}/api/v1/plog/homepage?${sp.toString()}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`${response.status} on ${url}`);
