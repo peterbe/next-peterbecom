@@ -35,3 +35,23 @@ jobs:
 
       - name: Build (and lint)
         run: npm run build
+
+      - name: Start server
+        env:
+          API_BASE: https://www.peterbe.com
+        run: npm run start > /tmp/stdout.log 2> /tmp/stderr.log &
+
+      - name: Check that the server started
+        run: curl --retry-connrefused --retry 5 -I http://localhost:3000/
+
+      - name: View the home page
+        run:
+          curl -v --fail http://localhost:3000/
+
+      - name: Debug any server outputs
+        if: failure()
+        run: |
+          echo "____STDOUT____"
+          cat /tmp/stdout.log
+          echo "____STDERR____"
+          cat /tmp/stderr.log
