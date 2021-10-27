@@ -2,8 +2,7 @@
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
-const BACKEND_BASE_URL =
-  process.env.BACKEND_BASE_URL || "http://localhost:8000";
+const BACKEND_BASE_URL = process.env.API_BASE || "http://127.0.0.1:8000";
 
 const REWRITES = [
   {
