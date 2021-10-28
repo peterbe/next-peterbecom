@@ -43,7 +43,7 @@ function ListGroups({ groups }: { groups: Group[] }) {
             {posts.map((post) => {
               return (
                 <dd key={post.oid} className={styles.post}>
-                  <Link href={`/plog/${post.oid}`} prefetch={true}>
+                  <Link href={`/plog/${post.oid}`}>
                     <a className={styles.post_link}>{post.title}</a>
                   </Link>{" "}
                   {post.comments > 0 && (
