@@ -1,6 +1,6 @@
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 
-const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+// const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
 const BACKEND_BASE_URL = process.env.API_BASE || "http://127.0.0.1:8000";
 
@@ -25,20 +25,21 @@ const REWRITES = [
 
 /** @type {import('next').NextConfig} */
 module.exports = (phase, { defaultConfig }) => {
-  if (phase === PHASE_DEVELOPMENT_SERVER) {
-    return {
-      /* development only config options here */
-      async rewrites() {
-        return [
-          ...REWRITES,
-          // {
-          //   source: "/api/:path*",
-          //   destination: `${BACKEND_BASE_URL}/api/:path*`,
-          // },
-        ];
-      },
-    };
-  }
+  // console.log({ phase, PHASE_DEVELOPMENT_SERVER });
+  // if (phase === PHASE_DEVELOPMENT_SERVER) {
+  //   return {
+  //     /* development only config options here */
+  //     async rewrites() {
+  //       return [
+  //         ...REWRITES,
+  //         // {
+  //         //   source: "/api/:path*",
+  //         //   destination: `${BACKEND_BASE_URL}/api/:path*`,
+  //         // },
+  //       ];
+  //     },
+  //   };
+  // }
 
   return {
     /* config options for all phases except development here */
