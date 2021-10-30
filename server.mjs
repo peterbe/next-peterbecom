@@ -36,6 +36,11 @@ app
     //   res.send("ping");
     // });
 
+    server.get("/images/*", (req, res) => {
+      res.setHeader("Cache-Control", "public,max-age=86400");
+      return handle(req, res);
+    });
+
     // XXX replace with middleware (aka. .use())
     server.head("*", (req, res) => {
       return handle(req, res);

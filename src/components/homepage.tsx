@@ -24,6 +24,7 @@ interface Props {
   previousPage: number | null;
   categories: string[];
 }
+
 export function Homepage({ posts, categories, nextPage, previousPage }: Props) {
   return (
     <Content
