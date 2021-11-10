@@ -35,7 +35,11 @@ export function Lyricspost({
       <Head>
         <title>
           {pageTitle}
-          {page > 1 && ` (Page ${page})`}
+          {/* Can't use regular boolean operator because 'null' doesn't
+          work as a string when this is sent to Next to update document.title.
+          Weird but necessary.
+           */}
+          {page > 1 ? ` (Page ${page})` : ""}
         </title>
 
         <meta

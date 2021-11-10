@@ -10,4 +10,4 @@ npm run dev
 ```
 
 and you'll need [django-peterbecom](https://github.com/peterbe/django-peterbecom)
-running on `localhost:8000`.
+running on `127.0.0.1:8000`.
