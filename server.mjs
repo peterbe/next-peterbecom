@@ -1,4 +1,5 @@
 import next from "next";
+import shrinkRay from "shrink-ray-current";
 import morgan from "morgan";
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
@@ -13,6 +14,7 @@ app
   .prepare()
   .then(() => {
     const server = express();
+
     server.use(morgan("tiny"));
 
     const backendProxy = createProxyMiddleware({
@@ -51,6 +53,8 @@ app
     server.get("*", (req, res) => {
       return handle(req, res);
     });
+
+    server.use(shrinkRay());
 
     server.listen(port, (err) => {
       if (err) throw err;
