@@ -23,6 +23,9 @@ export function Blogpost({
   let pageTitle = "";
 
   pageTitle = post.title;
+
+  console.log({ page });
+
   if (page > 1) {
     pageTitle += ` (page ${page})`;
   }
@@ -104,7 +107,9 @@ export function Blogpost({
       }
     >
       <Head>
-        <title>{post.title} - Peterbe.com</title>
+        <title>
+          {post.title} {page > 1 ? `(Page ${page})` : ""} - Peterbe.com
+        </title>
 
         <meta
           property="og:url"
