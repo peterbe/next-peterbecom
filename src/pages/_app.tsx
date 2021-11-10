@@ -27,6 +27,11 @@ import "../styles/css/highlight.css";
 import "../styles/css/peterbe.css";
 import "../styles/css/search.css";
 
+// This exists because use CSS modules on the archive page isn't
+// performant because it contains so darn many classNames.
+// So it's "hardcoded" the old-fashioned way.
+import "../styles/css/archive.css";
+
 // These are not ideal! They pollute the lyrics page
 import "../styles/css/carbon-ads.css";
 import "../styles/autocompeter.min.css";

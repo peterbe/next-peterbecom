@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 
 import { Content } from "../content";
-import styles from "../../styles/Archive.module.css";
 
 interface Post {
   oid: string;
@@ -35,24 +34,25 @@ export function Archive({ groups }: Props) {
 
 function ListGroups({ groups }: { groups: Group[] }) {
   return (
-    <dl>
+    // Remember, not using CSS modules on this page because it's so huge.
+    <dl id="archive">
       {groups.map(({ date, posts }) => {
         return (
           <Fragment key={date}>
-            <dt className={styles.date}>{formatDate(date)}</dt>
+            <dt>{formatDate(date)}</dt>
             {posts.map((post) => {
               return (
-                <dd key={post.oid} className={styles.post}>
+                <dd key={post.oid}>
                   <Link href={`/plog/${post.oid}`}>
-                    <a className={styles.post_link}>{post.title}</a>
+                    <a>{post.title}</a>
                   </Link>{" "}
                   {post.comments > 0 && (
-                    <span className={styles.comments}>
+                    <span className="comments">
                       {post.comments.toLocaleString()} comment
                       {post.comments === 1 ? "" : "s"}
                     </span>
                   )}{" "}
-                  <span className={styles.categories}>
+                  <span className="categories">
                     {post.categories.join(", ")}
                   </span>
                 </dd>
