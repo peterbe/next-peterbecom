@@ -1,25 +1,25 @@
-.date {
-  font-size: 1.2em;
+#archive dt {
+  font-size: 1.1em;
   margin-top: 10px;
 }
-.post_link {
+#archive dd a {
   margin-right: 10px;
 }
-.categories {
+#archive .categories {
   font-size: 0.9em;
   color: rgb(153, 153, 153);
   float: right;
 }
-.comments {
+#archive .comments {
   font-size: 0.9em;
   color: rgb(153, 153, 153);
 }
 
 @media only screen and (max-width: 767px) {
-  .categories {
+    #archive .categories {
     display: none;
   }
-  .post {
+  #archive dd {
     margin-left: 15px;
   }
 }
