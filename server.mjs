@@ -14,8 +14,8 @@ app
   .prepare()
   .then(() => {
     const server = express();
-
     server.use(morgan("tiny"));
+    server.use(shrinkRay());
 
     const backendProxy = createProxyMiddleware({
       target: BACKEND_BASE_URL,
@@ -53,8 +53,6 @@ app
     server.get("*", (req, res) => {
       return handle(req, res);
     });
-
-    server.use(shrinkRay());
 
     server.listen(port, (err) => {
       if (err) throw err;
