@@ -13,6 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.0
@@ -20,8 +22,8 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
-      - name: Make a file
-        run: echo "I'm not empty" > some.file
+      - name: What's the diff??
+        run: |
+          ls -l
 
-      - name: Is it there?
-        run: cat some.file
+          cat .github/workflows/build_and_deploy_and_play.yml
