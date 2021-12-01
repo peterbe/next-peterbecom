@@ -24,8 +24,6 @@ export function Blogpost({
 
   pageTitle = post.title;
 
-  console.log({ page });
-
   if (page > 1) {
     pageTitle += ` (page ${page})`;
   }
