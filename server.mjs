@@ -1,4 +1,5 @@
 import next from "next";
+import shrinkRay from "shrink-ray-current";
 import morgan from "morgan";
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
@@ -14,6 +15,7 @@ app
   .then(() => {
     const server = express();
     server.use(morgan("tiny"));
+    server.use(shrinkRay());
 
     const backendProxy = createProxyMiddleware({
       target: BACKEND_BASE_URL,
