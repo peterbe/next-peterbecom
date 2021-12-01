@@ -23,7 +23,7 @@
     "throttle-debounce": "3.0.1"
   },
   "devDependencies": {
-    "@types/react": "17.0.34",
+    "@types/react": "17.0.37",
     "@types/throttle-debounce": "2.1.0",
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.4",
