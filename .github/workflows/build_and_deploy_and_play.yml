@@ -9,7 +9,7 @@ on:
 
   push:
     branches:
-      # To keep the caches warm maybe.
+      # To keep the caches warm maybe..
       - main
 
 jobs:
