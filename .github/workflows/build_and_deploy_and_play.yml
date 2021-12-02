@@ -39,6 +39,18 @@ jobs:
           cat << EOF
           ${{ toJSON(github.event.pull_request) }}
           EOF
+          echo "Automerge?"
+          cat << EOF
+          ${{ toJSON(github.event.pull_request.auto_merge) }}
+          EOF
+
+      - name: In auto-merge state
+        if: ${{ github.event.pull_request.auto_merge }}
+        run: echo "Rumor has it that auto-merge is enabled"
+
+      - name: Not in auto-merge state
+        if: ${{ !github.event.pull_request.auto_merge }}
+        run: echo "Auto-merge is not enabled"
 
       - name: Take forever
-        run: sleep 600
+        run: sleep 100
