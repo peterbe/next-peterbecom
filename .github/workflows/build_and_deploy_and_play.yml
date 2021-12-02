@@ -1,7 +1,5 @@
 name: Debug build-and-deploy
 
-## PETER WAS HERE!
-
 on:
   pull_request_target:
     types:
@@ -29,3 +27,6 @@ jobs:
           ls -l
 
           cat .github/workflows/build_and_deploy_and_play.yml
+
+      - name: Take forever
+        run: sleep 600
