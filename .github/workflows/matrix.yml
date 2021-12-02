@@ -1,0 +1,42 @@
+name: Debug matrix
+
+on:
+  pull_request:
+
+jobs:
+  warmup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+  theworks:
+    needs: [warmup]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        test-group:
+          [
+            foo,
+            bar,
+            buzz,
+          ]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: '16'
+          cache: 'npm'
+
+      - name: Each matrix word
+        run: |
+          echo "GROUP:: ${{ matrix.test-group }}"
