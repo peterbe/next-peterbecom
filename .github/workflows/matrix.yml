@@ -19,11 +19,22 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Cache nextjs build
+      - name: Cache node_modules
         uses: actions/cache@v2.1.7
         with:
           path: node_modules
           key: ${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
+
+      - name: Build (and lint)
+        run: npm run build
+
+      - name: Cache nextjs build
+        uses: actions/cache@v2.1.7
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
 
 
   theworks:
@@ -51,11 +62,24 @@ jobs:
         run: |
           echo "GROUP:: ${{ matrix.test-group }}"
 
-      - name: Cache nextjs build
+      - name: Cache node_modules
         uses: actions/cache@v2.1.7
         with:
           path: node_modules
           key: ${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
 
-      - name: Debug
-        run: ls -l
+      - name: Cache nextjs build
+        uses: actions/cache@v2.1.7
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
+      - name: Start server
+        env:
+          API_BASE: https://www.peterbe.com
+        run: npm run start > /tmp/stdout.log 2> /tmp/stderr.log &
+
+      - name: Check that the server started
+        run: curl --retry-connrefused --retry 5 -I http://localhost:3000/
