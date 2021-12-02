@@ -1,5 +1,7 @@
 name: Debug build-and-deploy
 
+# Just a random comment.
+
 on:
   pull_request_target:
     types:
