@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v2.1.7
         with:
           path: node_modules
-          key: ${{ hashFiles('.github/workflows/matrix.yml') }}
+          key: ${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
 
 
   theworks:
@@ -55,7 +55,7 @@ jobs:
         uses: actions/cache@v2.1.7
         with:
           path: node_modules
-          key: ${{ hashFiles('.github/workflows/matrix.yml') }}
+          key: ${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
 
       - name: Debug
         run: ls -l
