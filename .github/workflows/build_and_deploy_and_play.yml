@@ -7,6 +7,11 @@ on:
       - reopened
       - synchronize
 
+  push:
+    branches:
+      # To keep the caches warm maybe
+      - main
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
