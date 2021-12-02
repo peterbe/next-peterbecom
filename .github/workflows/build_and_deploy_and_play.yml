@@ -28,5 +28,12 @@ jobs:
 
           cat .github/workflows/build_and_deploy_and_play.yml
 
+      - name: Is auto-merge enabled?
+        run: |
+
+          cat << EOF
+          ${{ toJSON(github.event.pull_request) }}
+          EOF
+
       - name: Take forever
         run: sleep 600
