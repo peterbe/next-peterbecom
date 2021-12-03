@@ -83,3 +83,11 @@ jobs:
 
       - name: Check that the server started
         run: curl --retry-connrefused --retry 5 -I http://localhost:3000/
+
+      - name: Debug any server outputs
+        if: failure()
+        run: |
+          echo "____STDOUT____"
+          cat /tmp/stdout.log
+          echo "____STDERR____"
+          cat /tmp/stderr.log
