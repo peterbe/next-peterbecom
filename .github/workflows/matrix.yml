@@ -25,6 +25,14 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Cache nextjs build
+        uses: actions/cache@v2.1.7
+        with:
+          path: .next
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
       - name: Build (and lint)
         run: npm run build
 
@@ -34,13 +42,6 @@ jobs:
           name: .next
           path: .next/
 
-      # - name: Cache nextjs build
-      #   uses: actions/cache@v2.1.7
-      #   with:
-      #     path: .next
-      #     key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-nextjs-
 
 
   theworks:
@@ -86,6 +87,9 @@ jobs:
         uses: actions/download-artifact@v2.0.10
         with:
           name: .next
+
+      - name: Debug more
+        run: ls -ltrh
 
       - name: Start server
         env:
