@@ -82,7 +82,8 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-nextjs-
 
-      - uses: actions/download-artifact@v2.0.10
+      - name: Download .next artifact
+        uses: actions/download-artifact@v2.0.10
         with:
           name: .next
 
