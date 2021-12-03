@@ -28,13 +28,19 @@ jobs:
       - name: Build (and lint)
         run: npm run build
 
-      - name: Cache nextjs build
-        uses: actions/cache@v2.1.7
+      - name: Use artifact for .next
+        uses: github/upload-artifact@v2.2.4
         with:
-          path: .next
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-
+          name: .next
+          path: .next/
+
+      # - name: Cache nextjs build
+      #   uses: actions/cache@v2.1.7
+      #   with:
+      #     path: .next
+      #     key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-nextjs-
 
 
   theworks:
@@ -75,6 +81,10 @@ jobs:
       #     key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
       #     restore-keys: |
       #       ${{ runner.os }}-nextjs-
+
+      - uses: actions/download-artifact@v2.0.10
+        with:
+          name: .next
 
       - name: Start server
         env:
