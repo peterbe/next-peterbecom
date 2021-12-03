@@ -31,7 +31,7 @@ jobs:
       - name: Cache nextjs build
         uses: actions/cache@v2.1.7
         with:
-          path: .next/cache
+          path: .next
           key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-
@@ -71,7 +71,7 @@ jobs:
       - name: Cache nextjs build
         uses: actions/cache@v2.1.7
         with:
-          path: .next/cache
+          path: .next
           key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-
