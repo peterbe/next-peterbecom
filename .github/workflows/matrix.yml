@@ -29,7 +29,7 @@ jobs:
         run: npm run build
 
       - name: Use artifact for .next
-        uses: github/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: .next
           path: .next/
