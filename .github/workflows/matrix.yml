@@ -89,7 +89,7 @@ jobs:
           name: .next
 
       - name: Debug more
-        run: ls -ltrh
+        run: ls -ltrha
 
       - name: Start server
         env:
