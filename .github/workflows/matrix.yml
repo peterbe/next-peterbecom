@@ -16,14 +16,14 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
-      - name: Install
-        run: npm ci
-
       - name: Cache node_modules
         uses: actions/cache@v2.1.7
         with:
           path: node_modules
           key: ${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
+
+      - name: Install
+        run: npm ci
 
       - name: Build (and lint)
         run: npm run build
@@ -68,13 +68,13 @@ jobs:
           path: node_modules
           key: ${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
 
-      - name: Cache nextjs build
-        uses: actions/cache@v2.1.7
-        with:
-          path: .next
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-
+      # - name: Cache nextjs build
+      #   uses: actions/cache@v2.1.7
+      #   with:
+      #     path: .next
+      #     key: ${{ runner.os }}-nextjs-${{ hashFiles('package*.json') }}-${{ hashFiles('.github/workflows/matrix.yml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-nextjs-
 
       - name: Start server
         env:
