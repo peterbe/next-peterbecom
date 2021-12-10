@@ -23,6 +23,7 @@ app
       changeOrigin: true,
     });
     server.use("*/rss.xml", backendProxy);
+    server.use("/robots.txt", backendProxy);
     server.use("/avatar.random.png", backendProxy);
     server.use("/avatar.png", backendProxy);
     // If the server is localhost:3000 and the backend is https://www.peterbe.com
