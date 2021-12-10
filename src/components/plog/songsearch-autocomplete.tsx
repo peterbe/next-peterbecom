@@ -257,6 +257,8 @@ export default function SongSearchAutocomplete() {
             setAutocompleteSuggestions(null);
             setAutocompleteHighlight(-1);
 
+            document.location.href = absolutifyUrl(gotoURL);
+
             // this.setState(
             //   {
             //     redirectingSearch: true,
@@ -344,12 +346,12 @@ export default function SongSearchAutocomplete() {
             maxLength={MAX_LENGTH}
           />
         )}
-        {redirectingSearch && (
-          <p>
-            Sending search to <a href={redirectingSearch}>SongSearch</a> now...
-          </p>
-        )}
       </div>
+      {redirectingSearch && (
+        <p>
+          Sending search to <a href={redirectingSearch}>SongSearch</a> now...
+        </p>
+      )}
     </form>
   );
 }
