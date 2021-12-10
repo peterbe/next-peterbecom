@@ -31,6 +31,8 @@ app
     server.use("/api/", backendProxy);
     server.use("/cache/", backendProxy);
     server.use("*/ping", backendProxy);
+    // Legacy. Can probably delete later.
+    server.post("*/submit", backendProxy);
 
     // It's important that this line comes *after* the setting up for the proxy
     // middleware for `/api/` above.
