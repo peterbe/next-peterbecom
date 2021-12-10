@@ -52,6 +52,7 @@ export interface OwnComment {
   email: string;
   parent: string | null;
   depth: number;
+  postOid: string;
 }
 
 export type AddOwnComment = (
