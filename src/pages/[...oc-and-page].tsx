@@ -20,10 +20,18 @@ export const getServerSideProps: GetServerSideProps = async ({
   params,
   res,
 }) => {
-  cacheHeader(res);
-
   const categories: string[] = [];
   const pathParams = params!["oc-and-page"];
+
+  // Any garbage at this wild cast net should be rejected as a 404.
+  // In production this would have been caught my the Express server.
+  if (pathParams && Array.isArray(pathParams)) {
+    for (const bit of pathParams) {
+      if (!(/oc-\w+/.test(bit) || /p\d/.test(bit))) {
+        return { notFound: true };
+      }
+    }
+  }
 
   const sp = new URLSearchParams();
   const paramPage = (pathParams as string[]).find((param) =>
@@ -40,8 +48,18 @@ export const getServerSideProps: GetServerSideProps = async ({
   for (const category of categories) {
     sp.append("oc", category);
   }
+
   const url = `${API_BASE}/api/v1/plog/homepage?${sp.toString()}`;
   const response = await fetch(url);
+  if (response.status === 400) {
+    console.warn(
+      `API said 400, but we'll call it a 404 for now (?${sp.toString()} => '${await response.text()}')`
+    );
+    return { notFound: true };
+  }
+  if (response.status === 404) {
+    return { notFound: true };
+  }
   if (!response.ok) {
     throw new Error(`${response.status} on ${url}`);
   }
@@ -49,6 +67,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   const { posts } = data;
   const nextPage = data.next_page;
   const previousPage = data.previous_page;
+
+  cacheHeader(res);
+
   return {
     props: {
       posts,

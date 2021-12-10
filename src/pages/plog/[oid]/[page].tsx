@@ -18,6 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   cacheHeader(res);
 
   const pageRaw = params!.page as string;
+
   if (!/^p\d+/.test(pageRaw)) {
     return {
       notFound: true,
@@ -30,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const response = await fetch(
     `${API_BASE}/api/v1/plog/${oid}?${sp.toString()}`
   );
-  if (response.status === 404) {
+  if (response.status === 404 || response.status === 400) {
     return {
       notFound: true,
     };
