@@ -15,6 +15,7 @@ app
   .then(() => {
     const server = express();
     server.use(morgan(dev ? "dev" : "short"));
+    // server.use(morgan("short"));
     server.use(shrinkRay());
 
     const backendProxy = createProxyMiddleware({
@@ -22,6 +23,8 @@ app
       changeOrigin: true,
     });
     server.use("/rss.xml", backendProxy);
+    server.use("/avatar.random.png", backendProxy);
+    server.use("/avatar.png", backendProxy);
     // If the server is localhost:3000 and the backend is https://www.peterbe.com
     // it might be a problem with cookies because that server will have `Secure`
     // in the `Set-Cookie` which won't be acceptable on http://localhost:3000
