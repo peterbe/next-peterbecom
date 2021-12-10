@@ -46,16 +46,7 @@ app
       return handle(req, res);
     });
 
-    // XXX replace with middleware (aka. .use())
-    server.head("*", (req, res) => {
-      return handle(req, res);
-    });
-    server.put("*", (req, res) => {
-      return handle(req, res);
-    });
-    server.get("*", (req, res) => {
-      return handle(req, res);
-    });
+    server.use(handle);
 
     server.listen(port, (err) => {
       if (err) throw err;
