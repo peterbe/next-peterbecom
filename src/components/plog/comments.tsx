@@ -6,7 +6,6 @@ import type {
   Comments,
   Comment,
   OwnComment,
-  AddOwnComment,
   AddOwnCommentProps,
 } from "../../types";
 import { CommentForm } from "./commentform";
@@ -157,6 +156,7 @@ function ShowCommentTree({
         email,
         parent,
         depth,
+        postOid: post.oid,
       };
       let edited = false;
       for (const ownComment of prevState) {
@@ -212,7 +212,7 @@ function ShowCommentTree({
             )}
 
             {ownComments
-              .filter((c) => c.parent === comment.oid)
+              .filter((c) => c.parent === comment.oid && c.postOid === post.oid)
               .map((ownComment) => {
                 return (
                   <DisplayOwnComment
@@ -228,7 +228,7 @@ function ShowCommentTree({
       })}
 
       {ownComments
-        .filter((c) => c.parent === null)
+        .filter((c) => c.parent === null && c.postOid === post.oid)
         .map((ownComment) => {
           return (
             <DisplayOwnComment
