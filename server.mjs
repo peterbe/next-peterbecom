@@ -45,6 +45,10 @@ app
       res.setHeader("Cache-Control", "public,max-age=86400");
       return handle(req, res);
     });
+    server.get("/songsearch-autocomplete-static/*", (req, res, next) => {
+      res.setHeader("Cache-Control", "public,max-age=86402");
+      return handle(req, res, next);
+    });
 
     server.use(handle);
 
