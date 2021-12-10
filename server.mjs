@@ -14,7 +14,7 @@ app
   .prepare()
   .then(() => {
     const server = express();
-    server.use(morgan("tiny"));
+    server.use(morgan(dev ? "dev" : "short"));
     server.use(shrinkRay());
 
     const backendProxy = createProxyMiddleware({
