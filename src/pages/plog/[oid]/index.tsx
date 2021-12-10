@@ -17,8 +17,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   cacheHeader(res);
 
-  const oid = params!.oid;
-  const response = await fetch(`${API_BASE}/api/v1/plog/${oid}`);
+  const oid = params!.oid as string;
+
+  const response = await fetch(
+    `${API_BASE}/api/v1/plog/${encodeURIComponent(oid)}`
+  );
   if (response.status === 404) {
     return {
       notFound: true,

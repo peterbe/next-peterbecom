@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const sp = new URLSearchParams();
   sp.set("page", `${page}`);
   const response = await fetch(
-    `${API_BASE}/api/v1/plog/${oid}?${sp.toString()}`
+    `${API_BASE}/api/v1/plog/${encodeURIComponent(oid)}?${sp.toString()}`
   );
   if (response.status === 404 || response.status === 400) {
     return {
