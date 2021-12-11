@@ -3,6 +3,16 @@ import shrinkRay from "shrink-ray-current";
 import morgan from "morgan";
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
+import Rollbar from "rollbar";
+
+// This is only for the Express part.
+let rollbar = null;
+if (process.env.ROLLBAR_ACCESS_TOKEN) {
+  rollbar = new Rollbar({ accessToken: process.env.ROLLBAR_ACCESS_TOKEN });
+  console.log("Rollbar access token enabled");
+} else if (process.env.NODE_ENV !== "development") {
+  console.warn("Rollbar access token NOT enabled!");
+}
 
 const BACKEND_BASE_URL = process.env.API_BASE || "http://127.0.0.1:8000";
 const dev = process.env.NODE_ENV !== "production";
@@ -54,6 +64,9 @@ app
     });
 
     server.use(handle);
+
+    // Use the rollbar error handler to send exceptions to your rollbar account
+    if (rollbar) server.use(rollbar.errorHandler());
 
     server.listen(port, (err) => {
       if (err) throw err;
