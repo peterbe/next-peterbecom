@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import { Content } from "../components/content";
+import { Content } from "./content";
 
 export default function Custom500() {
   return (
