@@ -39,7 +39,7 @@ export function Lyricspost({
           work as a string when this is sent to Next to update document.title.
           Weird but necessary.
            */}
-          {page > 1 ? ` (Page ${page})` : ""}
+          {page > 1 ? ` (Page ${page})` : " Looking for songs by the lyrics"}
         </title>
 
         <meta
@@ -51,6 +51,10 @@ export function Lyricspost({
         <meta
           property="og:description"
           content="Songsear.ch is a search engine for song lyrics. You can find the song if you only know parts of the song&#39;s lyrics."
+        />
+        <meta
+          name="description"
+          content="Find songs by lyrics. Use Songsear.ch when you can't remember the name of the song."
         />
       </Head>
 
