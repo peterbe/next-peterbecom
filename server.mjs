@@ -5,6 +5,8 @@ import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import Rollbar from "rollbar";
 
+import { cacheControlPublicFiles } from "./middleware/long-cache.mjs";
+
 // This is only for the Express part.
 let rollbar = null;
 if (process.env.ROLLBAR_ACCESS_TOKEN) {
@@ -46,23 +48,9 @@ app
     // Legacy. Can probably delete later.
     server.use("*/submit", backendProxy);
 
-    // It's important that this line comes *after* the setting up for the proxy
-    // middleware for `/api/` above.
-    // See https://github.com/chimurai/http-proxy-middleware/issues/40#issuecomment-163398924
-    // server.use(express.urlencoded({ extended: true }));
-
-    // server.head("/ping", (req, res) => {
-    //   res.send("ping");
-    // });
-
-    server.get("/images/*", (req, res) => {
-      res.setHeader("Cache-Control", "public,max-age=86400");
-      return handle(req, res);
-    });
-    server.get("/songsearch-autocomplete-static/*", (req, res, next) => {
-      res.setHeader("Cache-Control", "public,max-age=86402");
-      return handle(req, res, next);
-    });
+    // These will be served via the Next server, but here's our chance
+    // to givet them a long cache-control.
+    server.use(cacheControlPublicFiles);
 
     server.use(handle);
 
