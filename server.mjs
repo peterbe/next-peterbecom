@@ -6,6 +6,7 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 import Rollbar from "rollbar";
 
 import { cacheControlPublicFiles } from "./middleware/long-cache.mjs";
+import { legacyRedirects } from "./middleware/legacy-redirects.mjs";
 
 // This is only for the Express part.
 let rollbar = null;
@@ -48,6 +49,7 @@ app
     // Legacy. Can probably delete later.
     server.use("*/submit", backendProxy);
 
+    server.use(legacyRedirects);
     // These will be served via the Next server, but here's our chance
     // to givet them a long cache-control.
     server.use(cacheControlPublicFiles);
