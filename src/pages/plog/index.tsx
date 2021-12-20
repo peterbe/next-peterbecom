@@ -21,10 +21,12 @@ interface ServerData {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   cacheHeader(res);
 
-  const url = `${API_BASE}/api/v1/plog/`;
-  const response = await fetch(url);
+  const fetchURL = "/api/v1/plog/";
+  console.time(`Fetch:${fetchURL}`);
+  const response = await fetch(`${API_BASE}${fetchURL}`);
+  console.timeEnd(`Fetch:${fetchURL}`);
   if (!response.ok) {
-    throw new Error(`${response.status} on ${url}`);
+    throw new Error(`${response.status} on ${fetchURL}`);
   }
   const data: ServerData = await response.json();
   const { groups } = data;
