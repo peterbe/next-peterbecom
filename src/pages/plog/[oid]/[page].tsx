@@ -28,9 +28,10 @@ export const getServerSideProps: GetServerSideProps = async ({
   const oid = params!.oid as string;
   const sp = new URLSearchParams();
   sp.set("page", `${page}`);
-  const response = await fetch(
-    `${API_BASE}/api/v1/plog/${encodeURIComponent(oid)}?${sp.toString()}`
-  );
+  const fetchURL = `/api/v1/plog/${encodeURIComponent(oid)}?${sp.toString()}`;
+  console.time(`Fetch:${fetchURL}`);
+  const response = await fetch(`${API_BASE}${fetchURL}`);
+  console.timeEnd(`Fetch:${fetchURL}`);
   if (response.status === 404 || response.status === 400) {
     return {
       notFound: true,
