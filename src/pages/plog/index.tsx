@@ -19,8 +19,6 @@ interface ServerData {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  cacheHeader(res);
-
   const fetchURL = "/api/v1/plog/";
   console.time(`Fetch:${fetchURL}`);
   const response = await fetch(`${API_BASE}${fetchURL}`);
@@ -30,6 +28,8 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   }
   const data: ServerData = await response.json();
   const { groups } = data;
+
+  cacheHeader(res);
 
   return {
     props: {

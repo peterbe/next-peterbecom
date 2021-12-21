@@ -17,14 +17,20 @@ interface ServerData {
   previous_page: number | null;
 }
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  cacheHeader(res);
-
   const categories: string[] = [];
-  const response = await fetch(`${API_BASE}/api/v1/plog/homepage`);
+  const fetchURL = "/api/v1/plog/homepage";
+  console.time(`Fetch:${fetchURL}`);
+  const response = await fetch(`${API_BASE}${fetchURL}`);
+  console.timeEnd(`Fetch:${fetchURL}`);
+  if (!response.ok) {
+    throw new Error(`${response.status} on ${fetchURL}`);
+  }
   const data: ServerData = await response.json();
   const { posts } = data;
   const nextPage = data.next_page;
   const previousPage = data.previous_page;
+
+  cacheHeader(res);
 
   return {
     props: {
