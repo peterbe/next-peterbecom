@@ -15,8 +15,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   params,
   res,
 }) => {
-  cacheHeader(res);
-
   const pageRaw = params!.page as string;
 
   if (!/^p\d+/.test(pageRaw)) {
@@ -37,8 +35,13 @@ export const getServerSideProps: GetServerSideProps = async ({
       notFound: true,
     };
   }
+  if (!response.ok) {
+    throw new Error(`${response.status} on ${fetchURL}`);
+  }
   const data: ServerData = await response.json();
   const { post, comments } = data;
+
+  cacheHeader(res);
 
   return {
     props: {

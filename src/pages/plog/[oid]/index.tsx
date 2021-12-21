@@ -15,8 +15,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   params,
   res,
 }) => {
-  cacheHeader(res);
-
   const oid = params!.oid as string;
   const fetchURL = `/api/v1/plog/${encodeURIComponent(oid)}`;
   console.time(`Fetch:${fetchURL}`);
@@ -27,9 +25,15 @@ export const getServerSideProps: GetServerSideProps = async ({
       notFound: true,
     };
   }
+  if (!response.ok) {
+    throw new Error(`${response.status} on ${fetchURL}`);
+  }
   const data: ServerData = await response.json();
   const { post, comments } = data;
   const page = 1;
+
+  cacheHeader(res);
+
   return {
     props: {
       post,

@@ -4,7 +4,7 @@ export function cacheHeader(
   res: ServerResponse,
   cacheControl = "public,max-age=43200" // 12h
 ) {
-  if (process.env.NODE_ENV !== "development") {
+  if (process.env.NODE_ENV !== "development" && res.statusCode < 400) {
     res.setHeader("Cache-Control", cacheControl);
   }
 }

@@ -9,6 +9,7 @@
     "next:start": "next start",
     "start": "NODE_ENV=production node server.mjs",
     "start:dev": "NODE_ENV=production nodemon server.mjs",
+    "build:start:dev": "npm run build && npm run start:dev",
     "lint": "next lint"
   },
   "dependencies": {

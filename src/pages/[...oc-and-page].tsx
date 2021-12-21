@@ -49,8 +49,10 @@ export const getServerSideProps: GetServerSideProps = async ({
     sp.append("oc", category);
   }
 
-  const url = `${API_BASE}/api/v1/plog/homepage?${sp.toString()}`;
-  const response = await fetch(url);
+  const fetchURL = `/api/v1/plog/homepage?${sp.toString()}`;
+  console.time(`Fetch:${fetchURL}`);
+  const response = await fetch(`${API_BASE}${fetchURL}`);
+  console.timeEnd(`Fetch:${fetchURL}`);
   if (response.status === 400) {
     console.warn(
       `API said 400, but we'll call it a 404 for now (?${sp.toString()} => '${await response.text()}')`
@@ -61,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return { notFound: true };
   }
   if (!response.ok) {
-    throw new Error(`${response.status} on ${url}`);
+    throw new Error(`${response.status} on ${fetchURL}`);
   }
   const data: ServerData = await response.json();
   const { posts } = data;
