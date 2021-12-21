@@ -4,7 +4,7 @@ import { cacheHeader } from "../../../lib/cache";
 import { Blogpost } from "../../../components/plog";
 import { Lyricspost } from "../../../components/plog/lyricspost";
 import type { Post, Comments } from "../../../types";
-import { API_BASE } from "../../../lib/_constants";
+import { get } from "../../../lib/get-data";
 
 interface ServerData {
   post: Post;
@@ -27,19 +27,16 @@ export const getServerSideProps: GetServerSideProps = async ({
   const sp = new URLSearchParams();
   sp.set("page", `${page}`);
   const fetchURL = `/api/v1/plog/${encodeURIComponent(oid)}?${sp.toString()}`;
-  console.time(`Fetch:${fetchURL}`);
-  const response = await fetch(`${API_BASE}${fetchURL}`);
-  console.timeEnd(`Fetch:${fetchURL}`);
-  if (response.status === 404 || response.status === 400) {
+  const response = await get<ServerData>(fetchURL);
+  if (response.statusCode === 404 || response.statusCode === 400) {
     return {
       notFound: true,
     };
   }
-  if (!response.ok) {
-    throw new Error(`${response.status} on ${fetchURL}`);
+  if (response.statusCode >= 400) {
+    throw new Error(`${response.statusCode} on ${fetchURL}`);
   }
-  const data: ServerData = await response.json();
-  const { post, comments } = data;
+  const { post, comments } = response.body;
 
   cacheHeader(res);
 

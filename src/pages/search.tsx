@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 
 import { Search } from "../components/search";
 import { cacheHeader } from "../lib/cache";
-import { API_BASE } from "../lib/_constants";
+import { get } from "../lib/get-data";
 
 interface Document {
   oid: string;
@@ -51,10 +51,10 @@ export const getServerSideProps: GetServerSideProps = async ({
     if (debug) {
       sp.set("debug", debug.toString());
     }
-    const url = `${API_BASE}/api/v1/search/?${sp.toString()}`;
-    const response = await fetch(url);
-    if (response.status === 400) {
-      const serverError: ServerError = await response.json();
+    const fetchURL = `/api/v1/search/?${sp.toString()}`;
+    const response = await get<ServerData | ServerError>(fetchURL);
+    if (response.statusCode === 400) {
+      const serverError = response.body as ServerError;
 
       for (const [key, messages] of Object.entries(serverError)) {
         for (const message of messages) {
@@ -63,11 +63,10 @@ export const getServerSideProps: GetServerSideProps = async ({
         }
         break;
       }
-    } else if (!response.ok) {
-      throw new Error(`${response.status} on ${url}`);
+    } else if (response.statusCode !== 200) {
+      throw new Error(`${response.statusCode} on ${fetchURL}`);
     } else {
-      const data: ServerData = await response.json();
-      results = data.results;
+      results = response.body.results;
     }
   }
 
