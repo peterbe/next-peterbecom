@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { cacheHeader } from "../../../lib/cache";
 import { Blogpost } from "../../../components/plog";
 import { Lyricspost } from "../../../components/plog/lyricspost";
-import { API_BASE } from "../../../lib/_constants";
+import { get } from "../../../lib/get-data";
 import type { Post, Comments } from "../../../types";
 
 interface ServerData {
@@ -17,19 +17,16 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const oid = params!.oid as string;
   const fetchURL = `/api/v1/plog/${encodeURIComponent(oid)}`;
-  console.time(`Fetch:${fetchURL}`);
-  const response = await fetch(`${API_BASE}${fetchURL}`);
-  console.timeEnd(`Fetch:${fetchURL}`);
-  if (response.status === 404) {
+  const response = await get<ServerData>(fetchURL);
+  if (response.statusCode === 404) {
     return {
       notFound: true,
     };
   }
-  if (!response.ok) {
-    throw new Error(`${response.status} on ${fetchURL}`);
+  if (response.statusCode !== 200) {
+    throw new Error(`${response.statusCode} on ${fetchURL}`);
   }
-  const data: ServerData = await response.json();
-  const { post, comments } = data;
+  const { post, comments } = response.body;
   const page = 1;
 
   cacheHeader(res);

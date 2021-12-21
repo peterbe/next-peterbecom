@@ -52,9 +52,15 @@ jobs:
       - name: Check that the server started
         run: curl --retry-connrefused --retry 5 -I http://localhost:3000/
 
-      - name: View the home page
+      - name: View the some pages
         run:
           curl -v --fail http://localhost:3000/
+          curl --fail http://localhost:3000/p2
+          curl --fail http://localhost:3000/oc-JavaScript
+          curl --fail http://localhost:3000/oc-JavaScript/p2
+          curl --fail http://localhost:3000/plog/blogitem-040601-1
+          curl --fail http://localhost:3000/plog/blogitem-040601-1/p2
+          curl --fail http://localhost:3000/search?q=Peter
 
       - name: Debug any server outputs
         if: failure()

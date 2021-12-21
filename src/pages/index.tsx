@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 
 import { Homepage } from "../components/homepage";
 import { cacheHeader } from "../lib/cache";
-import { API_BASE } from "../lib/_constants";
+import { get } from "../lib/get-data";
 
 interface Post {
   title: string;
@@ -19,16 +19,12 @@ interface ServerData {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const categories: string[] = [];
   const fetchURL = "/api/v1/plog/homepage";
-  console.time(`Fetch:${fetchURL}`);
-  const response = await fetch(`${API_BASE}${fetchURL}`);
-  console.timeEnd(`Fetch:${fetchURL}`);
-  if (!response.ok) {
-    throw new Error(`${response.status} on ${fetchURL}`);
-  }
-  const data: ServerData = await response.json();
-  const { posts } = data;
-  const nextPage = data.next_page;
-  const previousPage = data.previous_page;
+  const response = await get<ServerData>(fetchURL, true);
+  const {
+    posts,
+    next_page: nextPage,
+    previous_page: previousPage,
+  } = response.body;
 
   cacheHeader(res);
 

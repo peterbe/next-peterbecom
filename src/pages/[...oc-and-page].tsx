@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 
 import { Homepage } from "../components/homepage";
 import { cacheHeader } from "../lib/cache";
-import { API_BASE } from "../lib/_constants";
+import { get } from "../lib/get-data";
 
 interface Post {
   title: string;
@@ -50,22 +50,20 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   const fetchURL = `/api/v1/plog/homepage?${sp.toString()}`;
-  console.time(`Fetch:${fetchURL}`);
-  const response = await fetch(`${API_BASE}${fetchURL}`);
-  console.timeEnd(`Fetch:${fetchURL}`);
-  if (response.status === 400) {
+  const response = await get<ServerData>(fetchURL);
+  if (response.statusCode === 400) {
     console.warn(
-      `API said 400, but we'll call it a 404 for now (?${sp.toString()} => '${await response.text()}')`
+      `API said 400, but we'll call it a 404 for now (?${sp.toString()})`
     );
     return { notFound: true };
   }
-  if (response.status === 404) {
+  if (response.statusCode === 404) {
     return { notFound: true };
   }
-  if (!response.ok) {
-    throw new Error(`${response.status} on ${fetchURL}`);
+  if (response.statusCode >= 400) {
+    throw new Error(`${response.statusCode} on ${fetchURL}`);
   }
-  const data: ServerData = await response.json();
+  const data = response.body;
   const { posts } = data;
   const nextPage = data.next_page;
   const previousPage = data.previous_page;
