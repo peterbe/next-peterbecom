@@ -1,5 +1,5 @@
 export function legacyRedirects(req, res, next) {
-  if (req.query.comments === "all") {
+  if (req.query.comments === "all" || req.query.magmadomain) {
     // All these legacy `?comments=all`, redirect those
     return res.redirect(301, req.path);
   }
