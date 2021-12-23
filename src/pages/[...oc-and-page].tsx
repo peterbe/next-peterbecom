@@ -50,7 +50,15 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 
   const fetchURL = `/api/v1/plog/homepage?${sp.toString()}`;
-  const response = await get<ServerData>(fetchURL);
+  const response = await get<ServerData>(fetchURL, false, false);
+  if ([301, 302].includes(response.statusCode)) {
+    return {
+      redirect: {
+        destination: response.headers["location"] || "/",
+        permanent: response.statusCode === 301,
+      },
+    };
+  }
   if (response.statusCode === 400) {
     console.warn(
       `API said 400, but we'll call it a 404 for now (?${sp.toString()})`

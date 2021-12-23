@@ -64,6 +64,12 @@ test("filter home page by bad category", async () => {
   assert.ok(!isCached(response));
 });
 
+test("redirect to correct case of oc categoru", async () => {
+  const response = await get("/oc-jAVAsCRIPT");
+  assert.is(response.statusCode, 308);
+  assert.is(response.headers["location"], "/oc-JavaScript");
+});
+
 test("lyrics post page", async () => {
   const response = await get("/plog/blogitem-040601-1");
   assert.is(response.statusCode, 200);
