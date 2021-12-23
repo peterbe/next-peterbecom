@@ -10,7 +10,9 @@
     "start": "NODE_ENV=production node server.mjs",
     "start:dev": "NODE_ENV=production nodemon server.mjs",
     "build:start:dev": "npm run build && npm run start:dev",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "uvu tests",
+    "test:watch": "watchlist tests -- uvu tests"
   },
   "dependencies": {
     "critters": "0.0.15",
@@ -32,6 +34,13 @@
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.7",
     "nodemon": "2.0.15",
-    "typescript": "4.5.4"
+    "typescript": "4.5.4",
+    "uvu": "0.5.2",
+    "watchlist": "0.3.1"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.mjs"
+    ]
   }
 }
