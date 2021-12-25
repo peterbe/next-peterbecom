@@ -60,14 +60,10 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
             <a className="ui item">Archive</a>
           </Link>
           <Link href="/about" prefetch={false}>
-            <a href="{{ url('about') }}" className="ui item">
-              About
-            </a>
+            <a className="ui item">About</a>
           </Link>
           <Link href="/contact" prefetch={false}>
-            <a href="{{ url('contact') }}" className="ui item">
-              Contact
-            </a>
+            <a className="ui item">Contact</a>
           </Link>
           <form
             action="/search"
