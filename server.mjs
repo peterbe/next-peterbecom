@@ -27,7 +27,6 @@ app
   .prepare()
   .then(() => {
     const server = express();
-    console.log(process.env.MORGAN_LOGGING);
     server.use(
       morgan(
         process.env.MORGAN_LOGGING ||
