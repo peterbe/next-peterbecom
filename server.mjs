@@ -27,8 +27,14 @@ app
   .prepare()
   .then(() => {
     const server = express();
-    server.use(morgan(dev ? "dev" : "short"));
-    // server.use(morgan("short"));
+    console.log(process.env.MORGAN_LOGGING);
+    server.use(
+      morgan(
+        process.env.MORGAN_LOGGING ||
+          ":remote-addr [:date[clf]] :method :url HTTP/:http-version :status :res[content-length] - :response-time ms"
+      )
+    );
+
     server.use(shrinkRay());
 
     const backendProxy = createProxyMiddleware({
