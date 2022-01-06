@@ -1,0 +1,11 @@
+/* Mobile */
+.carbonads_outer {
+  /* This is to avoid CLS */
+  min-height: 145px;
+}
+@media (min-width: 768px) {
+  /* Desktop */
+  .carbonads_outer {
+    min-height: 14px;
+  }
+}
