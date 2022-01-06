@@ -25,7 +25,11 @@ export function Content({
       </div>
       {!hideMainMenu && <MainMenu />}
       <div className="ui container content">{children}</div>
-      {footer ? footer : <Footer />}
+
+      {/* By checking for undefined, it becomes possible to pass `footer={null}`
+      as a prop to disable the footer and the default fallback.
+      Useful for the lyrics post page. */}
+      {footer !== undefined ? footer : <Footer />}
     </>
   );
 }

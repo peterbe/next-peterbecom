@@ -32,8 +32,10 @@ import "../styles/css/search.css";
 // So it's "hardcoded" the old-fashioned way.
 import "../styles/css/archive.css";
 
-// These are not ideal! They pollute the lyrics page
+import "../styles/css/carbon-ads-outer.css";
 import "../styles/css/carbon-ads.css";
+
+// These are not ideal! They pollute the lyrics page
 import "../styles/autocompeter.min.css";
 
 // NOT IDEAL!

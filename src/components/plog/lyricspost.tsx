@@ -31,6 +31,7 @@ export function Lyricspost({
       }
       hideMainMenu={true}
       extraHead={<SongLyricsSubheader page={page} />}
+      footer={null}
     >
       <Head>
         <title>
@@ -140,21 +141,25 @@ function LyricsBody() {
     <>
       <SongSearchAutocompleteLazy />
 
-      <p className={styles.songsearch_link}>
+      {/* Commented out Jan 5, 2022 to give more room for the ad. */}
+      {/* <p className={styles.songsearch_link}>
         Go to{" "}
         <a href="https://songsear.ch/" title="Search for song by lyrics">
           <b>Songsear.ch</b>
         </a>{" "}
         to search for songs from lyrics.
-      </p>
+      </p> */}
     </>
   );
 }
 
 function LyricsFooter() {
   return (
-    <p className={styles.lyrics_footer}>
-      &copy; <Link href="/">peterbe.com</Link> 2003 - {new Date().getFullYear()}
-    </p>
+    <div className={styles.lyrics_footer}>
+      <p>
+        &copy; <Link href="/">peterbe.com</Link> 2003 -{" "}
+        {new Date().getFullYear()}
+      </p>
+    </div>
   );
 }
