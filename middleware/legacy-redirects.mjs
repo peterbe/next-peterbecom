@@ -1,4 +1,10 @@
 export function legacyRedirects(req, res, next) {
+  // I have no idea where these came from but perhaps some bug during
+  // the Next work. They'll 500 on the server if let through.
+  if (req.path === "/plog/[oid]" || req.path === "/plog/[oid]/[page]") {
+    return res.redirect(301, "/");
+  }
+
   if (req.query.comments === "all") {
     // All these legacy `?comments=all`, redirect those
     return res.redirect(301, req.path);
