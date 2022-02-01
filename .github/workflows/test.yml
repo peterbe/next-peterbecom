@@ -16,10 +16,7 @@ jobs:
       - name: Debug a name
         run: |
 
-          echo "head_ref=${{ github.head_ref }}"
-          echo "name_ref=${{ github.name_ref }}"
-          echo "ref_name=${{ github.ref_name }}"
-          echo "ref=${{ github.ref }}"
+          echo "CURRENT BRANCH=${{ github.head_ref || github.ref_name }}"
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.1
