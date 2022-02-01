@@ -15,7 +15,7 @@
     "test:watch": "watchlist tests -- uvu tests"
   },
   "dependencies": {
-    "critters": "0.0.15",
+    "critters": "0.0.16",
     "express": "4.17.2",
     "got": "12.0.0",
     "http-proxy-middleware": "2.0.2",
