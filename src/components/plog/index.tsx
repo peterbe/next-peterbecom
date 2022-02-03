@@ -191,8 +191,8 @@ function NotPublishedWarning({ date }: { date: string }) {
     <div className="ui negative message" style={{ marginBottom: 40 }}>
       <div className="header">Not Published Yet!</div>
       <p>
-        This blog post is not published yet. It publishes on <b>{{ date }}</b>
-        (in {simpleTimeDelta(date)}).
+        This blog post is not published yet. It publishes in{" "}
+        <b>{simpleTimeDelta(date)}</b> ({new Date(date).toLocaleString()}).
       </p>
     </div>
   );
@@ -200,7 +200,7 @@ function NotPublishedWarning({ date }: { date: string }) {
 
 function simpleTimeDelta(date: string): string {
   const actualDate = new Date(date);
-  const seconds = (new Date().getTime() - actualDate.getTime()) / 1000;
+  const seconds = (actualDate.getTime() - new Date().getTime()) / 1000;
   const minutes = seconds / 60;
   if (minutes > 120) {
     const hours = minutes / 60;
