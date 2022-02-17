@@ -7,6 +7,7 @@ import Rollbar from "rollbar";
 
 import { cacheControlPublicFiles } from "./middleware/long-cache.mjs";
 import { legacyRedirects } from "./middleware/legacy-redirects.mjs";
+import renderCaching from "./middleware/render-caching.mjs";
 
 // This is only for the Express part.
 let rollbar = null;
@@ -58,6 +59,8 @@ app
     // These will be served via the Next server, but here's our chance
     // to givet them a long cache-control.
     server.use(cacheControlPublicFiles);
+
+    server.use(renderCaching);
 
     server.use(handle);
 
