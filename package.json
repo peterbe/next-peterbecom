@@ -16,15 +16,15 @@
   },
   "dependencies": {
     "critters": "0.0.16",
-    "express": "4.17.2",
+    "express": "4.17.3",
     "got": "12.0.1",
-    "http-proxy-middleware": "2.0.2",
+    "http-proxy-middleware": "2.0.3",
     "morgan": "1.10.0",
     "next": "12.0.10",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "rollbar": "2.24.0",
-    "sharp": "0.29.3",
+    "sharp": "0.30.1",
     "shrink-ray-current": "4.1.3",
     "throttle-debounce": "3.0.1"
   },
