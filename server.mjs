@@ -4,10 +4,13 @@ import morgan from "morgan";
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import Rollbar from "rollbar";
+import dotenv from "dotenv";
 
 import { cacheControlPublicFiles } from "./middleware/long-cache.mjs";
 import { legacyRedirects } from "./middleware/legacy-redirects.mjs";
 import renderCaching from "./middleware/render-caching.mjs";
+
+dotenv.config();
 
 // This is only for the Express part.
 let rollbar = null;
