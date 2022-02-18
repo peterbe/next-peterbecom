@@ -73,7 +73,7 @@ router.post("/__purge__", async function purgeCache(req, res, next) {
   res.json({ results });
 });
 
-router.get("/*", async function getSearch(req, res, next) {
+router.get("/*", async function renderCaching(req, res, next) {
   if (
     req.path.startsWith("/_next/image") ||
     req.path.startsWith("/_next/static") ||
@@ -89,21 +89,6 @@ router.get("/*", async function getSearch(req, res, next) {
   } else {
     res.setHeader("x-middleware-cache", "miss");
   }
-  // console.log("WILDCARD REQUEST", key);
-
-  // const originalWriteFunc = res.write.bind(res);
-  // res.write = function (body) {
-  //   console.log("INSIDE THE WRITE", key);
-  //   // cache.set(key, body);
-  //   return originalWriteFunc(body);
-  // };
-
-  // const originalSendFunc = res.send.bind(res);
-  // res.send = function (body) {
-  //   console.log("INSIDE THE SEND", key);
-  //   // cache.set(key, body);
-  //   return originalSendFunc(body);
-  // };
 
   const originalEndFunc = res.end.bind(res);
   res.end = function (body) {
@@ -117,11 +102,6 @@ router.get("/*", async function getSearch(req, res, next) {
       //   ).toFixed(1)}MB`
       // );
     }
-    // console.log(
-    //   "IN END FUNCTION",
-    //   res.statusCode,
-    //   typeof body === "string" ? body.slice(0, 1000) : body
-    // );
     return originalEndFunc(body);
   };
 
