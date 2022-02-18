@@ -76,13 +76,16 @@ router.post("/__purge__", async function purgeCache(req, res, next) {
 router.get("/*", async function renderCaching(req, res, next) {
   if (
     req.path.startsWith("/_next/image") ||
-    req.path.startsWith("/_next/static") ||
-    req.path.startsWith("/search")
+    req.path.startsWith("/_next/static")
   ) {
     return next();
   }
 
-  const key = req.url;
+  const key =
+    req.path.startsWith("/search") || req.path.startsWith("/_next/data")
+      ? req.url
+      : req.path;
+
   if (cache.has(key)) {
     res.setHeader("x-middleware-cache", "hit");
     return res.status(200).send(cache.get(key));
