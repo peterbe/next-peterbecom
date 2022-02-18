@@ -97,13 +97,6 @@ router.get("/*", async function renderCaching(req, res, next) {
   res.end = function (body) {
     if (body && res.statusCode === 200) {
       cache.set(key, body);
-      // console.log(
-      //   `HEAP AFTER CACHING ${(
-      //     process.memoryUsage().heapUsed /
-      //     1024 /
-      //     1024
-      //   ).toFixed(1)}MB`
-      // );
     }
     return originalEndFunc(body);
   };
