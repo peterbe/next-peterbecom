@@ -1,5 +1,8 @@
 import express from "express";
 import QuickLRU from "quick-lru";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const PURGE_SECRET = process.env.PURGE_SECRET || "";
 
@@ -38,6 +41,7 @@ router.post("/__purge__", async function purgeCache(req, res, next) {
   if (pathnames.find((x) => !x)) {
     return res.status(400).send("'pathnames' not array or empty entry");
   }
+
   if (PURGE_SECRET) {
     if (!req.headers.authorization) {
       return res.status(401).send("Unauthorized");
