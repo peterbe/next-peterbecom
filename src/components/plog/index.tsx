@@ -141,6 +141,14 @@ export function Blogpost({
         )}
       </Head>
 
+      {post.url && (
+        <h4>
+          <a href={post.url} rel="noopener noreferrer">
+            {post.url}
+          </a>
+        </h4>
+      )}
+
       {isOld(post.pub_date) && <OldPostWarning date={post.pub_date} />}
 
       {isNotPublished(post.pub_date) && (
