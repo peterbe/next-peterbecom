@@ -42,7 +42,7 @@ export async function get<T>(
   console.timeEnd(`Fetch:${uri}`);
 
   if (response.retryCount) {
-    console.warn(`Fetch hggad to retry on ${uri} ${response.retryCount} times`);
+    console.warn(`Fetch had to retry on ${uri} ${response.retryCount} times`);
   }
   return response;
 }
