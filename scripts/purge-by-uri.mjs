@@ -2,7 +2,7 @@
 
 import got from "got";
 
-const PURGE_URL = (process.env.PURGE_URL = "http://localhost:3000/__purge__");
+const PURGE_URL = process.env.PURGE_URL || "http://localhost:3000/__purge__";
 const PURGE_SECRET = process.env.PURGE_SECRET || "";
 
 main(process.argv.slice(2));
