@@ -75,7 +75,7 @@ export function CommentForm({
       setName(name);
     }
     if (email) {
-      setName(email);
+      setEmail(email);
     }
   }, []);
 
