@@ -71,6 +71,8 @@ router.post("/__purge__", async function purgeCache(req, res, next) {
   res.json({ results });
 });
 
+const HEADER_NAME = "x-middleware-cache";
+
 router.get("/*", async function renderCaching(req, res, next) {
   if (
     req.path.startsWith("/_next/image") ||
@@ -85,16 +87,20 @@ router.get("/*", async function renderCaching(req, res, next) {
       : req.path;
 
   if (cache.has(key)) {
-    res.setHeader("x-middleware-cache", "hit");
-    return res.status(200).send(cache.get(key));
+    res.setHeader(HEADER_NAME, "hit");
+    const [body, headers] = cache.get(key);
+    Object.entries(headers).forEach(([key, value]) => {
+      if (key !== HEADER_NAME) res.setHeader(key, value);
+    });
+    return res.status(200).send(body);
   } else {
-    res.setHeader("x-middleware-cache", "miss");
+    res.setHeader(HEADER_NAME, "miss");
   }
 
   const originalEndFunc = res.end.bind(res);
   res.end = function (body) {
     if (body && res.statusCode === 200) {
-      cache.set(key, body);
+      cache.set(key, [body, res.getHeaders()]);
     }
     return originalEndFunc(body);
   };

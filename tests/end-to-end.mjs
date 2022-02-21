@@ -22,6 +22,41 @@ test("home page", async () => {
   assert.is(response.headers["content-encoding"], "br");
 });
 
+test("middleware caching", async () => {
+  let response = await get("/");
+  assert.is(response.statusCode, 200);
+  const etagFirst = response.headers["etag"];
+  response = await get("/");
+  assert.is(response.statusCode, 200);
+  assert.is(response.headers["x-middleware-cache"], "hit");
+  assert.is(response.headers["etag"], etagFirst);
+
+  response = await get("/about");
+  assert.is(response.statusCode, 200);
+  response = await get("/about");
+  assert.is(response.statusCode, 200);
+  assert.is(response.headers["x-middleware-cache"], "hit");
+
+  response = await get(`/search?q=${Math.random()}`);
+  assert.is(response.statusCode, 200);
+  assert.is(response.headers["x-middleware-cache"], "miss");
+  response = await get(`/search?q=${Math.random()}`);
+  assert.is(response.statusCode, 200);
+  assert.is(response.headers["x-middleware-cache"], "miss");
+
+  response = await get("/search?q=zope");
+  assert.is(response.statusCode, 200);
+  response = await get("/search?q=zope");
+  assert.is(response.statusCode, 200);
+  assert.is(response.headers["x-middleware-cache"], "hit");
+
+  response = await get("/oc-JavaScript/p2");
+  assert.is(response.statusCode, 200);
+  response = await get("/oc-JavaScript/p2");
+  assert.is(response.statusCode, 200);
+  assert.is(response.headers["x-middleware-cache"], "hit");
+});
+
 test("home page (page 2)", async () => {
   const response = await get("/p2");
   assert.is(response.statusCode, 200);
