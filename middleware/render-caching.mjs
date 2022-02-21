@@ -12,11 +12,9 @@ router.use(express.json());
 
 // Doesn't need to be large because in production, the CDN should
 // terminate the request once it's warmed up.
-// 1min in development, 1h in production.
-const MAX_AGE_MS =
-  1000 * 60 * (process.env.NODE_ENV === "development" ? 1 : 60);
+const MAX_AGE_MS = 1000 * 60; // 1min
 
-const MAX_SIZE = 1000;
+const MAX_SIZE = 2000;
 
 const cache = new QuickLRU({
   maxSize: MAX_SIZE,
