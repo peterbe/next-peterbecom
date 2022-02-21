@@ -95,12 +95,6 @@ export function Blogpost({
               );
             })}
           </p>
-
-          {/* {post.url && (
-            <h4>
-              <a href={post.url}>{post.url}</a>
-            </h4>
-          )} */}
         </>
       }
     >
