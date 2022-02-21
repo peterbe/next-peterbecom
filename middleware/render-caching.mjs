@@ -20,7 +20,7 @@ const cache = new QuickLRU({
   maxSize: MAX_SIZE,
   maxAge: MAX_AGE_MS,
   onEviction: (key) => {
-    console.log(`LRU kicked out '${key}'`);
+    console.log(`LRU kicked out '${key}'`, cache.size);
   },
 });
 
