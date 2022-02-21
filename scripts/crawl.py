@@ -21,10 +21,33 @@ def main(args):
     else:
         max_urls = 0
 
-    urls = []
+    paths = []
+
     for loc in re.findall("<loc>(.*?)</loc>", r.text):
         path = urlparse(loc).path
-        urls.append("http://localhost:3000" + path)
+        paths.append(path)
+
+    oc_paths = []
+    for oc in (
+        "Node",
+        "JavaScript",
+        "Python",
+        "Web+development",
+        "PostgreSQL",
+        "Django",
+        "This+site",
+        "Misc.+links",
+        "Linux",
+        "Zope",
+    ):
+        for i in range(4):
+            if i > 1:
+                oc_paths.append(f"/oc-{oc}/p{i}")
+            else:
+                oc_paths.append(f"/oc-{oc}")
+    paths.extend(oc_paths)
+
+    urls = [f"http://localhost:3000" + x for x in paths]
 
     import random
 
@@ -35,6 +58,9 @@ def main(args):
         t0 = time.time()
         r = requests.get(url)
         t1 = time.time()
+        if r.status_code == 404:
+            print("404 on ", url)
+            continue
         r.raise_for_status()
         print(i + 1, seconds(t1 - t0).ljust(10), r.headers["x-middleware-cache"], url)
         times[r.headers["x-middleware-cache"]].append(t1 - t0)
