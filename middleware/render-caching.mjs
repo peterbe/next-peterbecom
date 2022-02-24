@@ -50,6 +50,8 @@ router.post("/__purge__", async function purgeCache(req, res, next) {
     if (token !== PURGE_SECRET) {
       return res.status(403).send("Forbidden");
     }
+  } else if (process.env.NODE_ENV !== "development") {
+    return res.status(500).send("PURGE_SECRET has not been set up");
   }
 
   const results = {};
