@@ -3,6 +3,7 @@ import type { GetServerSideProps } from "next";
 import { Search } from "../components/search";
 import { cacheHeader } from "../lib/cache";
 import { get } from "../lib/get-data";
+import { BadRequestError } from "../lib/errors";
 
 interface Document {
   oid: string;
@@ -59,10 +60,10 @@ export const getServerSideProps: GetServerSideProps = async ({
       for (const [key, messages] of Object.entries(serverError)) {
         for (const message of messages) {
           error = `${key}: ${message.message}`;
-          break;
+          throw new BadRequestError(error);
         }
-        break;
       }
+      throw new BadRequestError(`${response.body}`);
     } else if (response.statusCode !== 200) {
       throw new Error(`${response.statusCode} on ${fetchURL}`);
     } else {
