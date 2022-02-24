@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 
   const { groups } = data;
 
-  cacheHeader(res);
+  cacheHeader(res, 60 * 60);
 
   return {
     props: {
