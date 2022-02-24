@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     previous_page: previousPage,
   } = response.body;
 
-  cacheHeader(res);
+  cacheHeader(res, 60 * 60);
 
   return {
     props: {
