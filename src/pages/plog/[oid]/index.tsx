@@ -29,7 +29,11 @@ export const getServerSideProps: GetServerSideProps = async ({
   const { post, comments } = response.body;
   const page = 1;
 
-  cacheHeader(res);
+  if (post.pub_date && isNotPublished(post.pub_date)) {
+    cacheHeader(res, 0);
+  } else {
+    cacheHeader(res);
+  }
 
   return {
     props: {
@@ -39,6 +43,11 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
   };
 };
+
+function isNotPublished(date: string) {
+  const actualDate = new Date(date);
+  return actualDate > new Date();
+}
 
 type ViewProps = React.ComponentProps<typeof Blogpost>;
 
