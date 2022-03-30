@@ -17,10 +17,10 @@ import { API_BASE } from "./_constants";
 // So there's no point in trying more attempts than 3 because it would
 // just timeout on the 10s. (i.e. 1000 + 2000 + 4000 + 8000 > 10,000)
 const retryConfiguration = {
-  limit: 3,
+  limit: 4,
 };
 const timeoutConfiguration = {
-  request: 1000,
+  request: 2000,
 };
 
 export async function get<T>(
