@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import { cacheControlPublicFiles } from "./middleware/long-cache.mjs";
 import { legacyRedirects } from "./middleware/legacy-redirects.mjs";
 import renderCaching from "./middleware/render-caching.mjs";
+import { detectBadURIComponents } from "./middleware/detect-bad-requests.mjs";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app
   .prepare()
   .then(() => {
     const server = express();
+
     server.use(
       morgan(
         process.env.MORGAN_LOGGING ||
@@ -62,6 +64,8 @@ app
     // These will be served via the Next server, but here's our chance
     // to givet them a long cache-control.
     server.use(cacheControlPublicFiles);
+
+    server.use(detectBadURIComponents);
 
     server.use(renderCaching);
 
