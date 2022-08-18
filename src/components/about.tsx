@@ -499,10 +499,10 @@ export function About() {
             </h4>
             <p>
               An autocomplete widget where you put some CSS and JS on your site
-              and let autcompeter.com host the data. The server is written in
+              and let autcompeter.com host the data. The server is written in{" "}
               <a href="http://golang.org/">
                 <b>Go</b>
-              </a>
+              </a>{" "}
               and the Javascript is pure without any dependency on a framework.{" "}
               <a href="https://github.com/peterbe/autocompeter">
                 Code on GitHub
