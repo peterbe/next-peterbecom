@@ -34,7 +34,7 @@
     "@types/react": "18.0.15",
     "@types/throttle-debounce": "5.0.0",
     "eslint": "8.23.0",
-    "eslint-config-next": "12.2.4",
+    "eslint-config-next": "12.2.5",
     "nodemon": "2.0.19",
     "typescript": "4.8.2",
     "uvu": "0.5.6",
