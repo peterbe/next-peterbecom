@@ -60,10 +60,15 @@ export function Search({ q, results, error, debug }: Props) {
     }
   }
 
+  // This is to avoid the
+  // `Warning: A title element received an array with more than 1 element as children.`
+  // warning.
+  const pageTitleString = `${pageTitle} - Peterbe.com`;
+
   return (
     <Content pageTitle={pageTitle} extraHead={<h2>{extraHead}</h2>}>
       <Head>
-        <title>{pageTitle} - Peterbe.com</title>
+        <title>{pageTitleString}</title>
       </Head>
 
       {error && (
