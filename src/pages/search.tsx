@@ -57,13 +57,19 @@ export const getServerSideProps: GetServerSideProps = async ({
     if (response.statusCode === 400) {
       const serverError = response.body as ServerError;
 
+      let error = `${response.body}`;
       for (const [key, messages] of Object.entries(serverError)) {
         for (const message of messages) {
           error = `${key}: ${message.message}`;
-          throw new BadRequestError(error);
         }
       }
-      throw new BadRequestError(`${response.body}`);
+      return {
+        props: {
+          debug,
+          q,
+          error: `${response.body}`,
+        },
+      };
     } else if (response.statusCode !== 200) {
       throw new Error(`${response.statusCode} on ${fetchURL}`);
     } else {
