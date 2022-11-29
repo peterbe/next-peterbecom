@@ -5,13 +5,18 @@ import { Content } from "./content";
 import { formatDateBasic } from "./utils";
 import styles from "../styles/Search.module.css";
 
+interface Text {
+  anchor_text: string;
+  text: string;
+}
+
 interface Document {
   oid: string;
   title: string;
   date: string;
   comment_oid: string | null;
   summary: string;
-
+  texts?: Text[];
   score: number;
   score_boosted?: number;
   popularity?: number;
@@ -60,10 +65,15 @@ export function Search({ q, results, error, debug }: Props) {
     }
   }
 
+  // This is to avoid the
+  // `Warning: A title element received an array with more than 1 element as children.`
+  // warning.
+  const pageTitleString = `${pageTitle} - Peterbe.com`;
+
   return (
     <Content pageTitle={pageTitle} extraHead={<h2>{extraHead}</h2>}>
       <Head>
-        <title>{pageTitle} - Peterbe.com</title>
+        <title>{pageTitleString}</title>
       </Head>
 
       {error && (
@@ -98,7 +108,7 @@ export function Search({ q, results, error, debug }: Props) {
       )}
 
       {results && (
-        <div>
+        <div className="results">
           {results.documents.map((result) => {
             let url = `/plog/${result.oid}`;
             if (result.comment_oid) {
@@ -127,8 +137,26 @@ export function Search({ q, results, error, debug }: Props) {
                     {url}
                   </a>
                 </Link>
-                <br />
-                <span dangerouslySetInnerHTML={{ __html: result.summary }} />
+                {result.texts && result.texts.length > 0 ? (
+                  <p>
+                    {result.texts.map((text) => {
+                      return (
+                        <>
+                          <a
+                            className="anchor-link"
+                            href={`${url}#:~:text=${encodeURIComponent(
+                              text.anchor_text
+                            )}`}
+                            dangerouslySetInnerHTML={{ __html: text.text }}
+                          ></a>
+                          <br />
+                        </>
+                      );
+                    })}
+                  </p>
+                ) : (
+                  <p dangerouslySetInnerHTML={{ __html: result.summary }} />
+                )}
               </div>
             );
           })}

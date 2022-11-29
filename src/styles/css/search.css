@@ -1,4 +1,12 @@
-mark {
+h3 a mark {
   background: #ffffdc;
+  color: inherit;
+}
+
+p mark {
+  font-weight: bold;
+}
+
+p a.anchor-link {
   color: inherit;
 }
