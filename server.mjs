@@ -10,6 +10,7 @@ import { cacheControlPublicFiles } from "./middleware/long-cache.mjs";
 import { legacyRedirects } from "./middleware/legacy-redirects.mjs";
 import renderCaching from "./middleware/render-caching.mjs";
 import { detectBadURIComponents } from "./middleware/detect-bad-requests.mjs";
+import { detectBadSearches } from "./middleware/detect-bad-searches.mjs";
 
 dotenv.config();
 
@@ -39,6 +40,8 @@ app
           ":remote-addr [:date[clf]] :method :url HTTP/:http-version :status :res[content-length] - :response-time ms"
       )
     );
+
+    server.use(detectBadSearches);
 
     server.use(shrinkRay());
 
