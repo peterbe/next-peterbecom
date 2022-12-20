@@ -9,8 +9,6 @@ import { CommentsSection } from "./comments";
 import { formatDateBasic } from "../utils";
 import type { Post, Comments } from "../../types";
 
-// const Plog: NextPage = (props: Props) => {
-// function Plog({ data }: InferGetStaticPropsType<typeof getServerSideProps>) {
 export function Blogpost({
   post,
   comments,
@@ -61,6 +59,19 @@ export function Blogpost({
     };
   }, []);
 
+  // So that what we put into `<title>` is just a string.
+  // Otherwise Next will complain about:
+  //
+  //    Warning: A title element received an array with more than 1 element
+  //    as children. In browsers title Elements can only have Text Nodes as
+  //    children. If the children being rendered output more than a single
+  //    text node in aggregate the browser will display markup and
+  //    comments as text in the title and hydration will likely fail and
+  //    fall back to client rendering
+  const title = `${post.title} ${
+    page > 1 ? `(Page ${page})` : ""
+  } - Peterbe.com`;
+
   return (
     <Content
       pageTitle={
@@ -82,13 +93,12 @@ export function Blogpost({
             {post.categories.map((name, i) => {
               return (
                 <Fragment key={name}>
-                  <Link href={categoryURL(name)}>
-                    <a
-                      rel="nofollow"
-                      title={`Filter by the '${name}' category'`}
-                    >
-                      {name}
-                    </a>
+                  <Link
+                    href={categoryURL(name)}
+                    rel="nofollow"
+                    title={`Filter by the '${name}' category'`}
+                  >
+                    {name}
                   </Link>
                   {i !== post.categories.length - 1 && ", "}
                 </Fragment>
@@ -99,9 +109,7 @@ export function Blogpost({
       }
     >
       <Head>
-        <title>
-          {post.title} {page > 1 ? `(Page ${page})` : ""} - Peterbe.com
-        </title>
+        <title>{title}</title>
 
         <meta
           property="og:url"
@@ -324,10 +332,11 @@ function SubCategories({ categories }: { categories: string[] }) {
     <>
       {categories.map((category, i) => (
         <Fragment key={category}>
-          <Link href={categoryURL(category)}>
-            <a title={`Filter by the '${category}' category`}>
-              <small>{category}</small>
-            </a>
+          <Link
+            href={categoryURL(category)}
+            title={`Filter by the '${category}' category`}
+          >
+            <small>{category}</small>
           </Link>
           {i < categories.length - 1 && <small>, </small>}
         </Fragment>

@@ -5,11 +5,12 @@ import { Content } from "./content";
 
 export function Avatar() {
   const pageTitle = "Avatar image test page";
+  const title = `${pageTitle} - Peterbe.com`;
   const [imageSrc, setImageSrc] = useState("/avatar.png");
   return (
     <Content pageTitle={pageTitle}>
       <Head>
-        <title>{pageTitle} - Peterbe.com</title>
+        <title>{title}</title>
       </Head>
 
       <p id="figure">

@@ -35,35 +35,33 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
     <div className="ui borderless main menu">
       <div className="ui container">
         <div className="header item">
-          <Link href="/">
-            <a title="Go back the home page">
-              <img
-                className="logo"
-                alt="My face"
-                src="/images/favicon-32.png"
-                width={32}
-                height={32}
-              />
-            </a>
+          <Link href="/" title="Go back the home page">
+            <img
+              className="logo"
+              alt="My face"
+              src="/images/favicon-32.png"
+              width={32}
+              height={32}
+            />
           </Link>{" "}
-          <Link href="/">
-            <a title="Go back the home page">Peterbe.com</a>
+          <Link href="/" title="Go back the home page">
+            Peterbe.com
           </Link>
           {pageTitle && <a className="page-title-repeated">{pageTitle}</a>}
         </div>
 
         <div className="right menu">
-          <Link href="/">
-            <a className="ui item">Home</a>
+          <Link href="/" className="ui item">
+            Home
           </Link>
-          <Link href="/plog" prefetch={false}>
-            <a className="ui item">Archive</a>
+          <Link href="/plog" prefetch={false} className="ui item">
+            Archive
           </Link>
-          <Link href="/about" prefetch={false}>
-            <a className="ui item">About</a>
+          <Link href="/about" prefetch={false} className="ui item">
+            About
           </Link>
-          <Link href="/contact" prefetch={false}>
-            <a className="ui item">Contact</a>
+          <Link href="/contact" prefetch={false} className="ui item">
+            Contact
           </Link>
           <form
             action="/search"
@@ -137,20 +135,20 @@ export function MainMenu({ pageTitle }: { pageTitle?: string }) {
                 : { display: "none" }
             }
           >
-            <Link href="/">
-              <a className="item">Home</a>
+            <Link href="/" className="item">
+              Home
             </Link>
-            <Link href="/plog" prefetch={false}>
-              <a className="item">Archive</a>
+            <Link href="/plog" prefetch={false} className="item">
+              Archive
             </Link>
-            <Link href="/about" prefetch={false}>
-              <a className="item">About</a>
+            <Link href="/about" prefetch={false} className="item">
+              About
             </Link>
-            <Link href="/contact" prefetch={false}>
-              <a className="item">Contact</a>
+            <Link href="/contact" prefetch={false} className="item">
+              Contact
             </Link>
-            <Link href="/search" prefetch={false}>
-              <a className="item">Search</a>
+            <Link href="/search" prefetch={false} className="item">
+              Search
             </Link>
           </div>
         </div>

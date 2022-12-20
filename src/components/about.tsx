@@ -7,10 +7,11 @@ import styles from "../styles/About.module.css";
 
 export function About() {
   const pageTitle = "About this site";
+  const title = `${pageTitle} - Peterbe.com`;
   return (
     <Content pageTitle={pageTitle}>
       <Head>
-        <title>{pageTitle} - Peterbe.com</title>
+        <title>{title}</title>
       </Head>
 
       <p>

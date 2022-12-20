@@ -6,32 +6,23 @@ export function Footer() {
   return (
     <div className="ui inverted vertical footer segment">
       <div className="ui center aligned container">
-        <p>
-          &copy; peterbe.com 2003 - {THIS_YEAR}
-          {/* &sdot; Hosted on{" "}
-          <a
-            href="https://www.digitalocean.com/?refcode=9c9126b69f33"
-            title="Yes, following this link and signing up will give me a small referal bonus :)"
-          >
-            Digital Ocean
-          </a> */}
-        </p>
+        <p>&copy; peterbe.com 2003 - {THIS_YEAR}</p>
 
         <div className="ui horizontal inverted small divided link list">
-          <Link href="/">
-            <a className="item">Home</a>
+          <Link href="/" className="item">
+            Home
           </Link>{" "}
-          <Link href="/plog/" prefetch={false}>
-            <a className="item">Archive</a>
+          <Link href="/plog/" prefetch={false} className="item">
+            Archive
           </Link>{" "}
-          <Link href="/about" prefetch={false}>
-            <a className="item">About</a>
+          <Link href="/about" prefetch={false} className="item">
+            About
           </Link>{" "}
-          <Link href="/contact" prefetch={false}>
-            <a className="item">Contact</a>
+          <Link href="/contact" prefetch={false} className="item">
+            Contact
           </Link>{" "}
-          <Link href="/search" prefetch={false}>
-            <a className="item">Search</a>
+          <Link href="/search" prefetch={false} className="item">
+            Search
           </Link>
         </div>
         <p>

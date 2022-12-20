@@ -94,17 +94,23 @@ router.get("/*", async function renderCaching(req, res, next) {
     Object.entries(headers).forEach(([key, value]) => {
       if (key !== HEADER_NAME) res.setHeader(key, value);
     });
-    return res.status(200).send(body);
+    if (typeof body === "string") {
+      return res.status(200).send(body);
+    } else {
+      // Converting Uint8Array to string
+      const bodyString = Buffer.from(body.buffer).toString();
+      return res.status(200).send(bodyString);
+    }
   } else {
     res.setHeader(HEADER_NAME, "miss");
   }
 
-  const originalEndFunc = res.end.bind(res);
-  res.end = function (body) {
-    if (body && res.statusCode === 200) {
-      cache.set(key, [body, res.getHeaders()]);
+  const originalWriteFunc = res.write.bind(res);
+  res.write = function (buf) {
+    if (res.statusCode === 200 && buf) {
+      cache.set(key, [buf, res.getHeaders()]);
     }
-    return originalEndFunc(body);
+    return originalWriteFunc(buf);
   };
 
   next();

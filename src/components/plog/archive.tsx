@@ -22,10 +22,11 @@ interface Props {
 export function Archive({ groups }: Props) {
   const pageTitle = "Blog archive";
 
+  const title = `${pageTitle} - Peterbe.com`;
   return (
     <Content pageTitle={pageTitle}>
       <Head>
-        <title>{pageTitle} - Peterbe.com</title>
+        <title>{title}</title>
       </Head>
       <ListGroups groups={groups} />
     </Content>
@@ -43,9 +44,7 @@ function ListGroups({ groups }: { groups: Group[] }) {
             {posts.map((post) => {
               return (
                 <dd key={post.oid}>
-                  <Link href={`/plog/${post.oid}`}>
-                    <a>{post.title}</a>
-                  </Link>{" "}
+                  <Link href={`/plog/${post.oid}`}>{post.title}</Link>{" "}
                   {post.comments > 0 && (
                     <span className="comments">
                       {post.comments.toLocaleString()} comment
