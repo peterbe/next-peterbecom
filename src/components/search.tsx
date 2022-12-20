@@ -115,9 +115,10 @@ export function Search({ q, results, error, debug }: Props) {
                 className={styles.result}
               >
                 <h3 className={styles.result_h3}>
-                  <Link href={url}>
-                    <a dangerouslySetInnerHTML={{ __html: result.title }}></a>
-                  </Link>{" "}
+                  <Link
+                    href={url}
+                    dangerouslySetInnerHTML={{ __html: result.title }}
+                  ></Link>{" "}
                   {debug && !result.comment_oid && (
                     <DebugResult document={result} />
                   )}
@@ -126,11 +127,9 @@ export function Search({ q, results, error, debug }: Props) {
                     {formatDateBasic(result.date)}
                   </small>
                 </h3>
-                <Link href={url}>
-                  <a className={styles.result_a_url}>
-                    {baseURL}
-                    {url}
-                  </a>
+                <Link href={url} className={styles.result_a_url}>
+                  {baseURL}
+                  {url}
                 </Link>
                 <br />
                 <span dangerouslySetInnerHTML={{ __html: result.summary }} />

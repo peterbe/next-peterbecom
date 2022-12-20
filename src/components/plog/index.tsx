@@ -9,8 +9,6 @@ import { CommentsSection } from "./comments";
 import { formatDateBasic } from "../utils";
 import type { Post, Comments } from "../../types";
 
-// const Plog: NextPage = (props: Props) => {
-// function Plog({ data }: InferGetStaticPropsType<typeof getServerSideProps>) {
 export function Blogpost({
   post,
   comments,
@@ -82,13 +80,12 @@ export function Blogpost({
             {post.categories.map((name, i) => {
               return (
                 <Fragment key={name}>
-                  <Link href={categoryURL(name)}>
-                    <a
-                      rel="nofollow"
-                      title={`Filter by the '${name}' category'`}
-                    >
-                      {name}
-                    </a>
+                  <Link
+                    href={categoryURL(name)}
+                    rel="nofollow"
+                    title={`Filter by the '${name}' category'`}
+                  >
+                    {name}
                   </Link>
                   {i !== post.categories.length - 1 && ", "}
                 </Fragment>
@@ -324,10 +321,11 @@ function SubCategories({ categories }: { categories: string[] }) {
     <>
       {categories.map((category, i) => (
         <Fragment key={category}>
-          <Link href={categoryURL(category)}>
-            <a title={`Filter by the '${category}' category`}>
-              <small>{category}</small>
-            </a>
+          <Link
+            href={categoryURL(category)}
+            title={`Filter by the '${category}' category`}
+          >
+            <small>{category}</small>
           </Link>
           {i < categories.length - 1 && <small>, </small>}
         </Fragment>

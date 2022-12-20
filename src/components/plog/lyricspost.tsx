@@ -1,8 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-// import Link from "next/link";
-// import { Fragment, useEffect } from "react";
 import styles from "../../styles/Lyricspost.module.css";
 
 import { Content } from "../content";

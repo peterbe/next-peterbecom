@@ -52,13 +52,12 @@ export function Homepage({ posts, categories, nextPage, previousPage }: Props) {
               </span>
               {post.categories.map((name, i) => (
                 <Fragment key={name}>
-                  <Link href={categoryURL(name)}>
-                    <a
-                      rel="nofollow"
-                      title={`Filter by the '${name}' category`}
-                    >
-                      {name}
-                    </a>
+                  <Link
+                    href={categoryURL(name)}
+                    rel="nofollow"
+                    title={`Filter by the '${name}' category`}
+                  >
+                    {name}
                   </Link>
                   {i < post.categories.length - 1 && ", "}
                 </Fragment>
@@ -129,15 +128,15 @@ function HomepagePagination({
     <div className="ui two column centered grid" style={{ marginTop: 100 }}>
       <div className="ui pagination menu">
         {nextPage ? (
-          <Link href={makeURL(nextPage, categories)}>
-            <a className="item">&larr; Older</a>
+          <Link href={makeURL(nextPage, categories)} className="item">
+            &larr; Older
           </Link>
         ) : (
           <a className="item disabled">Older</a>
         )}{" "}
         {previousPage !== null ? (
-          <Link href={makeURL(previousPage, categories)}>
-            <a className="item">Newer &rarr;</a>
+          <Link href={makeURL(previousPage, categories)} className="item">
+            Newer &rarr;
           </Link>
         ) : (
           <a className="item disabled">Newer</a>

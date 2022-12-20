@@ -43,9 +43,7 @@ function ListGroups({ groups }: { groups: Group[] }) {
             {posts.map((post) => {
               return (
                 <dd key={post.oid}>
-                  <Link href={`/plog/${post.oid}`}>
-                    <a>{post.title}</a>
-                  </Link>{" "}
+                  <Link href={`/plog/${post.oid}`}>{post.title}</Link>{" "}
                   {post.comments > 0 && (
                     <span className="comments">
                       {post.comments.toLocaleString()} comment

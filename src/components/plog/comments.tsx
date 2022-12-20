@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import { useState, Fragment } from "react";
 import Link from "next/link";
 
 import type {
@@ -91,7 +91,7 @@ function CommentsPagination({
       {previousPage && (
         <>
           <Link href={makePaginationURL(oid, previousPage)}>
-            <a>← Go to page {page - 1}</a>
+            ← Go to page {page - 1}
           </Link>
           &nbsp;
         </>
@@ -100,7 +100,7 @@ function CommentsPagination({
       {nextPage && (
         <>
           <Link href={makePaginationURL(oid, nextPage)}>
-            <a>Go to page {nextPage} →</a>
+            Go to page {nextPage} →
           </Link>
           &nbsp;
         </>
