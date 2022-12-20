@@ -1,16 +1,14 @@
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
 
 import { Content } from "./content";
-// import styles from "../styles/About.module.css";
 
 export function Contact() {
   const pageTitle = "Contact me";
+  const title = `${pageTitle} - Peterbe.com`;
   return (
     <Content pageTitle={pageTitle}>
       <Head>
-        <title>{pageTitle} - Peterbe.com</title>
+        <title>{title}</title>
       </Head>
 
       <h3>Email</h3>

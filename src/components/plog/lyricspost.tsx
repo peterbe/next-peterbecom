@@ -19,6 +19,11 @@ export function Lyricspost({
 }) {
   let pageTitle = "Find song by lyrics";
 
+  // The contents of the `<title>` has to be a string
+  const title = `${pageTitle} ${
+    page > 1 ? ` (Page ${page})` : " Looking for songs by the lyrics"
+  }`;
+
   return (
     <Content
       pageTitle={
@@ -32,14 +37,7 @@ export function Lyricspost({
       footer={null}
     >
       <Head>
-        <title>
-          {pageTitle}
-          {/* Can't use regular boolean operator because 'null' doesn't
-          work as a string when this is sent to Next to update document.title.
-          Weird but necessary.
-           */}
-          {page > 1 ? ` (Page ${page})` : " Looking for songs by the lyrics"}
-        </title>
+        <title>{title}</title>
 
         <meta
           property="og:url"

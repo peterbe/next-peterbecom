@@ -22,10 +22,11 @@ interface Props {
 export function Archive({ groups }: Props) {
   const pageTitle = "Blog archive";
 
+  const title = `${pageTitle} - Peterbe.com`;
   return (
     <Content pageTitle={pageTitle}>
       <Head>
-        <title>{pageTitle} - Peterbe.com</title>
+        <title>{title}</title>
       </Head>
       <ListGroups groups={groups} />
     </Content>
