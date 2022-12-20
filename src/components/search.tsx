@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import useSWR from "swr";
 
 import { Content } from "./content";
 import { formatDateBasic } from "./utils";
+import { useQueryString, useQueryBoolean } from "./use-query-hook";
 import styles from "../styles/Search.module.css";
 
 interface Document {
@@ -33,20 +36,47 @@ interface SearchResult {
   search_term_boosts: SearchTermBoosts;
 }
 
-interface Props {
-  q: string | null;
-  results?: SearchResult;
-  error?: string | null;
-  debug: boolean;
+interface ServerData {
+  results: SearchResult;
+}
+interface ServerError {
+  [key: string]: {
+    message: string;
+  }[];
 }
 
-export function Search({ q, results, error, debug }: Props) {
+export function Search() {
+  const q = useQueryString("q");
+  const debug = useQueryBoolean("debug");
+
   const pageTitle = q ? `Searching for ${q}` : "Search";
   let extraHead = null;
   const baseURL = "https://www.peterbe.com";
-  if (results) {
-    const found = results.count_documents;
-    const shown = results.count_documents_shown;
+
+  // const error = undefined;
+  // const results: SearchResult | undefined = undefined;
+
+  const apiURL = q
+    ? `/api/v1/search?${new URLSearchParams({
+        q,
+        debug: JSON.stringify(debug),
+      }).toString()}`
+    : null;
+
+  const { data, error, isLoading } = useSWR<ServerData, Error>(
+    apiURL,
+    async (url) => {
+      const r = await fetch(url);
+      if (!r.ok) {
+        throw new Error(`${r.status} on ${url}`);
+      }
+      return r.json();
+    }
+  );
+
+  if (data && data.results) {
+    const found = data.results.count_documents;
+    const shown = data.results.count_documents_shown;
     if (found === 1) {
       extraHead = "1 thing found";
     } else if (found > 1) {
@@ -58,6 +88,8 @@ export function Search({ q, results, error, debug }: Props) {
     } else {
       extraHead = "Nothing found";
     }
+  } else if (isLoading) {
+    extraHead = "Hmmmmmm...";
   }
 
   // This is to avoid the
@@ -71,13 +103,14 @@ export function Search({ q, results, error, debug }: Props) {
         <title>{pageTitleString}</title>
       </Head>
 
+      {isLoading && <LoadingSpace />}
       {error && (
         <div className="ui negative message">
           <div className="header">Search error</div>
           <p>
             An error occurred with the server for that search:
             <br />
-            <code>{error}</code>
+            <code>{error.toString()}</code>
           </p>
         </div>
       )}
@@ -95,16 +128,16 @@ export function Search({ q, results, error, debug }: Props) {
         </form>
       )}
 
-      {results && !error && (
+      {data && data.results && !error && (
         <SearchMetaDetails
-          found={results.count_documents}
-          seconds={results.search_time}
+          found={data.results.count_documents}
+          seconds={data.results.search_time}
         />
       )}
 
-      {results && (
+      {data && data.results && (
         <div>
-          {results.documents.map((result) => {
+          {data.results.documents.map((result) => {
             let url = `/plog/${result.oid}`;
             if (result.comment_oid) {
               url += `#${result.comment_oid}`;
@@ -139,13 +172,41 @@ export function Search({ q, results, error, debug }: Props) {
         </div>
       )}
 
-      {debug && results && results.search_terms && (
+      {debug && data && data.results && data.results.search_terms && (
         <SearchTermDebugging
-          searchTerms={results.search_terms}
-          boosts={results?.search_term_boosts}
+          searchTerms={data.results.search_terms}
+          boosts={data.results?.search_term_boosts}
         />
       )}
     </Content>
+  );
+}
+
+function LoadingSpace() {
+  const [seconds, setSeconds] = useState(0);
+  useEffect(() => {
+    let mounted = true;
+
+    const timer = setTimeout(() => {
+      setSeconds((prevState) => prevState + 1);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      mounted = false;
+    };
+  }, [seconds]);
+
+  let statement = "";
+  if (seconds > 6) {
+    statement = "Man, this is taking ages!";
+  } else if (seconds >= 2) {
+    statement = "Still thinking about it...";
+  }
+  return (
+    <div style={{ marginTop: 20, marginBottom: 600 }}>
+      <p>{statement}</p>
+    </div>
   );
 }
 
