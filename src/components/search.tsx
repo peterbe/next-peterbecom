@@ -53,9 +53,6 @@ export function Search() {
   let extraHead = null;
   const baseURL = "https://www.peterbe.com";
 
-  // const error = undefined;
-  // const results: SearchResult | undefined = undefined;
-
   const apiURL = q
     ? `/api/v1/search?${new URLSearchParams({
         q,
@@ -71,6 +68,9 @@ export function Search() {
         throw new Error(`${r.status} on ${url}`);
       }
       return r.json();
+    },
+    {
+      revalidateOnFocus: false,
     }
   );
 
