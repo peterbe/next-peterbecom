@@ -39,6 +39,50 @@ export function About() {
       <div className={styles.projects}>
         <h2>Side projects</h2>
 
+        <div className={styles.project} id="docsql">
+          <div className={styles.screenshot}>
+            <a href="https://github.com/peterbe/docsql" title="docsQL">
+              <Image
+                src="/about/docsql.png"
+                alt="docsQL"
+                width={110}
+                height={110}
+              />
+            </a>
+          </div>
+          <div className="rest">
+            <h3>
+              docsQL
+              <a
+                href="#docsql"
+                title="Link to this section"
+                className={styles.perm}
+              >
+                #
+              </a>
+            </h3>
+            <h4>
+              <a href="https://github.com/peterbe/docsql">
+                https://github.com/peterbe/docsql
+              </a>
+            </h4>
+            <p>
+              A web app where you bring your own data. Where the data is a
+              repository of Markdown files. Then, you can query all of this
+              Markdown data with SQL queries.{" "}
+              <a href="https://github.com/peterbe/docsql#screenshots-as-of-mar-2022">
+                Screenhots in the README
+              </a>
+              .
+              <br />
+              <Link href="/plog/introducing-docsql">
+                Blog post about it here
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+
         <div className={styles.project} id="thatsgroce">
           <div className={styles.screenshot}>
             <a href="https://thatsgroce.web.app/about" title="That's Groce!">
