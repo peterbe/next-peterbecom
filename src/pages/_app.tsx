@@ -25,7 +25,6 @@ import "../styles/css/semantic/dropdown.min.css";
 import "../styles/css/semantic/search.css";
 import "../styles/css/highlight.css";
 import "../styles/css/peterbe.css";
-import "../styles/css/search.css";
 
 import "../styles/css/carbon-ads-outer.css";
 import "../styles/css/carbon-ads.css";
