@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 import { Content } from "../content";
+import styles from "../../styles/Archive.module.scss";
 
 interface Post {
   oid: string;
@@ -35,25 +36,23 @@ export function Archive({ groups }: Props) {
 
 function ListGroups({ groups }: { groups: Group[] }) {
   return (
-    // Remember, not using CSS modules on this page because it's so huge.
-    <dl id="archive">
+    <dl className={styles.archive}>
       {groups.map(({ date, posts }) => {
         return (
           <Fragment key={date}>
             <dt>{formatDate(date)}</dt>
             {posts.map((post) => {
+              const count = `${post.comments.toLocaleString()} comment${
+                post.comments === 1 ? "" : "s"
+              }`;
               return (
                 <dd key={post.oid}>
                   <Link href={`/plog/${post.oid}`}>{post.title}</Link>{" "}
-                  {post.comments > 0 && (
-                    <span className="comments">
-                      {post.comments.toLocaleString()} comment
-                      {post.comments === 1 ? "" : "s"}
-                    </span>
-                  )}{" "}
-                  <span className="categories">
-                    {post.categories.join(", ")}
-                  </span>
+                  {post.comments > 0 && <span>{count}</span>}{" "}
+                  {/* Using <b> here because of SCSS in Archive.module.scss
+                  I can't seen to use something like <span className="categories">
+                   */}
+                  <b>{post.categories.join(", ")}</b>
                 </dd>
               );
             })}
