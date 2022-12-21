@@ -4,9 +4,17 @@
 }
 .result {
   margin-bottom: 35px;
-}
-.result_h3 {
-  margin-bottom: 2px;
+  mark {
+    background: #ffffdc;
+    color: inherit;
+  }
+  h3 {
+    margin-bottom: 2px;
+
+    small {
+      float: right;
+    }
+  }
 }
 .result_a_url {
   color: green;

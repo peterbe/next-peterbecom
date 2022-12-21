@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { Content } from "./content";
 import { formatDateBasic } from "./utils";
 import { useQueryString, useQueryBoolean } from "./use-query-hook";
-import styles from "../styles/Search.module.css";
+import styles from "../styles/Search.module.scss";
 
 interface Document {
   oid: string;
@@ -147,7 +147,7 @@ export function Search() {
                 key={`${result.oid}${result.comment_oid}`}
                 className={styles.result}
               >
-                <h3 className={styles.result_h3}>
+                <h3>
                   <Link
                     href={url}
                     dangerouslySetInnerHTML={{ __html: result.title }}
@@ -156,9 +156,7 @@ export function Search() {
                     <DebugResult document={result} />
                   )}
                   &nbsp;
-                  <small style={{ float: "right" }}>
-                    {formatDateBasic(result.date)}
-                  </small>
+                  <small>{formatDateBasic(result.date)}</small>
                 </h3>
                 <Link href={url} className={styles.result_a_url}>
                   {baseURL}
