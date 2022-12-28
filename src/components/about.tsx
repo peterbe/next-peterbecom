@@ -1300,11 +1300,11 @@ export function About() {
         </div>
 
         <p style={{ marginTop: 30 }}>
-          <strong>Note:</strong>
-          This list does not include any of the fun projects I&apos;m workig on
-          at work. <strong>These are all side-projects</strong>.<br />
-          Also, most of these projects I&apos;m{" "}
-          <strong>not actively working on</strong> but they&apo;re all projects
+          <strong>Note:</strong> This list does not include any of the fun
+          projects I&apos;m working on at work.{" "}
+          <strong>These are all side-projects</strong>.<br />
+          Also, many of these projects I&apos;m{" "}
+          <strong>not actively working on</strong> but they&apos;re all projects
           that are <strong>alive and hosted somewhere</strong>.
         </p>
       </div>

@@ -15,6 +15,7 @@
     "test:watch": "watchlist tests -- uvu tests"
   },
   "dependencies": {
+    "classnames": "2.3.2",
     "critters": "0.0.16",
     "dotenv": "16.0.3",
     "express": "4.18.2",

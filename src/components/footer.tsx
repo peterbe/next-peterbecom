@@ -1,4 +1,6 @@
 import Link from "next/link";
+import cx from "classnames";
+import styles from "../styles/Footer.module.scss";
 
 const THIS_YEAR = new Date().getFullYear();
 
@@ -8,20 +10,18 @@ export function Footer() {
       <div className="ui center aligned container">
         <p>&copy; peterbe.com 2003 - {THIS_YEAR}</p>
 
-        <div className="ui horizontal inverted small divided link list">
-          <Link href="/" className="item">
-            Home
-          </Link>{" "}
-          <Link href="/plog/" prefetch={false} className="item">
+        <div className={cx(styles.links, "ui horizontal small divided link")}>
+          <Link href="/">Home</Link>{" "}
+          <Link href="/plog/" prefetch={false}>
             Archive
           </Link>{" "}
-          <Link href="/about" prefetch={false} className="item">
+          <Link href="/about" prefetch={false}>
             About
           </Link>{" "}
-          <Link href="/contact" prefetch={false} className="item">
+          <Link href="/contact" prefetch={false}>
             Contact
           </Link>{" "}
-          <Link href="/search" prefetch={false} className="item">
+          <Link href="/search" prefetch={false}>
             Search
           </Link>
         </div>

@@ -9,8 +9,8 @@ import "../styles/css/semantic/container.min.css";
 import "../styles/css/semantic/header.min.css";
 import "../styles/css/semantic/input.css"; // has custom hacks
 // import "../styles/css/semantic/label.css",
-import "../styles/css/semantic/list.min.css";
-import "../styles/css/semantic/loader.min.css";
+// import "../styles/css/semantic/list.min.css";
+// import "../styles/css/semantic/loader.min.css";
 import "../styles/css/semantic/segment.min.css";
 import "../styles/css/semantic/form.min.css";
 // import "../styles/css/semantic/grid.css"
@@ -20,9 +20,9 @@ import "../styles/css/semantic/message.min.css";
 import "../styles/css/semantic/table.min.css";
 import "../styles/css/semantic/item.min.css";
 import "../styles/css/semantic/comment.min.css";
-import "../styles/css/semantic/dimmer.min.css";
+// import "../styles/css/semantic/dimmer.min.css";
 import "../styles/css/semantic/dropdown.min.css";
-import "../styles/css/semantic/search.css";
+// import "../styles/css/semantic/search.css";
 import "../styles/css/highlight.css";
 import "../styles/css/peterbe.css";
 
