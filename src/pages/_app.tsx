@@ -6,7 +6,7 @@ import "../styles/css/semantic/site.min.css";
 import "../styles/css/slim-semantic-button.css"; // My own!
 import "../styles/css/semantic/container.min.css";
 // import "../styles/css/semantic/divider.css",
-import "../styles/css/semantic/header.min.css";
+import "../styles/css/semantic/header.css";
 import "../styles/css/semantic/input.css"; // has custom hacks
 // import "../styles/css/semantic/label.css",
 // import "../styles/css/semantic/list.min.css";
