@@ -186,7 +186,9 @@ function LoadingSpace() {
     let mounted = true;
 
     const timer = setTimeout(() => {
-      setSeconds((prevState) => prevState + 1);
+      if (mounted) {
+        setSeconds((prevState) => prevState + 1);
+      }
     }, 1000);
 
     return () => {
