@@ -49,7 +49,7 @@ module.exports = (phase, { defaultConfig }) => {
       defaultLocale: "en",
     },
 
-    experimental: { optimizeCss: true },
+    // experimental: { optimizeCss: true },
 
     // https://nextjs.org/docs/api-reference/next.config.js/disabling-x-powered-by
     poweredByHeader: false,
