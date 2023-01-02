@@ -83,7 +83,10 @@ router.get("/*", async function renderCaching(req, res, next) {
     return next();
   }
 
-  const key = req.path.startsWith("/_next/data") ? req.url : req.path;
+  const key =
+    req.path.startsWith("/search") || req.path.startsWith("/_next/data")
+      ? req.url
+      : req.path;
 
   if (cache.has(key)) {
     res.setHeader(HEADER_NAME, "hit");

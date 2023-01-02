@@ -42,7 +42,7 @@ test("middleware caching", async () => {
   assert.is(response.headers["x-middleware-cache"], "miss");
   response = await get(`/search?q=${Math.random()}`);
   assert.is(response.statusCode, 200);
-  assert.is(response.headers["x-middleware-cache"], "hit");
+  assert.is(response.headers["x-middleware-cache"], "miss");
 
   response = await get("/search?q=zope");
   assert.is(response.statusCode, 200);
