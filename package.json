@@ -26,7 +26,7 @@
     "quick-lru": "6.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "rollbar": "2.26.0",
+    "rollbar": "2.26.1",
     "sass": "1.57.1",
     "sharp": "0.31.3",
     "shrink-ray-current": "4.1.3",
