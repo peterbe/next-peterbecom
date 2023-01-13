@@ -45,7 +45,11 @@ interface ServerError {
   }[];
 }
 
-export function Search() {
+interface Props {
+  xhrPreloadURL?: string;
+}
+
+export function Search({ xhrPreloadURL }: Props) {
   const q = useQueryString("q");
   const debug = useQueryBoolean("debug");
 
@@ -101,6 +105,9 @@ export function Search() {
     <Content pageTitle={pageTitle} extraHead={<h2>{extraHead}</h2>}>
       <Head>
         <title>{pageTitleString}</title>
+        {xhrPreloadURL && (
+          <link rel="preload" href={xhrPreloadURL} as="fetch" />
+        )}
       </Head>
 
       {isLoading && <LoadingSpace />}
