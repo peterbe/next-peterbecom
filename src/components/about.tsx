@@ -87,8 +87,8 @@ export function About() {
               <Image
                 src="/about/docsql.png"
                 alt="docsQL"
-                width={110}
-                height={110}
+                width={100}
+                height={100}
               />
             </a>
           </div>
