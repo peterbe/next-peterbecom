@@ -39,14 +39,56 @@ export function About() {
       <div className={styles.projects}>
         <h2>Side projects</h2>
 
+        <div className={styles.project} id="youshouldwatch">
+          <div className={styles.screenshot}>
+            <a href="https://ushdwat.ch" title="You Should Watch">
+              <Image
+                src="/about/youshouldwatch.png"
+                alt="You Should Watch"
+                width={110}
+                height={110}
+              />
+            </a>
+          </div>
+          <div className="rest">
+            <h3>
+              You Should Watch
+              <a
+                href="#youshouldwatch"
+                title="Link to this section"
+                className={styles.perm}
+              >
+                #
+              </a>
+            </h3>
+            <h4>
+              <a href="https://ushdwat.ch">https://ushdwat.ch</a>
+            </h4>
+            <p>
+              You Should Watch is a mobile-friendly web app for remembering and
+              sharing movies and TV shows you should watch. Like a to-do list to
+              open when you finally sit down with the remote in your hand.
+              <br />
+              <Link href="/plog/announcing-you-should-watch">
+                Blog post about it here
+              </Link>
+              .{" "}
+              <Link href="/plog/the-technology-behind-you-should-watch">
+                Blog post about the technology used
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+
         <div className={styles.project} id="docsql">
           <div className={styles.screenshot}>
             <a href="https://github.com/peterbe/docsql" title="docsQL">
               <Image
                 src="/about/docsql.png"
                 alt="docsQL"
-                width={110}
-                height={110}
+                width={100}
+                height={100}
               />
             </a>
           </div>
