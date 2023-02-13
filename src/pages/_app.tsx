@@ -55,12 +55,15 @@ function MyApp({ Component, pageProps }: AppProps) {
           title="RSS"
           href="/rss.xml"
         />
-
         {/* <GAScripts/> can't return null because it gets used inside a <Head> */}
         {USE_GOOGLE_ANALYTICS && <GAScripts />}
-
         <link rel="icon" href="/images/favicon-48.png" />
         <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+        <script
+          async
+          src="https://cdn.carbonads.com/carbon.js?serve=CKYI52Q7&amp;placement=peterbecom"
+          id="_carbonads_js"
+        ></script>
       </Head>
       <Component {...pageProps} />
     </>
