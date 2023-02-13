@@ -220,8 +220,9 @@ export default function SongSearchAutocomplete() {
         if (r.status === 200) {
           if (q.startsWith(waitingFor)) {
             r.json().then((results: ServerData) => {
-              fetchAutocompleteSuggestionsCache.set(q.trim(), results.matches);
-              setAutocompleteSuggestions(results.matches);
+              const songsOnly = results.matches.filter((i) => !!i.id);
+              fetchAutocompleteSuggestionsCache.set(q.trim(), songsOnly);
+              setAutocompleteSuggestions(songsOnly);
               setAutocompleteHighlight(-1);
             });
           }
