@@ -8,7 +8,6 @@ import dotenv from "dotenv";
 
 import { cacheControlPublicFiles } from "./middleware/long-cache.mjs";
 import { legacyRedirects } from "./middleware/legacy-redirects.mjs";
-import renderCaching from "./middleware/render-caching.mjs";
 import { detectBadURIComponents } from "./middleware/detect-bad-requests.mjs";
 import { detectBadSearches } from "./middleware/detect-bad-searches.mjs";
 
@@ -69,8 +68,6 @@ app
     server.use(cacheControlPublicFiles);
 
     server.use(detectBadURIComponents);
-
-    server.use(renderCaching);
 
     server.use(handle);
 
