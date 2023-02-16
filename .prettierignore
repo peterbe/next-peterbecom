@@ -1,0 +1,8 @@
+src/styles/css/semantic*
+src/styles/css/slim-*
+src/styles/css/bootstrap*
+src/styles/css/carbon-*
+src/styles/**/*.min.css
+src/styles/css/highlight.css
+
+

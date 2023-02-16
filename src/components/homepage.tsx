@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -50,8 +49,8 @@ export function Homepage({ posts, categories, nextPage, previousPage }: Props) {
               <span className={styles.post_metadata_comments}>
                 {post.comments} comment{post.comments !== 1 && "s"}{" "}
               </span>
-              {post.categories.map((name, i) => (
-                <Fragment key={name}>
+              {post.categories.map((name, i, arr) => (
+                <span key={name}>
                   <Link
                     href={categoryURL(name)}
                     rel="nofollow"
@@ -59,8 +58,8 @@ export function Homepage({ posts, categories, nextPage, previousPage }: Props) {
                   >
                     {name}
                   </Link>
-                  {i < post.categories.length - 1 && ", "}
-                </Fragment>
+                  {i < arr.length - 1 && ", "}
+                </span>
               ))}
             </p>
 
@@ -98,16 +97,16 @@ function CategoryFiltering({ categories }: { categories: string[] }) {
       <div className="header">Filtered home page!</div>
       Currently only showing blog entries under the
       {categories.length === 1 ? "category" : "categories"}:{" "}
-      {categories.map((category, i) => {
+      {categories.map((category, i, arr) => {
         return (
-          <Fragment key={category}>
+          <span key={category}>
             <Link href={categoryURL(category)}>
               <a rel="nofollow">
                 <b>{category}</b>
               </a>
             </Link>
-            {i === categories.length - 1 ? "." : ", "}
-          </Fragment>
+            {i === arr.length - 1 ? "." : ", "}
+          </span>
         );
       })}{" "}
       <Link href="/">Clear filter</Link>
