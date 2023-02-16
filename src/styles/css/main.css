@@ -304,7 +304,7 @@ dd small {
 -------------------------------------------------- */
 .jumbotron {
   position: relative;
-  background: url('../images/fork-smaller.jpg') no-repeat;
+  background: url("../images/fork-smaller.jpg") no-repeat;
   border: 1px solid #efefef;
   padding: 100px;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);

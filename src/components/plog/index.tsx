@@ -82,30 +82,28 @@ export function Blogpost({
       }
       hideMainMenu={false}
       extraHead={
-        <>
-          <p>
-            {formatDateBasic(post.pub_date)} &nbsp;{" "}
-            <span className={styles.comment_count}>
-              {comments.count.toLocaleString()} comment
-              {comments.count !== 1 && "s"}
-            </span>{" "}
-            &nbsp;{" "}
-            {post.categories.map((name, i) => {
-              return (
-                <Fragment key={name}>
-                  <Link
-                    href={categoryURL(name)}
-                    rel="nofollow"
-                    title={`Filter by the '${name}' category'`}
-                  >
-                    {name}
-                  </Link>
-                  {i !== post.categories.length - 1 && ", "}
-                </Fragment>
-              );
-            })}
-          </p>
-        </>
+        <p>
+          {formatDateBasic(post.pub_date)} &nbsp;{" "}
+          <span className={styles.comment_count}>
+            {comments.count.toLocaleString()} comment
+            {comments.count !== 1 && "s"}
+          </span>{" "}
+          &nbsp;{" "}
+          {post.categories.map((name, i) => {
+            return (
+              <span key={name}>
+                <Link
+                  href={categoryURL(name)}
+                  rel="nofollow"
+                  title={`Filter by the '${name}' category'`}
+                >
+                  {name}
+                </Link>
+                {i !== post.categories.length - 1 && ", "}
+              </span>
+            );
+          })}
+        </p>
       }
     >
       <Head>

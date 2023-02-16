@@ -3,7 +3,7 @@
 body {
   color: #333;
   background-color: #ffffff;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .main.container {
@@ -143,7 +143,7 @@ pre {
 }
 code,
 pre {
-  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
   font-size: 0.8em;
 }
 
@@ -177,7 +177,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
 }
 
 /* For comments */
@@ -207,18 +207,32 @@ h4 {
 .ui.comments div.comment.nested {
   margin-top: 5px;
 }
-.ui.comments div.comment.d-1 { margin-left: 25px; }
-.ui.comments div.comment.d-2 { margin-left: 45px; }
-.ui.comments div.comment.d-3 { margin-left: 65px; }
-.ui.comments div.comment.d-4 { margin-left: 85px; }
-.ui.comments div.comment.d-5 { margin-left: 105px; }
-.ui.comments div.comment.d-6 { margin-left: 125px; }
-.ui.comments div.comment.d-7 { margin-left: 145px; }
+.ui.comments div.comment.d-1 {
+  margin-left: 25px;
+}
+.ui.comments div.comment.d-2 {
+  margin-left: 45px;
+}
+.ui.comments div.comment.d-3 {
+  margin-left: 65px;
+}
+.ui.comments div.comment.d-4 {
+  margin-left: 85px;
+}
+.ui.comments div.comment.d-5 {
+  margin-left: 105px;
+}
+.ui.comments div.comment.d-6 {
+  margin-left: 125px;
+}
+.ui.comments div.comment.d-7 {
+  margin-left: 145px;
+}
 
 span.not-approved {
-  font-size:90%;
-  color:red;
-  padding-left:10px;
+  font-size: 90%;
+  color: red;
+  padding-left: 10px;
 }
 .ui.comments .comment .metadata {
   display: inline-block;
