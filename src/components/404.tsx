@@ -11,11 +11,11 @@ export default function Custom404() {
       </Head>
       <h1 style={{ margin: "75px 0", textAlign: "center" }}>Page not found</h1>
 
-      <p style={{ margin: "50px 0 200px 0" }}>
-        It&apos;s awful but it appears this URL does not match anything.
-        <br />
-        <br />
-        <b>Try...</b>
+      <div style={{ margin: "50px 0 200px 0" }}>
+        <p>It&apos;s awful but it appears this URL does not match anything.</p>
+        <p>
+          <b>Try...</b>
+        </p>
         <ul>
           <li>
             <Link href="/">Go to the Home page</Link>
@@ -24,7 +24,7 @@ export default function Custom404() {
             <Link href="/plog">Go to the Archive page</Link>
           </li>
         </ul>
-      </p>
+      </div>
     </Content>
   );
 }

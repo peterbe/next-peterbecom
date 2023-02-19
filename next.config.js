@@ -59,7 +59,7 @@ module.exports = (phase, { defaultConfig }) => {
     },
 
     // https://nextjs.org/docs/advanced-features/source-maps
-    productionBrowserSourceMaps: false, // disabled because I can't think of a reason to keep it on
+    productionBrowserSourceMaps: true,
 
     // https://nextjs.org/docs/api-reference/next.config.js/compression
     // If you don't do this, the `shrink-ray-current` middleware can't do
