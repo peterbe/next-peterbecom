@@ -33,7 +33,7 @@ export function About() {
         The{" "}
         <a href="https://podcasts.apple.com/us/podcast/the-mycelium-network-podcast/id1639357086">
           The Mycelium Network Podcast
-        </a>
+        </a>{" "}
         did an interview with me in August 2022. Link to episode on{" "}
         <a href="https://podcasts.apple.com/us/podcast/the-mycelium-network-podcast-with-peter-bengtsson/id1639357086?i=1000577933476">
           Apple
