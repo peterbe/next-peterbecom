@@ -13,25 +13,34 @@ export function About() {
       <Head>
         <title>{title}</title>
       </Head>
-
       <p>
         My name is <strong>Peter Bengtsson</strong> and I&apos;m a web
         developer. This is by personal blog.
       </p>
       <p>
-        I work at <a href="https://github.com">GitHub</a> as a full-stack
-        developer on the{" "}
-        <a href="https://github.com/github/docs-engineering">
-          Docs engineering team
-        </a>
-        .
+        I work at <a href="https://github.com">GitHub</a> on the{" "}
+        <a href="https://github.com/github/docs">Docs Engineering team</a>.
       </p>
-
       <p>
         Virtually all of my work is Open Source and available on{" "}
         <a href="https://github.com/peterbe">my GitHub account</a> including{" "}
         <a href="https://github.com/peterbe/django-peterbecom">
           this site itself
+        </a>
+        .
+      </p>
+      <p>
+        The{" "}
+        <a href="https://podcasts.apple.com/us/podcast/the-mycelium-network-podcast/id1639357086">
+          The Mycelium Network Podcast
+        </a>
+        did an interview with me in August 2022. Link to episode on{" "}
+        <a href="https://podcasts.apple.com/us/podcast/the-mycelium-network-podcast-with-peter-bengtsson/id1639357086?i=1000577933476">
+          Apple
+        </a>{" "}
+        and{" "}
+        <a href="https://open.spotify.com/episode/2vw6EShZOFdgLBEQPHFsAx?si=637a3ac26b074fe5">
+          Spotify
         </a>
         .
       </p>
