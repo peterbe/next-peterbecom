@@ -37,7 +37,7 @@
   "devDependencies": {
     "@types/react": "18.0.28",
     "@types/throttle-debounce": "5.0.0",
-    "eslint": "8.35.0",
+    "eslint": "8.37.0",
     "eslint-config-next": "13.2.3",
     "nodemon": "2.0.20",
     "prettier": "2.8.4",
