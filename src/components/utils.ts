@@ -15,8 +15,8 @@ export function formatDateBasic(date: string) {
     "November",
     "December",
   ];
-  const monthName = monthNames[actualDate.getMonth()];
-  return `${actualDate.getDate()} ${monthName} ${actualDate.getFullYear()}`;
+  const monthName = monthNames[actualDate.getUTCMonth()];
+  return `${actualDate.getUTCDate()} ${monthName} ${actualDate.getFullYear()}`;
 }
 
 export function postURL(oid: string) {
