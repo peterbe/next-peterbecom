@@ -28,7 +28,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rollbar": "2.26.1",
-    "sass": "1.58.3",
+    "sass": "1.62.1",
     "sharp": "0.32.1",
     "shrink-ray-current": "4.1.3",
     "swr": "2.1.5",
