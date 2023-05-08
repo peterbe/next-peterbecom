@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const oid = params!.oid as string;
   const fetchURL = `/api/v1/plog/${encodeURIComponent(oid)}`;
   const response = await get<ServerData>(fetchURL);
-  if (response.statusCode === 404) {
+  if (response.statusCode === 404 || response.statusCode === 400) {
     return {
       notFound: true,
     };
