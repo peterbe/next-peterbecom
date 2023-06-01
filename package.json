@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "classnames": "2.3.2",
-    "critters": "0.0.16",
+    "critters": "0.0.18",
     "dotenv": "16.0.3",
     "express": "4.18.2",
     "got": "12.5.3",
